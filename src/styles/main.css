@@ -1,3 +1,76 @@
+@font-face {
+  font-family: "Inter";
+  src: local("Inter Light"), url("/fonts/Inter/Inter-Light.ttf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: local("Inter"), url("/fonts/Inter/Inter-Regular.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: local("Inter Medium"), url("/fonts/Inter/Inter-Medium.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: local("Inter SemiBold"), url("/fonts/Inter/Inter-SemiBold.ttf");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: local("Inter Bold"), url("/fonts/Inter/Inter-Bold.ttf");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: local("Inter ExtraBold"), url("/fonts/Inter/Inter-ExtraBold.ttf");
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: local("Manrope Light"), url("/fonts/Manrope/Manrope-Light.ttf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: local("Manrope"), url("/fonts/Manrope/Manrope-Regular.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: local("Manrope Medium"), url("/fonts/Manrope/Manrope-Medium.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: local("Manrope SemiBold"), url("/fonts/Manrope/Manrope-SemiBold.ttf");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: local("Inter Bold"), url("/fonts/Manrope/Manrope-Bold.ttf");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: local("Inter ExtraBold"), url("/fonts/Manrope/Manrope-ExtraBold.ttf");
+  font-weight: 800;
+}
+
+
 :root {
   --clr-primary-100: hsl(216 84% 90%);
   --clr-primary-300: hsl(210 79% 46%);
