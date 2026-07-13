@@ -1,0 +1,28 @@
+body {
+  font-size: var(--fs-500);
+  font-family: var(--ff-primary);
+  font-weight: var(--fw-400);
+  line-height: 1.5;
+}
+
+h1 {}
+
+h2 {}
+
+h3 {}
+
+h4 {}
+
+p {}
+
+a:link,
+a:visited {}
+
+a:hover,
+a:active,
+a:focus-visible {}
+
+button {}
+
+button:hover,
+button:focus-visible {}

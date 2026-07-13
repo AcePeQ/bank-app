@@ -1,0 +1,70 @@
+:root {
+  --clr-primary-100: hsl(216 84% 90%);
+  --clr-primary-300: hsl(210 79% 46%);
+  --clr-primary-400: hsl(208 100% 34%);
+  --clr-primary-400-40: hsl(208 100% 34% / 40%);
+  --clr-primary-500: hsl(224 76% 48%);
+  --clr-primary-600: hsl(226 71% 40%);
+
+  --clr-secondary-300: hsl(220 7% 48%);
+  --clr-secondary-400: hsl(215 16% 47%);
+  --clr-secondary-500: hsl(215 18% 40%);
+  --clr-secondary-600: hsl(216 19% 39%);
+  --clr-secondary-700: hsl(220 12% 29%);
+  --clr-secondary-800: hsl(218 19% 12%);
+  --clr-secondary-900: hsl(180 4% 11%);
+
+  --clr-surface-100: hsl(0 0% 100%);
+  --clr-surface-200: hsl(0 0% 98%);
+  --clr-surface-300: hsl(0 0% 95%);
+  --clr-surface-400: hsl(0 0% 91%);
+  --clr-surface-500: hsl(235 35% 93%);
+  --clr-surface-600: hsl(0 0% 89%);
+
+  --clr-accent-500: hsl(29 100% 36%);
+  --clr-accent-600: hsl(29 100% 29%);
+
+  --clr-alert-200: hsl(6 100% 92%);
+  --clr-alert-500: hsl(0 75% 42%);
+
+  --fs-50: clamp(0.576rem, 0.5795rem + -0.0035vw, 0.5787rem);
+  --fs-100: clamp(0.6944rem, 0.687rem + 0.033vw, 0.72rem);
+  --fs-200: clamp(0.8333rem, 0.814rem + 0.086vw, 0.9rem);
+  --fs-300: clamp(1rem, 0.9637rem + 0.1613vw, 1.125rem);
+  --fs-400: clamp(1.2rem, 1.1401rem + 0.2661vw, 1.4063rem);
+  --fs-500: clamp(1.44rem, 1.3477rem + 0.4101vw, 1.7578rem);
+  --fs-600: clamp(1.728rem, 1.5918rem + 0.6055vw, 2.1973rem);
+  --fs-700: clamp(2.0736rem, 1.8782rem + 0.8684vw, 2.7466rem);
+  --fs-800: clamp(2.4883rem, 2.214rem + 1.2192vw, 3.4332rem);
+  --fs-900: clamp(2.986rem, 2.607rem + 1.6846vw, 4.2915rem);
+
+  --space-3xs: clamp(0.25rem, 0.2319rem + 0.0806vw, 0.3125rem);
+  --space-2xs: clamp(0.5rem, 0.4637rem + 0.1613vw, 0.625rem);
+  --space-xs: clamp(0.75rem, 0.6956rem + 0.2419vw, 0.9375rem);
+  --space-s: clamp(1rem, 0.9274rem + 0.3226vw, 1.25rem);
+  --space-m: clamp(1.5rem, 1.3911rem + 0.4839vw, 1.875rem);
+  --space-l: clamp(2rem, 1.8548rem + 0.6452vw, 2.5rem);
+  --space-xl: clamp(3rem, 2.7823rem + 0.9677vw, 3.75rem);
+  --space-2xl: clamp(4rem, 3.7097rem + 1.2903vw, 5rem);
+  --space-3xl: clamp(6rem, 5.5645rem + 1.9355vw, 7.5rem);
+
+  --space-3xs-2xs: clamp(0.25rem, 0.1411rem + 0.4839vw, 0.625rem);
+  --space-2xs-xs: clamp(0.5rem, 0.373rem + 0.5645vw, 0.9375rem);
+  --space-xs-s: clamp(0.75rem, 0.6048rem + 0.6452vw, 1.25rem);
+  --space-s-m: clamp(1rem, 0.746rem + 1.129vw, 1.875rem);
+  --space-m-l: clamp(1.5rem, 1.2097rem + 1.2903vw, 2.5rem);
+  --space-l-xl: clamp(2rem, 1.4919rem + 2.2581vw, 3.75rem);
+  --space-xl-2xl: clamp(3rem, 2.4194rem + 2.5806vw, 5rem);
+  --space-2xl-3xl: clamp(4rem, 2.9839rem + 4.5161vw, 7.5rem);
+
+  --fw-300: 300;
+  --fw-400: 400;
+  --fw-500: 500;
+  --fw-600: 600;
+  --fw-700: 700;
+  --fw-800: 800;
+  --fw-900: 900;
+
+  --ff-primary: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --ff-secondary: Manrope, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
