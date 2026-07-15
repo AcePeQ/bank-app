@@ -72,33 +72,33 @@
 
 
 :root {
-  --clr-primary-100: hsl(216 84% 90%);
-  --clr-primary-300: hsl(210 79% 46%);
-  --clr-primary-400: hsl(208 100% 34%);
-  --clr-primary-400-40: hsl(208 100% 34% / 40%);
-  --clr-primary-500: hsl(224 76% 48%);
-  --clr-primary-600: hsl(226 71% 40%);
+  --clr-primary-100: #d0e1fb;
+  --clr-primary-300: #1975d2;
+  --clr-primary-400: #005cad;
+  --clr-primary-400-40: #005cad66;
+  --clr-primary-500: #1d4fd7;
+  --clr-primary-600: #1e3fae;
 
-  --clr-secondary-300: hsl(220 7% 48%);
-  --clr-secondary-400: hsl(215 16% 47%);
-  --clr-secondary-500: hsl(215 18% 40%);
-  --clr-secondary-600: hsl(216 19% 39%);
-  --clr-secondary-700: hsl(220 12% 29%);
-  --clr-secondary-800: hsl(218 19% 12%);
-  --clr-secondary-900: hsl(180 4% 11%);
+  --clr-secondary-300: #727883;
+  --clr-secondary-400: #65758b;
+  --clr-secondary-500: #546378;
+  --clr-secondary-600: #516076;
+  --clr-secondary-700: #414753;
+  --clr-secondary-800: #191d24;
+  --clr-secondary-900: #1a1c1c;
 
-  --clr-surface-100: hsl(0 0% 100%);
-  --clr-surface-200: hsl(0 0% 98%);
-  --clr-surface-300: hsl(0 0% 95%);
-  --clr-surface-400: hsl(0 0% 91%);
-  --clr-surface-500: hsl(235 35% 93%);
-  --clr-surface-600: hsl(0 0% 89%);
+  --clr-surface-100: #ffffff;
+  --clr-surface-200: #fafafa;
+  --clr-surface-300: #f2f2f2;
+  --clr-surface-400: #e8e8e8;
+  --clr-surface-500: #e7e8f3;
+  --clr-surface-600: #e3e3e3;
 
-  --clr-accent-500: hsl(29 100% 36%);
-  --clr-accent-600: hsl(29 100% 29%);
+  --clr-accent-500: #b85900;
+  --clr-accent-600: #944700;
 
-  --clr-alert-200: hsl(6 100% 92%);
-  --clr-alert-500: hsl(0 75% 42%);
+  --clr-alert-200: #ffdad6;
+  --clr-alert-500: #bb1b1b;
 
   --fs-50: clamp(0.576rem, 0.5795rem + -0.0035vw, 0.5787rem);
   --fs-100: clamp(0.6944rem, 0.687rem + 0.033vw, 0.72rem);

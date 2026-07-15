@@ -1,8 +1,69 @@
-<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 67" width="120" height="67">
-	<defs>
-		<image  width="148" height="95" id="img1" href="data:image/png;base64,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"/>
-	</defs>
-	<style>
-	</style>
-	<use id="Background" href="#img1" x="-15" y="-15"/>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="180"
+  height="100"
+  viewBox="0 0 180 100"
+  fill="none"
+  role="img"
+  aria-labelledby="logo-title logo-description"
+>
+  <title id="logo-title">Infinity Finance</title>
+  <desc id="logo-description">
+    Wycentrowane pionowe logo Infinity Finance z symbolem nieskończoności
+    i subtelną strzałką wzrostu.
+  </desc>
+
+  <defs>
+    <linearGradient
+      id="infinity-finance-gradient"
+      x1="58"
+      y1="18"
+      x2="122"
+      y2="52"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#005CAD" />
+      <stop offset="1" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+
+  <g
+    stroke="url(#infinity-finance-gradient)"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path
+      d="M59 37
+         C59 24 72 19 81 28
+         L99 46
+         C108 55 121 50 121 37
+         C121 24 108 19 99 28
+         L81 46
+         C72 55 59 50 59 37"
+      stroke-width="5"
+    />
+
+    <path
+      d="M102 35L116 21"
+      stroke-width="4"
+    />
+
+    <path
+      d="M108 21H116V29"
+      stroke-width="4"
+    />
+  </g>
+
+  <text
+    x="90"
+    y="84"
+    text-anchor="middle"
+    font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    font-size="22"
+    font-weight="700"
+    letter-spacing="-0.5"
+  >
+    <tspan fill="#005CAD">Infinity</tspan>
+    <tspan fill="#181C23"> Finance</tspan>
+  </text>
 </svg>

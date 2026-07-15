@@ -9,13 +9,109 @@
   <link href="./src/styles/reset.css" rel="stylesheet" />
   <link href="./src/styles/main.css" rel="stylesheet" />
   <link href="./src/styles/base.css" rel="stylesheet" />
+  <link href="./src/styles/layout.css" rel="stylesheet" />
+  <link href="./src/styles/pages/login.css" rel="stylesheet" />
 
-  <script src="./src/pages/login.ts" defer />
-  <title>Infinity Finance</title>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <script src="./src/pages/login.ts" defer></script>
+
+  <title>Infinity Finance - Login Page</title>
 </head>
 
 <body>
 
+  <main>
+    <div class="layout-wrapper grid-12 section-login">
+      <section class="advertisement">
+        <hgroup>
+          <h1 class="advertisement__title">
+            <span class="advertisement__title-part-one">Architecting Your</span>
+            <span class="advertisement-title-part-two">Financial Future.</span>
+          </h1>
+          <p class="adverisement__subtitle">Join an elite ecosystem designed for
+            institutional-grade stability with liquid
+            frictionlessness.</p>
+        </hgroup>
+      </section>
+
+      <section class="form-section">
+        <img class="img-logo img-logo--form" src="./public/icons/IFLogo.svg" alt="Infinity Finance - Logo" />
+
+        <div class="header">
+          <hgroup>
+            <h1>Create your account</h1>
+            <p>Enter your details to begin your journey with Infinity</p>
+          </hgroup>
+        </div>
+
+        <form class="form" method="post">
+          <div class="form__row">
+            <label for="firstName" class="form__label">First Name</label>
+            <input id="firstName" name="firstName" class="form__input" type="text" placeholder="Jane" />
+            <p class="form__error"></p>
+          </div>
+
+          <div class="form__row">
+            <label for="lastName" class="form__label">Last Name</label>
+            <input id="lastName" name="lastName" class="form__input" type="text" placeholder="Doe" />
+            <p class="form__error"></p>
+          </div>
+
+          <div class="form__row">
+            <label for="email" class="form__label">Email Address</label>
+            <input id="email" name="email" class="form__input" type="email" placeholder="name@exmaple.com" />
+            <p class="form__error"></p>
+          </div>
+
+          <div class="form__row">
+            <label for="phoneNumber" class="form__label">Phone Number</label>
+            <input id="phoneNumber" name="phoneNumber" class="form__input" type="tel" placeholder="(555) 000-0000" />
+            <p class="form__error"></p>
+          </div>
+
+          <div class="form__row">
+            <label for="password" class="form__label">Password</label>
+            <div class="form__row__input-box">
+              <input id="password" name="password" class="form__input" type="password" placeholder="********" />
+              <button class="form__row_button_show-password" type="button" aria-label="Show password">
+                <i data-lucide="menu"></i>
+              </button>
+            </div>
+            <div class="password-progress">
+              <div class="password-progress__wrapper">
+                <span class="password-progress__line"></span>
+                <span class="password-progress__line"></span>
+                <span class="password-progress__line"></span>
+                <span class="password-progress__line"></span>
+              </div>
+              <p class="password-progress__info">strength: <span class="password-progress__info__strength">strong</span>
+              </p>
+            </div>
+            <p class="form__error"></p>
+          </div>
+
+          <div class="form__row">
+            <label for="confirmPassword" class="form__label">Phone Number</label>
+            <input id="confirmPassword" name="confirmPassword" class="form__input" type="password"
+              placeholder="********" />
+            <p class="form__error"></p>
+          </div>
+
+          <div class="form__row">
+            <label for="terms" class="form__label--terms">
+              <input id="terms" type="checkbox" class="form__input--checkbox" />
+              <p>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand how
+                Infinity handles my financial data</p>
+            </label>
+          </div>
+
+          <button class="btn btn--primary btn--big btn--form">Sign Up</button>
+
+          <p class="account-information">Already have an account? <a href="#">Log In</a></p>
+        </form>
+      </section>
+    </div>
+  </main>
 </body>
 
 </html>

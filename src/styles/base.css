@@ -3,6 +3,8 @@ body {
   font-family: var(--ff-primary);
   font-weight: var(--fw-400);
   line-height: 1.5;
+
+  accent-color: var(--clr-primary);
 }
 
 h1,
@@ -12,24 +14,68 @@ h4 {
   font-family: var(--ff-secondary);
 }
 
-h1 {}
 
-h2 {}
-
-h3 {}
-
-h4 {}
-
-p {}
 
 a:link,
-a:visited {}
+a:visited {
+  text-decoration: none;
+
+  color: var(--clr-primary-400);
+  font-weight: var(--fw-700);
+
+
+}
 
 a:hover,
 a:active,
-a:focus-visible {}
+a:focus-visible {
+  color: var(--clr-primary-500);
+}
 
-button {}
+button {
+  border: none;
+  cursor: pointer;
+
+  background-color: transparent;
+
+}
 
 button:hover,
 button:focus-visible {}
+
+label {
+  font-size: var(--fs-200);
+  font-weight: var(--fw-600);
+
+  color: var(--clr-secondary-700);
+
+  padding-inline-start: 5px
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"] {
+  border: none;
+
+  padding-inline: 1rem;
+  padding-block: 0.8rem;
+
+  color: var(--clr-secondary-900);
+  background-color: var(--clr-surface-400);
+  border-radius: 12px;
+
+  font-size: var(--fs-300);
+}
+
+input::placeholder {
+  color: var(--clr-secondary-400);
+}
+
+.lucide {
+  color: var(--clr-primary);
+  width: 100%;
+  height: 100%;
+
+  stroke-width: 1px;
+}
