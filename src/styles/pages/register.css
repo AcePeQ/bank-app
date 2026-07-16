@@ -24,7 +24,7 @@
 }
 
 .advertisement__title-part-one,
-.advertisement-title-part-two {
+.advertisement__title-part-two {
   text-wrap: nowrap;
 
 }
@@ -33,7 +33,7 @@
   color: var(--clr-surface-100);
 }
 
-.advertisement-title-part-two {
+.advertisement__title-part-two {
   color: var(--clr-primary-100);
 }
 
