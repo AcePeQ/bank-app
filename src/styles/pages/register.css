@@ -52,7 +52,7 @@
 
   background-color: var(--clr-surface-200);
   gap: var(--space-m);
-  padding: var(--space-m);
+  padding: var(--space-l);
 
   grid-column: 1/-1;
 
@@ -204,11 +204,15 @@
   font-size: var(--fs-200);
 
   color: var(--clr-secondary-700);
+
+  cursor: pointer;
 }
 
 
 .form__label--terms input {
   translate: 0 3px;
+
+  cursor: pointer;
 }
 
 .btn--form {

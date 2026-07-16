@@ -199,11 +199,15 @@
   font-size: var(--fs-200);
 
   color: var(--clr-secondary-700);
+
+  cursor: pointer;
 }
 
 
 .form__label--session input {
   translate: 0 3px;
+
+  cursor: pointer;
 }
 
 .btn--form {
