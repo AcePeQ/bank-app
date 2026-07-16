@@ -10,6 +10,7 @@
   <link href="./src/styles/main.css" rel="stylesheet" />
   <link href="./src/styles/base.css" rel="stylesheet" />
   <link href="./src/styles/layout.css" rel="stylesheet" />
+  <link href="./src/styles/components/buttons.css" rel="stylesheet" />
   <link href="./src/styles/pages/login.css" rel="stylesheet" />
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
@@ -23,6 +24,8 @@
   <main>
     <div class="layout-wrapper grid-12 section-login">
       <section class="advertisement">
+        <img class="img-logo img-logo--adverisment" src="./public/icons/IFLogo.svg" alt="Infinity Finance - Logo" />
+
         <hgroup>
           <h1 class="advertisement__title">
             <span class="advertisement__title-part-one">Architecting Your</span>
@@ -34,7 +37,7 @@
         </hgroup>
       </section>
 
-      <section class="form-section">
+      <section class="form-section form-container">
         <img class="img-logo img-logo--form" src="./public/icons/IFLogo.svg" alt="Infinity Finance - Logo" />
 
         <div class="header">
@@ -91,7 +94,7 @@
           </div>
 
           <div class="form__row">
-            <label for="confirmPassword" class="form__label">Phone Number</label>
+            <label for="confirmPassword" class="form__label">Confirm Password</label>
             <input id="confirmPassword" name="confirmPassword" class="form__input" type="password"
               placeholder="********" />
             <p class="form__error"></p>
