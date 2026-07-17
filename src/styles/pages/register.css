@@ -159,9 +159,7 @@
   padding-inline-start: 5px;
 }
 
-.form__error--hidden {
-  display: none;
-}
+
 
 .password-progress {
   display: flex;
@@ -182,22 +180,31 @@
   flex: 1;
 
   height: 5px;
-  background-color: var(--clr-secondary-400);
 
   border-radius: 100px;
 }
 
-
-.password-progress__info {
-  font-size: var(--fs-200);
-  letter-spacing: 0.1em;
-  font-weight: var(--fw-400);
-  color: var(--clr-primary-400);
-  text-transform: uppercase;
-  padding-inline-start: 5px;
-
-  margin-block-start: 8px;
+.password-progress__line.weak {
+  background-color: var(--clr-alert-500);
 }
+
+.password-progress__line.medium {
+  background-color: var(--clr-warning-400);
+}
+
+.password-progress__line.strong {
+  background-color: var(--clr-warning-500);
+}
+
+.password-progress__line.perfect {
+  background-color: var(--clr-primary-300);
+}
+
+.password-progress__line.cover {
+  background-color: var(--clr-secondary-400) !important;
+  ;
+}
+
 
 .form__label--terms {
   display: flex;
@@ -214,9 +221,9 @@
 
 .form__label--terms input {
   translate: 0 3px;
-
   cursor: pointer;
 }
+
 
 .btn--form {
   margin-block: 1rem;

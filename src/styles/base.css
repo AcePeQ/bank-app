@@ -84,7 +84,7 @@ input[type="checkbox"] {
   color: var(--clr-primary-300);
   width: 18px;
   height: 18px;
-  border: 0.15em solid currentColor;
+  border: 0.2em solid currentColor;
   border-radius: 0.15em;
   transform: translateY(-0.075em);
 
@@ -113,6 +113,14 @@ input[type="checkbox"]:checked::before {
 input[type="checkbox"]:focus-visible {
   outline: max(2px, 0.15em) solid currentColor;
   outline-offset: max(2px, 0.15em);
+}
+
+input[type="checkbox"]:disabled {
+  opacity: 0.5;
+}
+
+input[type="checkbox"].invalid {
+  border-color: var(--clr-alert-500);
 }
 
 .lucide {

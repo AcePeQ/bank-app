@@ -1,22 +1,25 @@
 import { DIGIT_REGEX, EMAIL_REGEX, LOWERCASE_REGEX, NAME_REGEX, PHONE_REGEX, SPECIAL_CHARACTER_REGEX, UPPERCASE_REGEX, WHITESPACE_REGEX } from "./constants";
 
-function validResult() {
+function validResult(strength?: number) {
   return {
     isValid: true,
     message: null,
+    strength: strength, 
   }
 }
 
-function invalidResult(message:string) {
+function invalidResult(message:string, strength?: number) {
   return {
     isValid: false,
     message,
+    strength,
   }
 }
 
 export type ValidationResult = {
   isValid: boolean,
   message: string | null
+  strength: number | undefined,
 }
 
 export function validateFirstName(value: string):ValidationResult {
@@ -106,52 +109,53 @@ export function validatePassword(
   value: string
 ):ValidationResult {
   if (!value) {
-    return invalidResult("Password is required.");
+    return invalidResult("Password is required.", 1);
   }
 
   if (value.length < 8) {
     return invalidResult(
-      "Password must contain at least 8 characters."
+      "Password must contain at least 8 characters.", 1
     );
   }
 
   if (value.length > 64) {
     return invalidResult(
-      "Password must not exceed 64 characters."
+      "Password must not exceed 64 characters.", 1
     );
   }
 
+
   if (WHITESPACE_REGEX.test(value)) {
     return invalidResult(
-      "Password must not contain spaces."
+      "Password must not contain spaces.", 2
     );
   }
 
   if (!LOWERCASE_REGEX.test(value)) {
     return invalidResult(
-      "Password must contain at least one lowercase letter."
+      "Password must contain at least one lowercase letter.", 2
     );
   }
 
   if (!UPPERCASE_REGEX.test(value)) {
     return invalidResult(
-      "Password must contain at least one uppercase letter."
+      "Password must contain at least one uppercase letter.", 2
     );
   }
 
   if (!DIGIT_REGEX.test(value)) {
     return invalidResult(
-      "Password must contain at least one number."
+      "Password must contain at least one number.", 3
     );
   }
 
   if (!SPECIAL_CHARACTER_REGEX.test(value)) {
     return invalidResult(
-      "Password must contain at least one special character."
+      "Password must contain at least one special character.", 3
     );
   }
 
-  return validResult();
+  return validResult(4);
 }
 
 export function validateConfirmPassword(
