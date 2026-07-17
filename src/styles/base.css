@@ -122,3 +122,7 @@ input[type="checkbox"]:focus-visible {
 
   stroke-width: 1px;
 }
+
+.hidden {
+  display: none;
+}

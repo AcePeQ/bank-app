@@ -49,10 +49,26 @@ function init() {
     }
 
     if(validationObj.isValid) {
-      handleValidationInput(inputEl, errorEl);
+      handleValidInput(inputEl, errorEl);
     } else {
-      handleInvalidInput(inputEl, errorEl, validationObj.message);
+      handleInvalidInput(inputEl, errorEl, validationObj.message ?? "Invalid format.");
     }
+  }
+
+  function handleValidInput(inputEl:HTMLInputElement, errorEl:HTMLParagraphElement) {
+    errorEl.textContent = "";
+    errorEl.classList.add("hidden");
+
+    inputEl.classList.remove("invalid");
+    inputEl.classList.add("valid");
+  }
+
+  function handleInvalidInput(inputEl:HTMLInputElement, errorEl:HTMLParagraphElement, message: string) {
+    errorEl.textContent = message;
+    errorEl.classList.remove("hidden");
+
+    inputEl.classList.remove("valid");
+    inputEl.classList.add("invalid");
   }
 
   function handleInput(event: Event) {
