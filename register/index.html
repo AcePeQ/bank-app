@@ -14,7 +14,7 @@
   <link href="/src/styles/pages/register.css" rel="stylesheet" />
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-  <script src="/src/pages/register.ts" defer></script>
+  <script src="/src/pages/register.ts" type="module" defer></script>
 
   <title>Infinity Finance - Register Page</title>
 </head>
@@ -47,7 +47,7 @@
           </hgroup>
         </div>
 
-        <form class="form" method="post">
+        <form id="form" class="form" method="post">
           <div class="form__row">
             <label for="firstName" class="form__label">First Name</label>
             <input id="firstName" name="firstName" class="form__input" type="text" placeholder="Jane" />
@@ -62,7 +62,8 @@
 
           <div class="form__row">
             <label for="email" class="form__label">Email Address</label>
-            <input id="email" name="email" class="form__input" type="email" placeholder="name@exmaple.com" />
+            <input id="email" autocomplete="email" name="email" class="form__input" type="email"
+              placeholder="name@exmaple.com" />
             <p class="form__error"></p>
           </div>
 
@@ -75,9 +76,10 @@
           <div class="form__row">
             <label for="password" class="form__label">Password</label>
             <div class="form__row__input-box">
-              <input id="password" name="password" class="form__input" type="password" placeholder="********" />
+              <input id="password" name="password" autocomplete="new-password" class="form__input" type="password"
+                placeholder="********" />
               <button class="form__row_button_show-password" type="button" aria-label="Show password">
-                <i data-lucide="menu"></i>
+                <i data-lucide="eye"></i>
               </button>
             </div>
             <div class="password-progress">
@@ -95,8 +97,8 @@
 
           <div class="form__row">
             <label for="confirmPassword" class="form__label">Confirm Password</label>
-            <input id="confirmPassword" name="confirmPassword" class="form__input" type="password"
-              placeholder="********" />
+            <input id="confirmPassword" autocomplete="new-password" name="confirmPassword" class="form__input"
+              type="password" placeholder="********" />
             <p class="form__error"></p>
           </div>
 
@@ -108,7 +110,7 @@
             </label>
           </div>
 
-          <button class="btn btn--primary btn--big btn--form">Sign Up</button>
+          <button type="submit" class="btn btn--primary btn--big btn--form">Sign Up</button>
 
           <p class="account-information">Already have an account? <a href="#">Log In</a></p>
         </form>
