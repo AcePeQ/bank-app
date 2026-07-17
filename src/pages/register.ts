@@ -1,4 +1,5 @@
 import { createIcons, Eye } from "lucide";
+import { validateConfirmPassword, validateEmail, validateFirstName, validateLastName, validatePassword, validatePhoneNumber, type ValidationResult } from "../utils/validation";
 
 function init() {
     createIcons({
@@ -20,34 +21,52 @@ function init() {
   function handleValidationInput(inputEl:HTMLInputElement, errorEl: HTMLParagraphElement) {
     const name = inputEl.getAttribute("name");
 
+    const inputValue = inputEl.value;
+    let validationObj:ValidationResult;
+
     switch (name) {
       case "firstName":
+         validationObj = validateFirstName(inputValue);
         break;
       case "lastName":
+         validationObj = validateLastName(inputValue);
         break;
       case "email":
+         validationObj = validateEmail(inputValue);
         break;
       case "phoneNumber":
+         validationObj = validatePhoneNumber(inputValue);
         break;
       case "password":
+         validationObj = validatePassword(inputValue);
         break;
       case "confirmPassword":
+        const passwordValue = passwordInputEl.value;
+         validationObj = validateConfirmPassword(inputValue, passwordValue);
         break;
         default:
+          return;
+    }
+
+    if(validationObj.isValid) {
+      handleValidationInput(inputEl, errorEl);
+    } else {
+      handleInvalidInput(inputEl, errorEl, validationObj.message);
     }
   }
 
-  function handleInput(event: InputEvent) {
-    const target = event.target as HTMLInputElement;
+  function handleInput(event: Event) {
+    if(!(event.target instanceof HTMLInputElement)) return;
+
+    const target = event.target;
     if(!target) return;
 
     const inputRowEl = target.closest(".form__row") as HTMLDivElement
     if(!inputRowEl) return;
 
-    const inputEl = inputRowEl.querySelector(".form__input") as HTMLInputElement;
     const errorEl = inputRowEl.querySelector(".form__error") as HTMLParagraphElement;
     
-    handleValidationInput(inputEl, errorEl)
+    handleValidationInput(target, errorEl)
   }
 
 
