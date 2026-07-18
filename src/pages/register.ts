@@ -1,10 +1,12 @@
-import { createIcons, Eye } from "lucide";
+import { createIcons, Eye, EyeOff } from "lucide";
 import { validateConfirmPassword, validateEmail, validateFirstName, validateLastName, validatePassword, validatePhoneNumber, validateTerms, type ValidationResult } from "../utils/validation";
+import { testPromise } from "../services/api";
 
 function init() {
     createIcons({
     icons: {
       Eye,
+      EyeOff,
     }
   })
 
@@ -17,6 +19,16 @@ function init() {
   const confirmPasswordInputEl = document.querySelector("#confirmPassword") as HTMLInputElement;
   const termsCheckboxEl = document.querySelector("#terms") as HTMLInputElement
   const passwordProgressEl = document.querySelector("#passwordProgress") as HTMLDivElement
+
+  const submitBtnEl = document.querySelector("#register-btn") as HTMLButtonElement;
+  const submitBtnTextEl = document.querySelector("#register-btn-text") as HTMLParagraphElement;
+  const loaderEl = document.querySelector("#loader") as HTMLDivElement;
+
+  const showPasswordBtnEl = document.querySelector("#show-password-btn") as HTMLButtonElement
+  const showPasswordIconEl = document.querySelector("#show-password-icon") as HTMLDivElement
+  const hidePasswordIconEl = document.querySelector("#hide-password-icon") as HTMLDivElement
+
+  let isLoading = false;
 
   function handleValidationInput(inputEl:HTMLInputElement, errorEl: HTMLParagraphElement) {
     const name = inputEl.getAttribute("name");
@@ -120,8 +132,37 @@ function init() {
     }
   }
 
+  function toggleInputs() {
+      firstNameInputEl.disabled = isLoading;
+      lastNameInputEl.disabled = isLoading;
+      emailInputEl.disabled = isLoading;
+      phoneNumberInputEl.disabled = isLoading;
+      passwordInputEl.disabled = isLoading;
+      confirmPasswordInputEl.disabled = isLoading;
+      termsCheckboxEl.disabled = isLoading;
+  }
+
+  function toggleShowPassword() {
+    if(passwordInputEl.type === "password") {
+      passwordInputEl.type = "text";
+      confirmPasswordInputEl.type = "text";
+    
+      showPasswordIconEl.classList.add("hidden");
+      hidePasswordIconEl.classList.remove("hidden");
+    } else {
+      passwordInputEl.type = "password";
+      confirmPasswordInputEl.type = "password";
+      showPasswordIconEl.setAttribute("data-lucide", "eye-off");
+
+      showPasswordIconEl.classList.remove("hidden");
+      hidePasswordIconEl.classList.add("hidden");
+    }
+  }
+
   function handleSubmit(event:Event) {
     event.preventDefault();
+
+    if(isLoading) return;
 
     const firstNameValue  = firstNameInputEl.value;
     const lastNameValue = lastNameInputEl.value;
@@ -162,11 +203,35 @@ function init() {
       handleValidationInput(confirmPasswordInputEl, confirmPasswordErrorEl);
       return;
     }
+
+    handleRequest();
   }
 
+  function handleLoading() {
+    loaderEl.classList.toggle("hidden", !isLoading);
+    submitBtnTextEl.classList.toggle("hidden", isLoading);
+  }
 
+  async function handleRequest() {
+  try {
+      isLoading = true;
+      submitBtnEl.disabled = true;
+      toggleInputs();
+      handleLoading();
+
+      await testPromise();
+    } catch (error) {
+      console.log("error");
+    } finally {
+      isLoading = false;
+      submitBtnEl.disabled = false;
+      toggleInputs();
+      handleLoading();
+    }
+  }
 
   termsCheckboxEl.addEventListener("change", handleValidationCheckbox);
+  showPasswordBtnEl.addEventListener("click", toggleShowPassword);
   form.addEventListener("submit", handleSubmit);
   form.addEventListener("input", handleInput);
 };

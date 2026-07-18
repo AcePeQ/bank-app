@@ -11,6 +11,7 @@
   <link href="/src/styles/base.css" rel="stylesheet" />
   <link href="/src/styles/layout.css" rel="stylesheet" />
   <link href="/src/styles/components/buttons.css" rel="stylesheet" />
+  <link href="/src/styles/components/loader.css" rel="stylesheet" />
   <link href="/src/styles/pages/register.css" rel="stylesheet" />
 
   <script src="/src/pages/register.ts" type="module" defer></script>
@@ -75,10 +76,12 @@
           <div class="form__row">
             <label for="password" class="form__label">Password</label>
             <div class="form__row__input-box">
-              <input id="password" name="password" autocomplete="new-password" class="form__input" type="password"
-                placeholder="********" />
-              <button class="form__row_button_show-password" type="button" aria-label="Show password">
-                <i data-lucide="eye"></i>
+              <input id="password" name="password" autocomplete="new-password" data-type="password" class="form__input"
+                type="password" placeholder="********" />
+              <button id="show-password-btn" class="form__row_button_show-password" type="button"
+                aria-label="Show password">
+                <i id="show-password-icon" data-lucide="eye"></i>
+                <i id="hide-password-icon" data-lucide="eye-off" class="hidden"></i>
               </button>
             </div>
             <div class="password-progress">
@@ -94,8 +97,8 @@
 
           <div class="form__row">
             <label for="confirmPassword" class="form__label">Confirm Password</label>
-            <input id="confirmPassword" autocomplete="new-password" name="confirmPassword" class="form__input"
-              type="password" placeholder="********" />
+            <input id="confirmPassword" data-type="password" autocomplete="new-password" name="confirmPassword"
+              class="form__input" type="password" placeholder="********" />
             <p class="form__error"></p>
           </div>
 
@@ -107,7 +110,12 @@
             </label>
           </div>
 
-          <button type="submit" class="btn btn--primary btn--big btn--form">Sign Up</button>
+          <button id="register-btn" type="submit" class="btn btn--primary btn--big btn--form">
+            <span id="loader" class="dots dots--normal hidden"></span>
+            <span id="register-btn-text">
+              Sign Up
+            </span>
+          </button>
 
           <p class="account-information">Already have an account? <a href="#">Log In</a></p>
         </form>
