@@ -1,6 +1,15 @@
 import { createIcons, Eye, EyeOff } from "lucide";
 import { validateConfirmPassword, validateEmail, validateFirstName, validateLastName, validatePassword, validatePhoneNumber, validateTerms, type ValidationResult } from "../utils/validation";
-import { testPromise } from "../services/api";
+import { registerUser } from "../services/api";
+import { getRequiredElement } from "../utils/helpers";
+
+export type RegisterData = {
+  firstName: string,
+  lastName: string,
+  email: string;
+  phoneNumber: string,
+  password: string;
+}
 
 function init() {
     createIcons({
@@ -10,23 +19,23 @@ function init() {
     }
   })
 
-  const form = document.querySelector("#form") as HTMLFormElement;
-  const firstNameInputEl = document.querySelector("#firstName") as HTMLInputElement;
-  const lastNameInputEl = document.querySelector("#lastName") as HTMLInputElement;
-  const emailInputEl = document.querySelector("#email") as HTMLInputElement;
-  const phoneNumberInputEl = document.querySelector("#phoneNumber") as HTMLInputElement;
-  const passwordInputEl = document.querySelector("#password") as HTMLInputElement;
-  const confirmPasswordInputEl = document.querySelector("#confirmPassword") as HTMLInputElement;
-  const termsCheckboxEl = document.querySelector("#terms") as HTMLInputElement
-  const passwordProgressEl = document.querySelector("#passwordProgress") as HTMLDivElement
+  const form = getRequiredElement("#form", HTMLFormElement);
+  const firstNameInputEl = getRequiredElement("#firstName", HTMLInputElement);
+  const lastNameInputEl = getRequiredElement("#lastName", HTMLInputElement);
+  const emailInputEl = getRequiredElement("#email", HTMLInputElement);
+  const phoneNumberInputEl = getRequiredElement("#phoneNumber", HTMLInputElement);
+  const passwordInputEl = getRequiredElement("#password", HTMLInputElement);
+  const confirmPasswordInputEl =  getRequiredElement("#confirmPassword", HTMLInputElement);
+  const termsCheckboxEl = getRequiredElement("#terms", HTMLInputElement);
+  const passwordProgressEl = getRequiredElement("#passwordProgress", HTMLDivElement);
 
-  const submitBtnEl = document.querySelector("#register-btn") as HTMLButtonElement;
-  const submitBtnTextEl = document.querySelector("#register-btn-text") as HTMLParagraphElement;
-  const loaderEl = document.querySelector("#loader") as HTMLDivElement;
+  const submitBtnEl = getRequiredElement("#register-btn", HTMLButtonElement);
+  const submitBtnTextEl = getRequiredElement("#register-btn-text", HTMLSpanElement);
+  const loaderEl = getRequiredElement("#loader", HTMLSpanElement);
 
-  const showPasswordBtnEl = document.querySelector("#show-password-btn") as HTMLButtonElement
-  const showPasswordIconEl = document.querySelector("#show-password-icon") as HTMLDivElement
-  const hidePasswordIconEl = document.querySelector("#hide-password-icon") as HTMLDivElement
+  const showPasswordBtnEl = getRequiredElement("#show-password-btn", HTMLButtonElement);
+  const showPasswordIconEl = getRequiredElement("#show-password-icon", HTMLElement);
+  const hidePasswordIconEl = getRequiredElement("#hiden-password-icon", HTMLElement);
 
   let isLoading = false;
 
@@ -58,7 +67,7 @@ function init() {
          validationObj = validateConfirmPassword(inputValue, passwordValue);
         break;
         default:
-          return;
+          return null;
     }
 
     if(validationObj.isValid) {
@@ -66,6 +75,8 @@ function init() {
     } else {
       handleInvalidInput(inputEl, errorEl, validationObj.message ?? "Invalid format.");
     }
+
+    return validationObj;
   }
 
   function handleValidInput(inputEl:HTMLInputElement, errorEl:HTMLParagraphElement) {
@@ -164,21 +175,6 @@ function init() {
 
     if(isLoading) return;
 
-    const firstNameValue  = firstNameInputEl.value;
-    const lastNameValue = lastNameInputEl.value;
-    const emailValue = emailInputEl.value;
-    const phoneNumberValue = phoneNumberInputEl.value;
-    const passwordValue = passwordInputEl.value;
-    const confirmPasswordValue = confirmPasswordInputEl.value;
-
-    const firstNameValidation = validateFirstName(firstNameValue);
-    const lastNameValidation = validateLastName(lastNameValue);
-    const emailValidation = validateEmail(emailValue);
-    const phoneNumberValidation = validatePhoneNumber(phoneNumberValue);
-    const passwordValidation = validatePassword(passwordValue);
-    const confirmPasswordValidation = validateConfirmPassword(confirmPasswordValue, passwordValue);
-    const termsValueValidation = handleValidationCheckbox();
-
     const firstNameErrorEl = firstNameInputEl.closest(".form__row")?.querySelector(".form__error") as HTMLParagraphElement;
     const lastNameErrorEl = lastNameInputEl.closest(".form__row")?.querySelector(".form__error") as HTMLParagraphElement;
     const emailErrorEl = emailInputEl.closest(".form__row")?.querySelector(".form__error") as HTMLParagraphElement;
@@ -186,25 +182,27 @@ function init() {
     const passwordErrorEl = passwordInputEl.closest(".form__row")?.querySelector(".form__error") as HTMLParagraphElement;
     const confirmPasswordErrorEl = confirmPasswordInputEl.closest(".form__row")?.querySelector(".form__error") as HTMLParagraphElement;
 
-    if(
-      !firstNameValidation.isValid ||
-      !lastNameValidation.isValid ||
-      !emailValidation.isValid ||
-      !phoneNumberValidation.isValid ||
-      !passwordValidation.isValid ||
-      !confirmPasswordValidation.isValid ||
-      !termsValueValidation.isValid
-    ) {
-      handleValidationInput(firstNameInputEl, firstNameErrorEl);
-      handleValidationInput(lastNameInputEl, lastNameErrorEl);
-      handleValidationInput(emailInputEl, emailErrorEl);
-      handleValidationInput(phoneNumberInputEl, phoneNumberErrorEl);
-      handleValidationInput(passwordInputEl, passwordErrorEl);
-      handleValidationInput(confirmPasswordInputEl, confirmPasswordErrorEl);
-      return;
+    const isFormValid = [
+      handleValidationInput(firstNameInputEl, firstNameErrorEl)?.isValid,
+      handleValidationInput(lastNameInputEl, lastNameErrorEl)?.isValid,
+      handleValidationInput(emailInputEl, emailErrorEl)?.isValid,
+      handleValidationInput(phoneNumberInputEl, phoneNumberErrorEl)?.isValid,
+      handleValidationInput(passwordInputEl, passwordErrorEl)?.isValid,
+      handleValidationInput(confirmPasswordInputEl, confirmPasswordErrorEl)?.isValid,
+      handleValidationCheckbox().isValid,
+    ].every(Boolean);
+
+    if(!isFormValid) return;
+
+    const registerData = {
+      firstName: firstNameInputEl.value.trim(),
+      lastName: lastNameInputEl.value.trim(),
+      email: emailInputEl.value.trim().toLowerCase(),
+      phoneNumber: phoneNumberInputEl.value.trim(),
+      password: passwordInputEl.value,
     }
 
-    handleRequest();
+    handleRequest(registerData);
   }
 
   function handleLoading() {
@@ -212,16 +210,19 @@ function init() {
     submitBtnTextEl.classList.toggle("hidden", isLoading);
   }
 
-  async function handleRequest() {
+  async function handleRequest(registerData: RegisterData) {
   try {
       isLoading = true;
       submitBtnEl.disabled = true;
       toggleInputs();
       handleLoading();
-
-      await testPromise();
+      await registerUser(registerData);
     } catch (error) {
-      console.log("error");
+      if(error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("Unknown registration error: ", error);
+      }
     } finally {
       isLoading = false;
       submitBtnEl.disabled = false;
