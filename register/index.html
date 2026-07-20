@@ -14,7 +14,6 @@
   <link href="/src/styles/components/loader.css" rel="stylesheet" />
   <link href="/src/styles/pages/register.css" rel="stylesheet" />
 
-  <script src="/src/utils/helpers.ts" type="module" defer></script>
   <script src="/src/pages/register.ts" type="module" defer></script>
 
   <title>Infinity Finance - Register Page</title>
@@ -25,13 +24,13 @@
   <main>
     <div class="layout-wrapper grid-12 section-login">
       <section class="advertisement">
-        <img class="img-logo img-logo--adverisment" src="/icons/IFLogo.svg" alt="Infinity Finance - Logo" />
+        <img class="img-logo img-logo--adverisment" src="/icons/IFLogo.svg" alt="" />
 
         <hgroup>
-          <h1 class="advertisement__title">
+          <h2 class="advertisement__title">
             <span class="advertisement__title-part-one">Architecting Your</span>
             <span class="advertisement__title-part-two">Financial Future.</span>
-          </h1>
+          </h2>
           <p class="adverisement__subtitle">Join an elite ecosystem designed for
             institutional-grade stability with liquid
             frictionlessness.</p>
@@ -39,7 +38,7 @@
       </section>
 
       <section class="form-section form-container">
-        <img class="img-logo img-logo--form" src="/icons/IFLogo.svg" alt="Infinity Finance - Logo" />
+        <img class="img-logo img-logo--form" src="/icons/IFLogo.svg" alt="" />
 
         <div class="header">
           <hgroup>
@@ -48,77 +47,93 @@
           </hgroup>
         </div>
 
-        <form id="form" class="form" method="post">
+        <form id="form" class="form" method="post" novalidate>
           <div class="form__row">
             <label for="firstName" class="form__label">First Name</label>
-            <input id="firstName" name="firstName" class="form__input" type="text" placeholder="Jane" />
-            <p class="form__error"></p>
+            <input id="firstName" name="firstName" class="form__input" type="text" placeholder="Jane"
+              autocomplete="given-name" minlength="2" maxlength="50" pattern="[\p{L}\p{M}]+(?:[ '\-][\p{L}\p{M}]+)*"
+              aria-describedby="firstNameError" aria-invalid="false" required />
+            <p id="firstNameError" aria-live="polite" class="form__error"></p>
           </div>
 
           <div class="form__row">
             <label for="lastName" class="form__label">Last Name</label>
-            <input id="lastName" name="lastName" class="form__input" type="text" placeholder="Doe" />
-            <p class="form__error"></p>
+            <input id="lastName" name="lastName" class="form__input" type="text" placeholder="Doe"
+              autocomplete="family-name" minlength="2" maxlength="50" pattern="[\p{L}\p{M}]+(?:[ '\-][\p{L}\p{M}]+)*"
+              aria-describedby="lastNameError" aria-invalid="false" required />
+            <p id="lastNameError" aria-live="polite" class="form__error"></p>
           </div>
 
           <div class="form__row">
             <label for="email" class="form__label">Email Address</label>
             <input id="email" autocomplete="email" name="email" class="form__input" type="email"
-              placeholder="name@exmaple.com" />
-            <p class="form__error"></p>
+              placeholder="name@example.com" maxlength="254" pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}"
+              aria-describedby="emailError" aria-invalid="false" required />
+            <p id="emailError" aria-live="polite" class="form__error"></p>
           </div>
 
           <div class="form__row">
             <label for="phoneNumber" class="form__label">Phone Number</label>
-            <input id="phoneNumber" name="phoneNumber" class="form__input" type="tel" placeholder="+48123456789" />
-            <p class="form__error"></p>
+            <input id="phoneNumber" name="phoneNumber" class="form__input" type="tel" placeholder="+48123456789"
+              autocomplete="tel" inputmode="tel" maxlength="16" pattern="\+?[1-9][0-9]{7,14}" aria-invalid="false"
+              aria-describedby="phoneNumberError" required />
+            <p id="phoneNumberError" aria-live="polite" class="form__error"></p>
           </div>
 
           <div class="form__row">
             <label for="password" class="form__label">Password</label>
             <div class="form__row__input-box">
               <input id="password" name="password" autocomplete="new-password" data-type="password" class="form__input"
-                type="password" placeholder="********" />
+                type="password" placeholder="********" minlength="8" maxlength="64"
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9\s])\S{8,64}" aria-invalid="false"
+                aria-describedby="passwordError" required />
               <button id="show-password-btn" class="form__row_button_show-password" type="button"
-                aria-label="Show password">
+                aria-label="Show password" aria-controls="password confirmPassword">
                 <i id="show-password-icon" data-lucide="eye"></i>
                 <i id="hide-password-icon" data-lucide="eye-off" class="hidden"></i>
               </button>
             </div>
             <div class="password-progress">
-              <div id="passwordProgress" class="password-progress__wrapper">
+              <div aria-label="Password requirements progress" id="passwordProgress" class="password-progress__wrapper"
+                role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"
+                aria-valuetext="No password requirements met">
                 <span class="password-progress__line weak cover"></span>
                 <span class="password-progress__line medium cover"></span>
                 <span class="password-progress__line strong cover"></span>
                 <span class="password-progress__line perfect cover"></span>
               </div>
             </div>
-            <p class="form__error"></p>
+            <p id="passwordError" aria-live="polite" class="form__error"></p>
           </div>
 
           <div class="form__row">
             <label for="confirmPassword" class="form__label">Confirm Password</label>
             <input id="confirmPassword" data-type="password" autocomplete="new-password" name="confirmPassword"
-              class="form__input" type="password" placeholder="********" />
-            <p class="form__error"></p>
+              class="form__input" type="password" placeholder="********" aria-invalid="false"
+              aria-describedby="confirmPasswordError" required />
+            <p id="confirmPasswordError" aria-live="polite" class="form__error"></p>
           </div>
 
           <div class="form__row">
             <label for="terms" class="form__label--terms">
-              <input id="terms" name="terms" type="checkbox" class="form__input--checkbox" />
-              <p>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand how
-                Infinity handles my financial data</p>
+              <input aria-describedby="terms-error" aria-invalid="false" id="terms" name="terms" type="checkbox"
+                class="form__input--checkbox" required />
+              <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand how
+                Infinity handles my financial data</span>
             </label>
+            <p id="terms-error" class="form__error" aria-live="polite"></p>
           </div>
 
           <button id="register-btn" type="submit" class="btn btn--primary btn--big btn--form">
-            <span id="loader" class="dots dots--normal hidden"></span>
+            <span role="status" id="loader" class="dots dots--normal hidden">
+              <span class="sr-only">Creating your account...</span>
+            </span>
             <span id="register-btn-text">
               Sign Up
             </span>
           </button>
 
-          <p class="account-information">Already have an account? <a href="#">Log In</a></p>
+          <p class="account-information">Already have an account? <a href="/">Log In</a></p>
         </form>
       </section>
     </div>

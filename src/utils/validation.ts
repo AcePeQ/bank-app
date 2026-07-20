@@ -4,11 +4,11 @@ function validResult(strength?: number) {
   return {
     isValid: true,
     message: null,
-    strength: strength, 
+    strength: strength,
   }
 }
 
-function invalidResult(message:string, strength?: number) {
+function invalidResult(message: string, strength?: number) {
   return {
     isValid: false,
     message,
@@ -22,25 +22,25 @@ export type ValidationResult = {
   strength: number | undefined,
 }
 
-export function validateFirstName(value: string):ValidationResult {
+export function validateFirstName(value: string): ValidationResult {
   const normalizedValue = value.trim();
 
-  if(!normalizedValue) {
+  if (!normalizedValue) {
     return invalidResult("First name is required.")
   }
 
-  if(normalizedValue.length < 2 || normalizedValue.length > 50) {
+  if (normalizedValue.length < 2 || normalizedValue.length > 50) {
     return invalidResult("First name must contain 2 and 50 characters");
   }
 
-  if(!NAME_REGEX.test(normalizedValue)) {
+  if (!NAME_REGEX.test(normalizedValue)) {
     return invalidResult("First name may contain only letters, spaces, apostrophes and hyphens.")
   }
 
   return validResult();
 }
 
-export function validateLastName(value: string):ValidationResult {
+export function validateLastName(value: string): ValidationResult {
   const normalizedValue = value.trim();
 
   if (!normalizedValue) {
@@ -65,7 +65,7 @@ export function validateLastName(value: string):ValidationResult {
   return validResult();
 }
 
-export function validateEmail(value: string):ValidationResult {
+export function validateEmail(value: string): ValidationResult {
   const normalizedValue = value.trim();
 
   if (!normalizedValue) {
@@ -89,7 +89,7 @@ export function validateEmail(value: string):ValidationResult {
 
 export function validatePhoneNumber(
   value: string
-):ValidationResult {
+): ValidationResult {
   const normalizedValue = value.trim();
 
   if (!normalizedValue) {
@@ -98,7 +98,7 @@ export function validatePhoneNumber(
 
   if (!PHONE_REGEX.test(normalizedValue)) {
     return invalidResult(
-      "Enter the phone number in the format (555) 000-0000."
+      "Enter a valid phone number, for example +48123456789.",
     );
   }
 
@@ -107,9 +107,9 @@ export function validatePhoneNumber(
 
 export function validatePassword(
   value: string
-):ValidationResult {
+): ValidationResult {
   if (!value) {
-    return invalidResult("Password is required.", 1);
+    return invalidResult("Password is required.", 0);
   }
 
   if (value.length < 8) {
@@ -161,7 +161,7 @@ export function validatePassword(
 export function validateConfirmPassword(
   value: string,
   password: string
-):ValidationResult {
+): ValidationResult {
   if (!value) {
     return invalidResult(
       "Password confirmation is required."
@@ -177,7 +177,7 @@ export function validateConfirmPassword(
 
 export function validateTerms(
   isChecked: boolean
-):ValidationResult {
+): ValidationResult {
   if (!isChecked) {
     return invalidResult(
       "You must accept the Terms of Service and Privacy Policy."
