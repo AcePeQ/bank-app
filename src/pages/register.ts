@@ -186,30 +186,18 @@ function init() {
   }
 
   function toggleShowPassword() {
-    if (passwordInputEl.type === "password") {
-      passwordInputEl.type = "text";
-      confirmPasswordInputEl.type = "text";
+    const shouldShowPassword = passwordInputEl.type === "password";
 
-      showPasswordIconEl.classList.add("hidden");
-      hidePasswordIconEl.classList.remove("hidden");
+    passwordInputEl.type = shouldShowPassword ? "text" : "password";
+    confirmPasswordInputEl.type = shouldShowPassword ? "text" : "password";
 
-      showPasswordBtnEl.setAttribute(
-        "aria-label",
-        "Hide password",
-      );
-    } else {
-      passwordInputEl.type = "password";
-      confirmPasswordInputEl.type = "password";
-      showPasswordIconEl.setAttribute("data-lucide", "eye-off");
+    showPasswordIconEl.classList.toggle("hidden", shouldShowPassword);
+    hidePasswordIconEl.classList.toggle("hidden", !shouldShowPassword);
 
-      showPasswordIconEl.classList.remove("hidden");
-      hidePasswordIconEl.classList.add("hidden");
-
-      showPasswordBtnEl.setAttribute(
-        "aria-label",
-        "Show password",
-      );
-    }
+    showPasswordBtnEl.setAttribute(
+      "aria-label",
+      shouldShowPassword ? "Hide password" : "Show password",
+    );
   }
 
   async function handleRequest(registerData: RegisterData) {

@@ -28,6 +28,10 @@ function init() {
   const loaderEl = getRequiredElement("#loader", HTMLSpanElement);
   const loginBtnTextEl = getRequiredElement("#login-btn-text", HTMLSpanElement);
 
+  const showPasswordBtnEl = getRequiredElement(".button-show-password", HTMLButtonElement);
+  const showPasswordIconEl = getRequiredElement("#show-password-icon", Element);
+  const hidePasswordIconEl = getRequiredElement("#hide-password-icon", Element);
+
   let isLoading: boolean = false;
 
   function handleLoading() {
@@ -70,6 +74,20 @@ function init() {
     emailInputEl.disabled = isLoading;
     passwordInputEl.disabled = isLoading;
     rememberSessionEl.disabled = isLoading;
+  }
+
+  function toggleShowPassword() {
+    const shouldShowPassword = passwordInputEl.type === "password";
+
+    passwordInputEl.type = shouldShowPassword ? "text" : "password";
+
+    showPasswordIconEl.classList.toggle("hidden", shouldShowPassword);
+    hidePasswordIconEl.classList.toggle("hidden", !shouldShowPassword);
+
+    showPasswordBtnEl.setAttribute(
+      "aria-label",
+      shouldShowPassword ? "Hide password" : "Show password",
+    );
   }
 
   async function handleRequest(loginData: LoginData) {
@@ -121,6 +139,7 @@ function init() {
 
   emailInputEl.addEventListener("input", () => handleInputValidation(emailInputEl, emailInputErrorEl))
   passwordInputEl.addEventListener("input", () => handleInputValidation(passwordInputEl, passwordInputErrorEl))
+  showPasswordBtnEl.addEventListener("click", toggleShowPassword);
   formEl.addEventListener("submit", handleSubmit);
 }
 
