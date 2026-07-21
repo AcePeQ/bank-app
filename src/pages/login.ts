@@ -1,6 +1,7 @@
 import { createIcons, Eye, EyeOff } from "lucide";
 import { loginUser } from "../services/api";
 import { getRequiredElement } from "../utils/helpers";
+import { validateEmail } from "../utils/validation";
 
 export type LoginData = {
   email: string,
@@ -45,29 +46,33 @@ function init() {
   }
 
   function handleInputValidation(input: HTMLInputElement, errorEl: HTMLParagraphElement) {
-    const normalizedValue = input.value.trim();
-    const inputName = input.name;
+    const inputValue = input.value;
+    const inputId = input.id;
 
-    input.classList.remove("invalid")
-    errorEl.textContent = "";
-    input.setAttribute("aria-invalid", "false");
+    if (inputId === "email") {
+      const emailValidation = validateEmail(inputValue);
 
-    if (!normalizedValue) {
-      input.classList.add("invalid");
-      input.setAttribute("aria-invalid", "true");
+      errorEl.textContent = emailValidation.message ?? "";
+      input.classList.toggle("invalid", !emailValidation.isValid);
+      input.classList.toggle("valid", emailValidation.isValid);
+      input.setAttribute("aria-invalid", String(!emailValidation.isValid));
 
-      if (inputName === "email") {
-        errorEl.textContent = "Email Address is required."
-      }
-
-      if (inputName === "password") {
-        errorEl.textContent = "Password is required."
-      }
-
-      return false;
+      return emailValidation.isValid;
     }
 
-    return true;
+    if (inputId === "password") {
+      const normalizedPassword = inputValue.trim();
+      const isNotEmpty = normalizedPassword.length > 0;
+
+      errorEl.textContent = isNotEmpty ? "" : "Password is required.";
+      input.classList.toggle("invalid", !isNotEmpty);
+      input.classList.toggle("valid", isNotEmpty);
+      input.setAttribute("aria-invalid", String(!isNotEmpty));
+
+      return isNotEmpty;
+    }
+
+    return false;
   }
 
   function toggleInputs() {
