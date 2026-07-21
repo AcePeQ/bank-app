@@ -45,7 +45,7 @@
             </hgroup>
           </div>
 
-          <form id="form" class="form" method="get" novalidate>
+          <form id="form" class="form" method="POST" novalidate>
             <div class="form__row">
               <label for="email" class="form__label">Email Address</label>
               <input autocomplete="email" aria-describedby="emailError" id="email" name="email" class="form__input"
@@ -56,7 +56,7 @@
             <div class="form__row">
               <label for="password" class="form__label">Password</label>
               <div class="input-box">
-                <input autocomplete="new-password" aria-describedby="passwordError" id="password" name="password"
+                <input autocomplete="current-password" aria-describedby="passwordError" id="password" name="password"
                   class="form__input" type="password" aria-invalid="false" placeholder="********" required />
                 <button class="button-show-password" type="button" aria-label="Show password" aria-controls="password">
                   <i id="show-password-icon" data-lucide="eye"></i>
@@ -66,16 +66,16 @@
               <p id="passwordError" aria-live="polite" class="form__error"></p>
             </div>
 
-            <div class="form__row">
+            <div class="form__row margin-b-0">
               <label for="rememberSession" class="form__label--session">
                 <input id="rememberSession" type="checkbox" class="form__input--checkbox" />
-                <p>Remember me for 30 days</p>
+                <span>Remember me for 30 days</span>
               </label>
             </div>
 
             <button id="loginBtn" type="submit" class="btn btn--primary btn--big btn--form">
               <span role="status" id="loader" class="dots dots--normal hidden">
-                <span class="sr-only">Creating your account...</span>
+                <span class="sr-only">Logging in...</span>
               </span>
               <span id="login-btn-text">
                 Login to Dashboard

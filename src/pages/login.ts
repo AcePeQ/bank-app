@@ -5,6 +5,7 @@ import { getRequiredElement } from "../utils/helpers";
 export type LoginData = {
   email: string,
   password: string,
+  rememberSession: boolean,
 }
 
 function init() {
@@ -45,9 +46,11 @@ function init() {
 
     input.classList.remove("invalid")
     errorEl.textContent = "";
+    input.setAttribute("aria-invalid", "false");
 
     if (!normalizedValue) {
       input.classList.add("invalid");
+      input.setAttribute("aria-invalid", "true");
 
       if (inputName === "email") {
         errorEl.textContent = "Email Address is required."
@@ -95,6 +98,8 @@ function init() {
   function handleSubmit(event: Event) {
     event.preventDefault();
 
+    if (isLoading) return;
+
     const isFormValid = [
       handleInputValidation(emailInputEl, emailInputErrorEl),
       handleInputValidation(passwordInputEl, passwordInputErrorEl)
@@ -107,7 +112,8 @@ function init() {
 
     const loginData: LoginData = {
       email: emailInputEl.value.trim().toLowerCase(),
-      password: passwordInputEl.value.trim(),
+      password: passwordInputEl.value,
+      rememberSession: rememberSessionEl.checked,
     }
 
     handleRequest(loginData);
