@@ -14,7 +14,7 @@
   <link href="/src/styles/components/loader.css" rel="stylesheet" />
   <link href="/src/styles/pages/login.css" rel="stylesheet" />
 
-  <script src="/src/pages/login.ts" defer></script>
+  <script src="/src/pages/login.ts" defer type="module"></script>
 
   <title>Infinity Finance - Login Page</title>
 </head>
@@ -24,13 +24,13 @@
     <div class="layout-wrapper grid-12 section-login">
       <div class="login-box">
         <section class="banner">
-          <img class="img-logo img-logo--banner" src="/icons/IFLogo.svg" alt="Infinity Finance - Logo" />
+          <img class="img-logo img-logo--banner" src="/icons/IFLogo.svg" alt="" />
 
           <hgroup>
-            <h1 class="banner__title">
+            <h2 class="banner__title">
               <span class="banner__title-part-one">Master your</span>
               <span class="banner__title-part-two">financial flow.</span>
-            </h1>
+            </h2>
             <p class="banner__subtitle">Experience the next generation of wealth
               management with real-time analytics and
               institutional-grade security.</p>
@@ -45,21 +45,25 @@
             </hgroup>
           </div>
 
-          <form class="form" method="get">
+          <form id="form" class="form" method="get" novalidate>
             <div class="form__row">
               <label for="email" class="form__label">Email Address</label>
-              <input id="email" name="email" class="form__input" type="email" placeholder="name@exmaple.com" />
-              <p class="form__error"></p>
+              <input autocomplete="email" aria-describedby="emailError" id="email" name="email" class="form__input"
+                type="email" placeholder="name@example.com" aria-invalid="false" required />
+              <p id="emailError" aria-live="polite" class="form__error"></p>
             </div>
 
             <div class="form__row">
               <label for="password" class="form__label">Password</label>
-              <div class="form__row__input-box">
-                <input id="password" name="password" class="form__input" type="password" placeholder="********" />
-                <button class="form__row_button_show-password" type="button" aria-label="Show password">
-                  <i data-lucide="menu"></i>
+              <div class="input-box">
+                <input autocomplete="new-password" aria-describedby="passwordError" id="password" name="password"
+                  class="form__input" type="password" aria-invalid="false" placeholder="********" required />
+                <button class="button-show-password" type="button" aria-label="Show password" aria-controls="password">
+                  <i id="show-password-icon" data-lucide="eye"></i>
+                  <i id="hide-password-icon" data-lucide="eye-off" class="hidden"></i>
                 </button>
               </div>
+              <p id="passwordError" aria-live="polite" class="form__error"></p>
             </div>
 
             <div class="form__row">
@@ -69,11 +73,16 @@
               </label>
             </div>
 
-            <button class="btn btn--primary btn--big btn--form">
-              Login to Dashboard
+            <button id="loginBtn" type="submit" class="btn btn--primary btn--big btn--form">
+              <span role="status" id="loader" class="dots dots--normal hidden">
+                <span class="sr-only">Creating your account...</span>
+              </span>
+              <span id="login-btn-text">
+                Login to Dashboard
+              </span>
             </button>
 
-            <p class="account-information">Don't have an account? <a href="#">Sign Up</a></p>
+            <p class="account-information">Don't have an account? <a href="/register/">Sign Up</a></p>
           </form>
         </section>
       </div>

@@ -19,7 +19,7 @@ function init() {
     }
   })
 
-  const form = getRequiredElement("#form", HTMLFormElement);
+  const formEl = getRequiredElement("#form", HTMLFormElement);
   const firstNameInputEl = getRequiredElement("#firstName", HTMLInputElement);
   const lastNameInputEl = getRequiredElement("#lastName", HTMLInputElement);
   const emailInputEl = getRequiredElement("#email", HTMLInputElement);
@@ -137,7 +137,7 @@ function init() {
   }
 
   function focusFirstInvalidInput() {
-    const firstInvalidInput = form.querySelector<HTMLInputElement>(".invalid");
+    const firstInvalidInput = formEl.querySelector<HTMLInputElement>(".invalid");
     firstInvalidInput?.focus();
   }
 
@@ -168,6 +168,11 @@ function init() {
     for (let i = strength; i <= arrayLength - 1; i++) {
       passwordProgressChildren[i].classList.add("cover");
     }
+  }
+
+  function handleLoading() {
+    loaderEl.classList.toggle("hidden", !isLoading);
+    submitBtnTextEl.classList.toggle("hidden", isLoading);
   }
 
   function toggleInputs() {
@@ -204,6 +209,29 @@ function init() {
         "aria-label",
         "Show password",
       );
+    }
+  }
+
+  async function handleRequest(registerData: RegisterData) {
+    try {
+      isLoading = true;
+      submitBtnEl.disabled = true;
+      toggleInputs();
+      handleLoading();
+      formEl.setAttribute("aria-busy", "true");
+      await registerUser(registerData);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("Unknown registration error: ", error);
+      }
+    } finally {
+      isLoading = false;
+      submitBtnEl.disabled = false;
+      toggleInputs();
+      handleLoading();
+      formEl.setAttribute("aria-busy", "false");
     }
   }
 
@@ -246,38 +274,10 @@ function init() {
     handleRequest(registerData);
   }
 
-  function handleLoading() {
-    loaderEl.classList.toggle("hidden", !isLoading);
-    submitBtnTextEl.classList.toggle("hidden", isLoading);
-  }
-
-  async function handleRequest(registerData: RegisterData) {
-    try {
-      isLoading = true;
-      submitBtnEl.disabled = true;
-      toggleInputs();
-      handleLoading();
-      form.setAttribute("aria-busy", "true");
-      await registerUser(registerData);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      } else {
-        console.error("Unknown registration error: ", error);
-      }
-    } finally {
-      isLoading = false;
-      submitBtnEl.disabled = false;
-      toggleInputs();
-      handleLoading();
-      form.setAttribute("aria-busy", "false");
-    }
-  }
-
   termsCheckboxEl.addEventListener("change", handleValidationCheckbox);
   showPasswordBtnEl.addEventListener("click", toggleShowPassword);
-  form.addEventListener("submit", handleSubmit);
-  form.addEventListener("input", handleInput);
+  formEl.addEventListener("submit", handleSubmit);
+  formEl.addEventListener("input", handleInput);
 };
 
 init();
