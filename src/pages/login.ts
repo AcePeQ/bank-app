@@ -39,21 +39,28 @@ function init() {
     firstInvalidInput?.focus();
   }
 
-  function handleSubmitValidation() {
-    const normalizedEmailValue = emailInputEl.value.trim().toLowerCase();
-    const normalizedPasswordValue = passwordInputEl.value.trim();
+  function handleInputValidation(input: HTMLInputElement, errorEl: HTMLParagraphElement) {
+    const normalizedValue = input.value.trim();
+    const inputName = input.name;
 
-    if (!normalizedEmailValue) {
-      emailInputErrorEl.textContent = "Email Address is required."
-      emailInputEl.classList.add("invalid");
+    input.classList.remove("invalid")
+    errorEl.textContent = "";
+
+    if (!normalizedValue) {
+      input.classList.add("invalid");
+
+      if (inputName === "email") {
+        errorEl.textContent = "Email Address is required."
+      }
+
+      if (inputName === "password") {
+        errorEl.textContent = "Password is required."
+      }
+
+      return false;
     }
 
-    if (!normalizedPasswordValue) {
-      passwordInputErrorEl.textContent = "Password is required."
-      passwordInputEl.classList.add("invalid");
-    }
-
-    return normalizedEmailValue && normalizedPasswordValue;
+    return true;
   }
 
   function toggleInputs() {
@@ -88,7 +95,10 @@ function init() {
   function handleSubmit(event: Event) {
     event.preventDefault();
 
-    const isFormValid = handleSubmitValidation();
+    const isFormValid = [
+      handleInputValidation(emailInputEl, emailInputErrorEl),
+      handleInputValidation(passwordInputEl, passwordInputErrorEl)
+    ].every(Boolean);
 
     if (!isFormValid) {
       focusFirstInvalidInput();
@@ -103,6 +113,8 @@ function init() {
     handleRequest(loginData);
   }
 
+  emailInputEl.addEventListener("input", () => handleInputValidation(emailInputEl, emailInputErrorEl))
+  passwordInputEl.addEventListener("input", () => handleInputValidation(passwordInputEl, passwordInputErrorEl))
   formEl.addEventListener("submit", handleSubmit);
 }
 
