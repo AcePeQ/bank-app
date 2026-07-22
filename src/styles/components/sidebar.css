@@ -1,0 +1,107 @@
+.sidebar {
+  background-color: var(--clr-surface-100);
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
+
+  padding: var(--space-s) var(--space-m);
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.navigation__link {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: var(--fs-100);
+  font-weight: var(--fw-500);
+  border-radius: 6px;
+
+  color: var(--clr-secondary-700);
+  background-color: transparent;
+
+  padding: var(--space-2xs);
+
+  text-transform: uppercase;
+  letter-spacing: 1.1px;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.navigation__link.active {
+  color: var(--clr-surface-100);
+  background-color: var(--clr-primary-400);
+}
+
+.navigation__link svg {
+  max-width: 18px;
+  stroke-width: 2.25px;
+
+  color: var(--clr-secondary-700);
+
+  transition: all 0.3s ease-in-out;
+}
+
+.navigation__link.active svg {
+  color: var(--clr-surface-100);
+}
+
+.navigation__link:hover svg {
+  color: var(--clr-primary-400);
+}
+
+.navigation__link.active:hover svg {
+  color: var(--clr-surface-100);
+}
+
+.navigation__link:hover {
+  color: var(--clr-primary-400);
+  background-color: var(--clr-surface-300);
+}
+
+.navigation__link.active:hover {
+  color: var(--clr-surface-100) !important;
+  background-color: var(--clr-primary-400) !important;
+}
+
+.navigation__link:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.navigation__link:disabled svg {
+  color: var(--clr-secondary-400);
+}
+
+.navigation__link:disabled:hover svg {
+  color: var(--clr-secondary-400);
+}
+
+.navigation__link:disabled:hover {
+  color: var(--clr-secondary-400);
+}
+
+.navigation__link:disabled.active {
+  color: var(--clr-secondary-400);
+}
+
+.navigation__link:disabled.active svg {
+  color: var(--clr-secondary-400);
+}
+
+.navigation__link:focus-visible {
+  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+  background-color: var(--clr-surface-300);
+}
+
+.navigation__link:disabled:focus-visible {
+  box-shadow: none;
+}

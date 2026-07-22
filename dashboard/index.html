@@ -10,6 +10,7 @@
   <link href="/src/styles/base.css" rel="stylesheet" />
   <link href="/src/styles/layout.css" rel="stylesheet" />
   <link href="/src/styles/components/header.css" rel="stylesheet" />
+  <link href="/src/styles/components/sidebar.css" rel="stylesheet" />
   <link href="/src/styles/components/buttons.css" rel="stylesheet" />
   <link href="/src/styles/components/loader.css" rel="stylesheet" />
   <link href="/src/styles/pages/dashboard.css" rel="stylesheet" />
@@ -20,25 +21,55 @@
 </head>
 
 <body>
-  <header class="header">
-    <a class="logo-wrapper">
-      <img class="logo-image" src="/icons/IFLogo.svg" />
-    </a>
-    <div class="input-box">
-      <input id="search" type="text" name="search" class="input-search" placeholder="Search accounts or assets..." />
-    </div>
-    <div class="actions">
-      <button id="notifications-btn" class="notifications">
-        <i data-lucide="bell"></i>
-        <span id="notifications-count" class="notifications__count">99</span>
-      </button>
+  <div class="base-layout grid-12">
+    <header class="header">
+      <a href="/dashboard/" class="logo-wrapper">
+        <img class="logo-image" src="/icons/IFLogo.svg" alt="" />
+      </a>
+      <div class="input-box">
+        <button role="search" aria-label="Search accounts or assets" class="search-btn">
+          <i data-lucide="search"></i>
+        </button>
+        <input id="search" type="text" name="search" class="input-search" placeholder="Search accounts or assets..." />
+      </div>
+      <div class="actions">
+        <button id="notifications-btn" class="notifications">
+          <i data-lucide="bell"></i>
+          <span class="sr-only">Notifications:</span>
+          <span id="notifications-count" class="notifications__count">99</span>
+        </button>
 
-      <div class="avatar" aria-hidden="true">M.N</div>
-    </div>
-  </header>
-  <aside class="aside"></aside>
-  <main class="main"></main>
-  <footer class="footer"></footer>
+        <div class="avatar" aria-hidden="true">M.N</div>
+      </div>
+    </header>
+    <aside class="sidebar">
+      <a href="/dashboard/" class="logo-wrapper--aside hidden">
+        <img class="logo-image--aside" src="/icons/IFLogo.svg" alt="" />
+      </a>
+      <nav class="navigation">
+        <a class="navigation__link active">
+          <i data-lucide="house"></i>
+          Home
+        </a>
+
+        <a class="navigation__link">
+          <i data-lucide="credit-card"></i>
+          Cards
+        </a>
+
+        <a class="navigation__link">
+          <i data-lucide="repeat"></i>
+          Transfers
+        </a>
+
+        <a class="navigation__link">
+          <i data-lucide="settings"></i>
+          Settings
+        </a>
+      </nav>
+    </aside>
+    <main class="main"></main>
+  </div>
 </body>
 
 </html>

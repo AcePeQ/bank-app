@@ -3,6 +3,32 @@
   margin-inline: auto;
 }
 
+.header {
+  grid-area: header;
+}
+
+.main {
+  grid-area: content;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.base-layout {
+  display: grid;
+  grid-template-areas:
+    "header header header header header header header header header header header header"
+    "content content content content content content content content content content content content"
+    "sidebar sidebar sidebar sidebar sidebar sidebar sidebar sidebar sidebar sidebar sidebar sidebar"
+  ;
+
+  grid-template-rows: max-content 1fr max-content;
+
+  max-block-size: 100dvb;
+  min-block-size: 100dvb;
+}
+
 .grid-12 {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
