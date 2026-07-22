@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/src/styles/reset.css" rel="stylesheet" />
+  <link href="/src/styles/main.css" rel="stylesheet" />
+  <link href="/src/styles/base.css" rel="stylesheet" />
+  <link href="/src/styles/layout.css" rel="stylesheet" />
+  <link href="/src/styles/components/header.css" rel="stylesheet" />
+  <link href="/src/styles/components/buttons.css" rel="stylesheet" />
+  <link href="/src/styles/components/loader.css" rel="stylesheet" />
+  <link href="/src/styles/pages/dashboard.css" rel="stylesheet" />
+
+  <script src="/src/pages/dashboard.ts" defer type="module"></script>
+
+  <title>Dashboard</title>
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo-wrapper">
+      <img class="logo-image" src="/icons/IFLogo.svg" />
+    </a>
+    <div class="input-box">
+      <input id="search" type="text" name="search" class="input-search" placeholder="Search accounts or assets..." />
+    </div>
+    <div class="actions">
+      <button id="notifications-btn" class="notifications">
+        <i data-lucide="bell"></i>
+        <span id="notifications-count" class="notifications__count">99</span>
+      </button>
+
+      <div class="avatar" aria-hidden="true">M.N</div>
+    </div>
+  </header>
+  <aside class="aside"></aside>
+  <main class="main"></main>
+  <footer class="footer"></footer>
+</body>
+
+</html>
