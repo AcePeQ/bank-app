@@ -10,6 +10,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+
+  @media (width >=450px) {
+    gap: 1.5rem;
+  }
 }
 
 .navigation__link {
@@ -32,6 +36,8 @@
 
   text-transform: uppercase;
   letter-spacing: 1.1px;
+
+  flex: 1;
 
   transition: all 0.3s ease-in-out;
 }
