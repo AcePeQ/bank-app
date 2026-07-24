@@ -14,7 +14,7 @@
   <link href="/src/styles/components/loader.css" rel="stylesheet" />
   <link href="/src/styles/pages/login.css" rel="stylesheet" />
 
-  <script src="/src/pages/login.ts" defer type="module"></script>
+  <script src="/src/pages/login.ts" type="module" defer></script>
 
   <title>Infinity Finance - Login Page</title>
 </head>
@@ -45,11 +45,12 @@
             </hgroup>
           </div>
 
-          <form id="form" class="form" method="POST" novalidate aria-describedby="formError">
+          <form id="form" class="form" method="post" novalidate aria-describedby="formError">
             <div class="form__row">
               <label for="email" class="form__label">Email Address</label>
               <input autocomplete="email" aria-describedby="emailError" id="email" name="email" class="form__input"
-                type="email" placeholder="name@example.com" aria-invalid="false" required />
+                type="email" placeholder="name@example.com" aria-invalid="false" required maxlength="254"
+                pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" />
               <p id="emailError" aria-live="polite" class="form__error"></p>
             </div>
 
@@ -70,7 +71,7 @@
 
             <div class="form__row margin-b-0">
               <label for="rememberSession" class="form__label--session">
-                <input id="rememberSession" type="checkbox" class="form__input--checkbox" />
+                <input id="rememberSession" name="rememberSession" type="checkbox" class="form__input--checkbox" />
                 <span>Remember me for 30 days</span>
               </label>
             </div>
