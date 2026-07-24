@@ -6,6 +6,8 @@ import type { RegisterData } from "../types/auth";
 import { registerUser } from "../services/auth";
 
 function init() {
+
+
   createIcons({
     icons: {
       Eye,
@@ -34,36 +36,53 @@ function init() {
 
   let isLoading = false;
 
+  const validators = {
+    firstName: validateFirstName,
+    lastName: validateLastName,
+    email: validateEmail,
+    phoneNumber: validatePhoneNumber,
+  };
+
+  type ValidatorName = keyof typeof validators;
+
+  function isValidatorName(name: string): name is ValidatorName {
+    return name in validators;
+  }
+
   function handleValidationInput(inputEl: HTMLInputElement, errorEl: HTMLParagraphElement) {
     const name = inputEl.getAttribute("name");
+    if (!name) return;
 
     const inputValue = inputEl.value;
-    let validationObj: ValidationResult;
 
-    switch (name) {
-      case "firstName":
-        validationObj = validateFirstName(inputValue);
-        break;
-      case "lastName":
-        validationObj = validateLastName(inputValue);
-        break;
-      case "email":
-        validationObj = validateEmail(inputValue);
-        break;
-      case "phoneNumber":
-        validationObj = validatePhoneNumber(inputValue);
-        break;
-      case "password":
-        validationObj = validatePassword(inputValue);
-        handlePasswordStrength(validationObj.strength ?? 0)
-        break;
-      case "confirmPassword":
-        const passwordValue = passwordInputEl.value;
-        validationObj = validateConfirmPassword(inputValue, passwordValue);
-        break;
-      default:
-        return null;
-    }
+    if (!isValidatorName(name)) return;
+
+    const validationObj = validators[name](inputValue);
+
+    // switch (name) {
+    //   case "firstName":
+    //     validationObj = validateFirstName(inputValue);
+    //     break;
+    //   case "lastName":
+    //     validationObj = validateLastName(inputValue);
+    //     break;
+    //   case "email":
+    //     validationObj = validateEmail(inputValue);
+    //     break;
+    //   case "phoneNumber":
+    //     validationObj = validatePhoneNumber(inputValue);
+    //     break;
+    //   case "password":
+    //     validationObj = validatePassword(inputValue);
+    //     handlePasswordStrength(validationObj.strength ?? 0)
+    //     break;
+    //   case "confirmPassword":
+    //     const passwordValue = passwordInputEl.value;
+    //     validationObj = validateConfirmPassword(inputValue, passwordValue);
+    //     break;
+    //   default:
+    //     return null;
+    // }
 
     if (validationObj.isValid) {
       handleValidInput(inputEl, errorEl);
@@ -98,7 +117,6 @@ function init() {
     if (!(event.target instanceof HTMLInputElement)) return;
 
     const target = event.target;
-    if (!target) return;
 
     const inputRowEl = target.closest<HTMLDivElement>(".form__row");
     if (!inputRowEl) return;
@@ -107,13 +125,6 @@ function init() {
 
     if (!errorEl) return;
 
-    const shouldRevalidateConfirmation = target === passwordInputEl && confirmPasswordInputEl.value.length > 0;
-
-    if (shouldRevalidateConfirmation) {
-      const confirmPasswordErrorEl = getErrorElement(confirmPasswordInputEl);
-      handleValidationInput(confirmPasswordInputEl, confirmPasswordErrorEl);
-    }
-
     const shouldClearFormError = formErrorEl.classList.contains("hidden");
 
     if (!shouldClearFormError) {
@@ -121,6 +132,13 @@ function init() {
     }
 
     handleValidationInput(target, errorEl)
+
+    const shouldRevalidateConfirmation = target === passwordInputEl && confirmPasswordInputEl.value.length > 0;
+
+    if (shouldRevalidateConfirmation) {
+      const confirmPasswordErrorEl = getErrorElement(confirmPasswordInputEl);
+      handleValidationInput(confirmPasswordInputEl, confirmPasswordErrorEl);
+    }
   }
 
 
@@ -199,6 +217,7 @@ function init() {
     passwordInputEl.disabled = isLoading;
     confirmPasswordInputEl.disabled = isLoading;
     termsCheckboxEl.disabled = isLoading;
+    showPasswordBtnEl.disabled = isLoading;
   }
 
   function toggleShowPassword() {

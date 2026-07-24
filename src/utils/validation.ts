@@ -19,8 +19,9 @@ function invalidResult(message: string, strength?: number) {
 export type ValidationResult = {
   isValid: boolean,
   message: string | null
-  strength: number | undefined,
+  strength?: number,
 }
+
 
 function validateName(value: string, fieldLabel: string) {
   const normalizedValue = value.trim();
