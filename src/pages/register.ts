@@ -6,8 +6,6 @@ import type { RegisterData } from "../types/auth";
 import { registerUser } from "../services/auth";
 
 function init() {
-
-
   createIcons({
     icons: {
       Eye,
@@ -41,12 +39,26 @@ function init() {
     lastName: validateLastName,
     email: validateEmail,
     phoneNumber: validatePhoneNumber,
+    password: handlePasswordValidation,
+    confirmPassword: handleConfirmPasswordValidation,
   };
 
   type ValidatorName = keyof typeof validators;
 
   function isValidatorName(name: string): name is ValidatorName {
     return name in validators;
+  }
+
+  function handlePasswordValidation(value: string): ValidationResult {
+    const validationObj = validatePassword(value);
+    handlePasswordStrength(validationObj.strength ?? 0)
+    return validationObj;
+  }
+
+  function handleConfirmPasswordValidation(value: string): ValidationResult {
+    const passwordValue = passwordInputEl.value;
+    const validationObj = validateConfirmPassword(value, passwordValue);
+    return validationObj;
   }
 
   function handleValidationInput(inputEl: HTMLInputElement, errorEl: HTMLParagraphElement) {
@@ -58,31 +70,6 @@ function init() {
     if (!isValidatorName(name)) return;
 
     const validationObj = validators[name](inputValue);
-
-    // switch (name) {
-    //   case "firstName":
-    //     validationObj = validateFirstName(inputValue);
-    //     break;
-    //   case "lastName":
-    //     validationObj = validateLastName(inputValue);
-    //     break;
-    //   case "email":
-    //     validationObj = validateEmail(inputValue);
-    //     break;
-    //   case "phoneNumber":
-    //     validationObj = validatePhoneNumber(inputValue);
-    //     break;
-    //   case "password":
-    //     validationObj = validatePassword(inputValue);
-    //     handlePasswordStrength(validationObj.strength ?? 0)
-    //     break;
-    //   case "confirmPassword":
-    //     const passwordValue = passwordInputEl.value;
-    //     validationObj = validateConfirmPassword(inputValue, passwordValue);
-    //     break;
-    //   default:
-    //     return null;
-    // }
 
     if (validationObj.isValid) {
       handleValidInput(inputEl, errorEl);
@@ -305,5 +292,4 @@ function init() {
   formEl.addEventListener("submit", handleSubmit);
   formEl.addEventListener("input", handleInput);
 };
-
 init();
