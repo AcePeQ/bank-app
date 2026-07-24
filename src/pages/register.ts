@@ -112,9 +112,9 @@ function init() {
 
     if (!errorEl) return;
 
-    const shouldClearFormError = formErrorEl.classList.contains("hidden");
+    const shouldClearFormError = !formErrorEl.classList.contains("hidden");
 
-    if (!shouldClearFormError) {
+    if (shouldClearFormError) {
       clearFormError();
     }
 
@@ -236,7 +236,7 @@ function init() {
         console.error(error.message);
         showFormError(error.message)
       } else {
-        console.error("Unknown registration error occurred!");
+        console.error("Unknown registration error occurred!", error);
         showFormError("Unknown registration error occurred!")
       }
 

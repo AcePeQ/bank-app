@@ -1,6 +1,6 @@
 import { createIcons, Eye, EyeOff } from "lucide";
 import { getRequiredElement } from "../utils/helpers";
-import { validateEmail } from "../utils/validation";
+import { validateEmail, type ValidationResult } from "../utils/validation";
 import { loginUser } from "../services/auth";
 import type { LoginData } from "../types/auth";
 
@@ -13,6 +13,7 @@ function init() {
   })
 
   const formEl = getRequiredElement("#form", HTMLFormElement);
+  const formErrorEl = getRequiredElement("#formError", HTMLParagraphElement);
   const loginBtn = getRequiredElement("#loginBtn", HTMLButtonElement);
   const emailInputEl = getRequiredElement("#email", HTMLInputElement);
   const passwordInputEl = getRequiredElement("#password", HTMLInputElement);
@@ -22,13 +23,24 @@ function init() {
   const passwordInputErrorEl = getRequiredElement("#passwordError", HTMLParagraphElement);
 
   const loaderEl = getRequiredElement("#loader", HTMLSpanElement);
-  const loginBtnTextEl = getRequiredElement("#login-btn-text", HTMLSpanElement);
+  const loginBtnTextEl = getRequiredElement("#loginBtnText", HTMLSpanElement);
 
-  const showPasswordBtnEl = getRequiredElement(".button-show-password", HTMLButtonElement);
-  const showPasswordIconEl = getRequiredElement("#show-password-icon", Element);
-  const hidePasswordIconEl = getRequiredElement("#hide-password-icon", Element);
+  const showPasswordBtnEl = getRequiredElement("#buttonShowPassword", HTMLButtonElement);
+  const showPasswordIconEl = getRequiredElement("#showPasswordIcon", Element);
+  const hidePasswordIconEl = getRequiredElement("#hidePasswordIcon", Element);
 
   let isLoading: boolean = false;
+
+  const validators = {
+    email: handleEmailValidation,
+    password: handlePasswordValidation,
+  }
+
+  type ValidatorId = keyof typeof validators;
+
+  function isValidatorId(id: string): id is ValidatorId {
+    return id in validators;
+  }
 
   function handleLoading() {
     loaderEl.classList.toggle("hidden", !isLoading);
@@ -40,34 +52,72 @@ function init() {
     firstInvalidInput?.focus();
   }
 
+  function handleEmailValidation(value: string): ValidationResult {
+    return validateEmail(value);
+  }
+
+  function handlePasswordValidation(value: string): ValidationResult {
+    const normalizedPassword = value.trim();
+    const isValid = normalizedPassword.length > 0;
+
+    return {
+      isValid,
+      message: isValid ? "" : "Password is required."
+    };
+  }
+
+  function handleValidInput(inputEl: HTMLInputElement, errorEl: HTMLParagraphElement) {
+    errorEl.textContent = "";
+    errorEl.classList.add("hidden");
+
+    inputEl.classList.remove("invalid");
+    inputEl.classList.add("valid");
+
+    inputEl.setAttribute("aria-invalid", "false");
+  }
+
+  function handleInvalidInput(inputEl: HTMLInputElement, errorEl: HTMLParagraphElement, message: string) {
+    errorEl.textContent = message;
+    errorEl.classList.remove("hidden");
+
+    inputEl.classList.remove("valid");
+    inputEl.classList.add("invalid");
+
+    inputEl.setAttribute("aria-invalid", "true");
+  }
+
+  function showFormError(message: string) {
+    formErrorEl.textContent = message;
+    formErrorEl.classList.remove("hidden");
+  }
+
+  function clearFormError() {
+    formErrorEl.textContent = "";
+    formErrorEl.classList.remove("hidden");
+  }
+
   function handleInputValidation(input: HTMLInputElement, errorEl: HTMLParagraphElement) {
-    const inputValue = input.value;
+    const shouldClearFormError = !formErrorEl.classList.contains("hidden");
+
+    if (shouldClearFormError) {
+      clearFormError();
+    }
+
     const inputId = input.id;
 
-    if (inputId === "email") {
-      const emailValidation = validateEmail(inputValue);
+    if (!inputId) return;
 
-      errorEl.textContent = emailValidation.message ?? "";
-      input.classList.toggle("invalid", !emailValidation.isValid);
-      input.classList.toggle("valid", emailValidation.isValid);
-      input.setAttribute("aria-invalid", String(!emailValidation.isValid));
+    const inputValue = input.value;
 
-      return emailValidation.isValid;
+    if (!isValidatorId(inputId)) return;
+
+    const validationObj = validators[inputId](inputValue);
+
+    if (validationObj.isValid) {
+      handleValidInput(input, errorEl);
+    } else {
+      handleInvalidInput(input, errorEl, validationObj.message ?? "Invalid format.");
     }
-
-    if (inputId === "password") {
-      const normalizedPassword = inputValue.trim();
-      const isNotEmpty = normalizedPassword.length > 0;
-
-      errorEl.textContent = isNotEmpty ? "" : "Password is required.";
-      input.classList.toggle("invalid", !isNotEmpty);
-      input.classList.toggle("valid", isNotEmpty);
-      input.setAttribute("aria-invalid", String(!isNotEmpty));
-
-      return isNotEmpty;
-    }
-
-    return false;
   }
 
   function toggleInputs() {
@@ -92,6 +142,7 @@ function init() {
 
   async function handleRequest(loginData: LoginData) {
     try {
+      clearFormError();
       isLoading = true;
       loginBtn.disabled = true;
       toggleInputs();
@@ -101,8 +152,10 @@ function init() {
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
+        showFormError(error.message);
       } else {
-        console.error("Unknown login error: ", error);
+        console.error("Unknown registration error occurred!", error);
+        showFormError("Unknown registration error occurred!")
       }
     } finally {
       isLoading = false;

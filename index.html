@@ -45,7 +45,7 @@
             </hgroup>
           </div>
 
-          <form id="form" class="form" method="POST" novalidate>
+          <form id="form" class="form" method="POST" novalidate aria-describedby="formError">
             <div class="form__row">
               <label for="email" class="form__label">Email Address</label>
               <input autocomplete="email" aria-describedby="emailError" id="email" name="email" class="form__input"
@@ -59,9 +59,10 @@
                 <input autocomplete="current-password" data-type="password" aria-describedby="passwordError"
                   id="password" name="password" class="form__input" type="password" aria-invalid="false"
                   placeholder="********" required />
-                <button class="button-show-password" type="button" aria-label="Show password" aria-controls="password">
-                  <i id="show-password-icon" data-lucide="eye"></i>
-                  <i id="hide-password-icon" data-lucide="eye-off" class="hidden"></i>
+                <button id="buttonShowPassword" class="button-show-password" type="button" aria-label="Show password"
+                  aria-controls="password">
+                  <i id="showPasswordIcon" data-lucide="eye"></i>
+                  <i id="hidePasswordIcon" data-lucide="eye-off" class="hidden"></i>
                 </button>
               </div>
               <p id="passwordError" aria-live="polite" class="form__error"></p>
@@ -74,11 +75,13 @@
               </label>
             </div>
 
+            <p id="formError" aria-live="polite" class="form__error hidden"></p>
+
             <button id="loginBtn" type="submit" class="btn btn--primary btn--big btn--form">
               <span role="status" id="loader" class="dots dots--normal hidden">
                 <span class="sr-only">Logging in...</span>
               </span>
-              <span id="login-btn-text">
+              <span id="loginBtnText">
                 Login to Dashboard
               </span>
             </button>
