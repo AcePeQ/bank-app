@@ -29,10 +29,10 @@ function init() {
   const showPasswordIconEl = getRequiredElement("#showPasswordIcon", Element);
   const hidePasswordIconEl = getRequiredElement("#hidePasswordIcon", Element);
 
-  let isLoading: boolean = false;
+  let isLoading = false;
 
   const validators = {
-    email: handleEmailValidation,
+    email: validateEmail,
     password: handlePasswordValidation,
   }
 
@@ -52,13 +52,8 @@ function init() {
     firstInvalidInput?.focus();
   }
 
-  function handleEmailValidation(value: string): ValidationResult {
-    return validateEmail(value);
-  }
-
   function handlePasswordValidation(value: string): ValidationResult {
-    const normalizedPassword = value.trim();
-    const isValid = normalizedPassword.length > 0;
+    const isValid = value.length > 0;
 
     return {
       isValid,
@@ -93,10 +88,10 @@ function init() {
 
   function clearFormError() {
     formErrorEl.textContent = "";
-    formErrorEl.classList.remove("hidden");
+    formErrorEl.classList.add("hidden");
   }
 
-  function handleInputValidation(input: HTMLInputElement, errorEl: HTMLParagraphElement) {
+  function handleInputValidation(input: HTMLInputElement, errorEl: HTMLParagraphElement): boolean {
     const shouldClearFormError = !formErrorEl.classList.contains("hidden");
 
     if (shouldClearFormError) {
@@ -105,11 +100,11 @@ function init() {
 
     const inputId = input.id;
 
-    if (!inputId) return;
+    if (!inputId) return false;
 
     const inputValue = input.value;
 
-    if (!isValidatorId(inputId)) return;
+    if (!isValidatorId(inputId)) return false;
 
     const validationObj = validators[inputId](inputValue);
 
@@ -118,12 +113,15 @@ function init() {
     } else {
       handleInvalidInput(input, errorEl, validationObj.message ?? "Invalid format.");
     }
+
+    return validationObj.isValid;
   }
 
   function toggleInputs() {
     emailInputEl.disabled = isLoading;
     passwordInputEl.disabled = isLoading;
     rememberSessionEl.disabled = isLoading;
+    showPasswordBtnEl.disabled = isLoading;
   }
 
   function toggleShowPassword() {
@@ -154,8 +152,8 @@ function init() {
         console.error(error.message);
         showFormError(error.message);
       } else {
-        console.error("Unknown registration error occurred!", error);
-        showFormError("Unknown registration error occurred!")
+        console.error("Unknown login error occurred!", error);
+        showFormError("Unknown login error occurred!")
       }
     } finally {
       isLoading = false;

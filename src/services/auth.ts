@@ -1,6 +1,6 @@
-import type { LoginData, LoginResponse, RegisterData } from "../types/auth";
+import type { LoginData, LoginResponse, RegisterData, RegisterResponse } from "../types/auth";
 
-export async function registerUser(registerData: RegisterData): Promise<RegisterData> {
+export async function registerUser(registerData: RegisterData): Promise<RegisterResponse> {
   const res = await fetch("/api/register", {
     method: "POST",
     headers: {
