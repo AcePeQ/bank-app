@@ -28,3 +28,29 @@ export function getErrorElement(
 
   return errorElement;
 }
+
+export function mapStrengthValue(strength: number) {
+  let mappedStrength;
+
+  switch (strength) {
+    case 0:
+      mappedStrength = "very weak"
+      break;
+    case 1:
+      mappedStrength = "weak"
+      break;
+    case 2:
+      mappedStrength = "medium"
+      break;
+    case 3:
+      mappedStrength = "strong"
+      break;
+    case 4:
+      mappedStrength = "valid"
+      break;
+    default:
+      mappedStrength = "invlaid"
+  }
+
+  return mappedStrength;
+}

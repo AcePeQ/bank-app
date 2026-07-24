@@ -22,48 +22,27 @@ export type ValidationResult = {
   strength: number | undefined,
 }
 
-export function validateFirstName(value: string): ValidationResult {
+function validateName(value: string, fieldLabel: string) {
   const normalizedValue = value.trim();
 
   if (!normalizedValue) {
-    return invalidResult("First name is required.")
+    return invalidResult(`${fieldLabel} is required.`)
   }
 
   if (normalizedValue.length < 2 || normalizedValue.length > 50) {
-    return invalidResult("First name must contain 2 and 50 characters");
+    return invalidResult(`${fieldLabel} must contain 2 and 50 characters`);
   }
 
   if (!NAME_REGEX.test(normalizedValue)) {
-    return invalidResult("First name may contain only letters, spaces, apostrophes and hyphens.")
+    return invalidResult(`${fieldLabel} may contain only letters, spaces, apostrophes and hyphens.`)
   }
 
   return validResult();
 }
 
-export function validateLastName(value: string): ValidationResult {
-  const normalizedValue = value.trim();
+export const validateFirstName = (value: string) => validateName(value, "First name")
 
-  if (!normalizedValue) {
-    return invalidResult("Last name is required.");
-  }
-
-  if (
-    normalizedValue.length < 2 ||
-    normalizedValue.length > 50
-  ) {
-    return invalidResult(
-      "Last name must contain between 2 and 50 characters."
-    );
-  }
-
-  if (!NAME_REGEX.test(normalizedValue)) {
-    return invalidResult(
-      "Last name may contain only letters, spaces, apostrophes and hyphens."
-    );
-  }
-
-  return validResult();
-}
+export const validateLastName = (value: string) => validateName(value, "Last name")
 
 export function validateEmail(value: string): ValidationResult {
   const normalizedValue = value.trim();

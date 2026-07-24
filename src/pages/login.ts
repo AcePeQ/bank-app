@@ -1,13 +1,8 @@
 import { createIcons, Eye, EyeOff } from "lucide";
-import { loginUser } from "../services/api";
 import { getRequiredElement } from "../utils/helpers";
 import { validateEmail } from "../utils/validation";
-
-export type LoginData = {
-  email: string,
-  password: string,
-  rememberSession: boolean,
-}
+import { loginUser } from "../services/auth";
+import type { LoginData } from "../types/auth";
 
 function init() {
   createIcons({

@@ -1,15 +1,9 @@
 import { createIcons, Eye, EyeOff } from "lucide";
 import { validateConfirmPassword, validateEmail, validateFirstName, validateLastName, validatePassword, validatePhoneNumber, validateTerms, type ValidationResult } from "../utils/validation";
-import { registerUser } from "../services/api";
-import { getErrorElement, getRequiredElement } from "../utils/helpers";
 
-export type RegisterData = {
-  firstName: string,
-  lastName: string,
-  email: string;
-  phoneNumber: string,
-  password: string;
-}
+import { getErrorElement, getRequiredElement, mapStrengthValue } from "../utils/helpers";
+import type { RegisterData } from "../types/auth";
+import { registerUser } from "../services/auth";
 
 function init() {
   createIcons({
@@ -173,10 +167,8 @@ function init() {
     passwordProgressEl.setAttribute("aria-valuenow", String(strength));
 
     strength >= 1
-      ? passwordProgressEl.setAttribute("aria-valuetext", `Password meets ${strength} of 4 requirements`)
+      ? passwordProgressEl.setAttribute("aria-valuetext", `Password is ${mapStrengthValue(strength)}`)
       : passwordProgressEl.setAttribute("aria-valuetext", "No password requirements met")
-
-
 
     if (!passwordInputEl.value) {
       for (let i = 0; i < arrayLength; i++) {
