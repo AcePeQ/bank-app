@@ -14,7 +14,7 @@ export async function testPromise() {
 }
 
 export async function registerUser(registerData: RegisterData) {
-  const res = await fetch("/pai/reigster", {
+  const res = await fetch("/api/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

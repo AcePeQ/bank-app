@@ -20,6 +20,7 @@ function init() {
   })
 
   const formEl = getRequiredElement("#form", HTMLFormElement);
+  const formErrorEl = getRequiredElement("#formError", HTMLParagraphElement);
   const firstNameInputEl = getRequiredElement("#firstName", HTMLInputElement);
   const lastNameInputEl = getRequiredElement("#lastName", HTMLInputElement);
   const emailInputEl = getRequiredElement("#email", HTMLInputElement);
@@ -29,13 +30,13 @@ function init() {
   const termsCheckboxEl = getRequiredElement("#terms", HTMLInputElement);
   const passwordProgressEl = getRequiredElement("#passwordProgress", HTMLDivElement);
 
-  const submitBtnEl = getRequiredElement("#register-btn", HTMLButtonElement);
-  const submitBtnTextEl = getRequiredElement("#register-btn-text", HTMLSpanElement);
+  const submitBtnEl = getRequiredElement("#registerBtn", HTMLButtonElement);
+  const submitBtnTextEl = getRequiredElement("#registerBtnText", HTMLSpanElement);
   const loaderEl = getRequiredElement("#loader", HTMLSpanElement);
 
-  const showPasswordBtnEl = getRequiredElement("#show-password-btn", HTMLButtonElement);
-  const showPasswordIconEl = getRequiredElement("#show-password-icon", Element);
-  const hidePasswordIconEl = getRequiredElement("#hide-password-icon", Element);
+  const showPasswordBtnEl = getRequiredElement("#showPasswordBtn", HTMLButtonElement);
+  const showPasswordIconEl = getRequiredElement("#showPasswordIcon", Element);
+  const hidePasswordIconEl = getRequiredElement("#hidePasswordIcon", Element);
 
   let isLoading = false;
 
@@ -112,8 +113,22 @@ function init() {
 
     if (!errorEl) return;
 
+    const shouldRevalidateConfirmation = target === passwordInputEl && confirmPasswordInputEl.value.length > 0;
+
+    if (shouldRevalidateConfirmation) {
+      const confirmPasswordErrorEl = getErrorElement(confirmPasswordInputEl);
+      handleValidationInput(confirmPasswordInputEl, confirmPasswordErrorEl);
+    }
+
+    const shouldClearFormError = formErrorEl.classList.contains("hidden");
+
+    if (!shouldClearFormError) {
+      clearFormError();
+    }
+
     handleValidationInput(target, errorEl)
   }
+
 
   function handleValidationCheckbox() {
     const termsValidation = validateTerms(termsCheckboxEl.checked);
@@ -129,7 +144,6 @@ function init() {
       termsCheckboxEl.classList.remove("valid");
       termsCheckboxEl.classList.add("invalid");
       termsCheckboxEl.setAttribute("aria-invalid", "true");
-
       termsErrorEl.textContent = termsValidation.message;
     }
 
@@ -141,17 +155,27 @@ function init() {
     firstInvalidInput?.focus();
   }
 
+  function showFormError(message: string) {
+    formErrorEl.textContent = message;
+    formErrorEl.classList.remove("hidden");
+  }
+
+  function clearFormError() {
+    formErrorEl.textContent = "";
+    formErrorEl.classList.add("hidden");
+  }
+
+
   function handlePasswordStrength(strength: number) {
     const passwordProgressChildren = Array.from(passwordProgressEl.children) as HTMLSpanElement[];
     const arrayLength = passwordProgressChildren.length;
 
     passwordProgressEl.setAttribute("aria-valuenow", String(strength));
 
-    if (strength >= 1) {
-      passwordProgressEl.setAttribute("aria-valuetext", `Password meets ${strength} of 4 requirements`)
-    } else {
-      passwordProgressEl.setAttribute("aria-valuetext", "No password requirements met")
-    }
+    strength >= 1
+      ? passwordProgressEl.setAttribute("aria-valuetext", `Password meets ${strength} of 4 requirements`)
+      : passwordProgressEl.setAttribute("aria-valuetext", "No password requirements met")
+
 
 
     if (!passwordInputEl.value) {
@@ -202,6 +226,7 @@ function init() {
 
   async function handleRequest(registerData: RegisterData) {
     try {
+      clearFormError();
       isLoading = true;
       submitBtnEl.disabled = true;
       toggleInputs();
@@ -211,9 +236,12 @@ function init() {
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
+        showFormError(error.message)
       } else {
-        console.error("Unknown registration error: ", error);
+        console.error("Unknown registration error occurred!");
+        showFormError("Unknown registration error occurred!")
       }
+
     } finally {
       isLoading = false;
       submitBtnEl.disabled = false;
@@ -257,7 +285,6 @@ function init() {
       phoneNumber: phoneNumberInputEl.value.trim(),
       password: passwordInputEl.value,
     }
-
 
     handleRequest(registerData);
   }

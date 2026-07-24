@@ -47,7 +47,7 @@
           </hgroup>
         </div>
 
-        <form id="form" class="form" method="post" novalidate>
+        <form id="form" class="form" method="post" novalidate aria-describedby="formError">
           <div class="form__row">
             <label for="firstName" class="form__label">First Name</label>
             <input id="firstName" name="firstName" class="form__input" type="text" placeholder="Jane"
@@ -87,10 +87,10 @@
                 type="password" placeholder="********" minlength="8" maxlength="64"
                 pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9\s])\S{8,64}" aria-invalid="false"
                 aria-describedby="passwordError" required />
-              <button id="show-password-btn" class="form__row_button_show-password" type="button"
+              <button id="showPasswordBtn" class="form__row_button_show-password" type="button"
                 aria-label="Show password" aria-controls="password confirmPassword">
-                <i id="show-password-icon" data-lucide="eye"></i>
-                <i id="hide-password-icon" data-lucide="eye-off" class="hidden"></i>
+                <i id="showPasswordIcon" data-lucide="eye"></i>
+                <i id="hidePasswordIcon" data-lucide="eye-off" class="hidden"></i>
               </button>
             </div>
             <div class="password-progress">
@@ -116,19 +116,21 @@
 
           <div class="form__row">
             <label for="terms" class="form__label--terms">
-              <input aria-describedby="terms-error" aria-invalid="false" id="terms" name="terms" type="checkbox"
+              <input aria-describedby="termsError" aria-invalid="false" id="terms" name="terms" type="checkbox"
                 class="form__input--checkbox" required />
               <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand how
                 Infinity handles my financial data</span>
             </label>
-            <p id="terms-error" class="form__error" aria-live="polite"></p>
+            <p id="termsError" class="form__error" aria-live="polite"></p>
           </div>
 
-          <button id="register-btn" type="submit" class="btn btn--primary btn--big btn--form">
+          <p id="formError" class="form_error hidden" aria-live="polite"></p>
+
+          <button id="registerBtn" type="submit" class="btn btn--primary btn--big btn--form">
             <span role="status" id="loader" class="dots dots--normal hidden">
               <span class="sr-only">Creating your account...</span>
             </span>
-            <span id="register-btn-text">
+            <span id="registerBtnText">
               Sign Up
             </span>
           </button>

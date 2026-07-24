@@ -10,8 +10,6 @@
 
   grid-column: 1/6;
 
-
-
   @media (width >=1024px) {
     display: block;
   }
