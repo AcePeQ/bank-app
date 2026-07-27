@@ -29,6 +29,14 @@ export function getErrorElement(
   return errorElement;
 }
 
+export function createElement<K extends keyof HTMLElementTagNameMap>(tagName: K, classList?: string[], content?: string) {
+  const newElement = document.createElement(tagName);
+  classList ? newElement.classList.add(...classList) : null;
+  newElement.textContent = content ?? "";
+
+  return newElement;
+}
+
 export function mapStrengthValue(strength: number) {
   let mappedStrength;
 
