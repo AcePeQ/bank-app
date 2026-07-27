@@ -1,4 +1,4 @@
-import { Bell, createIcons, CreditCard, House, Repeat, Search, Settings } from "lucide";
+import { Bell, createIcons, CreditCard, House, LogOut, Repeat, Search, Settings } from "lucide";
 
 function init() {
   createIcons({
@@ -9,6 +9,7 @@ function init() {
       CreditCard,
       Repeat,
       Settings,
+      LogOut
     }
   })
 }

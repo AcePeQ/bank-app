@@ -6,7 +6,6 @@ body {
 
   accent-color: var(--clr-primary);
   background-color: var(--clr-surface-200);
-
 }
 
 h1,
@@ -132,6 +131,10 @@ input[type="checkbox"].invalid {
   height: 100%;
 
   stroke-width: 1px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hidden {
