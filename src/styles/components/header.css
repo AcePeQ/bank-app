@@ -94,6 +94,8 @@
   color: var(--clr-surface-100);
 
   font-size: 16px;
+
+  user-select: none;
 }
 
 .notifications {
@@ -109,8 +111,8 @@
 
   color: var(--clr-secondary-700);
 
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
 }
 
 .notifications__count {
@@ -138,4 +140,19 @@
 .logo-wrapper,
 .actions {
   flex-shrink: 0;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-btn svg {
+  stroke-width: 1.5px;
+
+  color: var(--clr-secondary-700);
+
+  width: 36px;
+  height: 36px;
 }
