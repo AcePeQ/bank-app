@@ -1,31 +1,47 @@
 import { createElement, getRequiredElement } from "../utils/helpers";
 
-type NavigationItem = {
-  element: "a" | "button",
-  icon: string,
-  text: string,
+type NavigationItemBase = {
+  icon: string;
+  text: string;
 }
+
+type NavigationLink = NavigationItemBase & {
+  element: "a";
+  href: string;
+}
+
+type NavigationButton = NavigationItemBase & {
+  element: "button";
+  action: () => void;
+}
+
+type NavigationItem = NavigationLink | NavigationButton
+
 
 const NAVIGATION_LINKS: NavigationItem[] = [
   {
     element: "a",
     icon: "house",
-    text: "Dashboard"
+    text: "Dashboard",
+    href: "/dashboard/"
   },
   {
     element: "a",
     icon: "credit-card",
-    text: "Cards"
+    text: "Cards",
+    href: "/cards/"
   },
   {
     element: "a",
     icon: "repeat",
-    text: "Transfers"
+    text: "Transfers",
+    href: "/transfers/"
   },
   {
     element: "a",
     icon: "settings",
-    text: "Settings"
+    text: "Settings",
+    href: "/settings/"
   },
 ]
 
@@ -33,12 +49,16 @@ const NAVIGATION_ACTIONS: NavigationItem[] = [
   {
     element: "a",
     icon: "settings",
-    text: "Settings"
+    text: "Settings",
+    href: "/settings/"
   },
   {
     element: "button",
     icon: "log-out",
-    text: "Logout"
+    text: "Logout",
+    action: () => {
+      console.log("Logout")
+    }
   },
 ]
 
@@ -48,8 +68,8 @@ export function createSidebar() {
   sidebarEl.textContent = "";
 
   const heading = createHeading();
-  const navigation = createNavigation();
-  const actionNavigation = createActionNavigation();
+  const navigation = createNavigation(NAVIGATION_LINKS, ["navigation"], "Main navigation");
+  const actionNavigation = createNavigation(NAVIGATION_ACTIONS, ["sidebar-actions"], "Actions navigation");
 
   sidebarEl.appendChild(heading);
   sidebarEl.appendChild(navigation);
@@ -59,8 +79,8 @@ export function createSidebar() {
 
 function createHeading() {
   const hgroup = createElement("hgroup", ["title-group"]);
-  const title = createElement("h1", ["title"], "Infinity Finance");
-  const subTitle = createElement("p", ["subtitle"], "Wealth Managment")
+  const title = createElement("h2", ["title"], "Infinity Finance");
+  const subTitle = createElement("p", ["subtitle"], "Wealth Management")
 
   hgroup.appendChild(title);
   hgroup.appendChild(subTitle);
@@ -68,44 +88,34 @@ function createHeading() {
   return hgroup;
 }
 
-function createNavigation() {
-  const navigation = createElement("nav", ["navigation"]);
+function createNavigation(items: NavigationItem[], className: string[], accessibleName: string) {
+  const navigation = createElement("nav", className);
+  navigation.ariaLabel = accessibleName;
 
-  NAVIGATION_LINKS.forEach(item => {
-    const link = createNavigationItem(item);
+  items.forEach(item => {
+    const itemEl = createNavigationItem(item);
     const icon = createElement("i");
     icon.dataset.lucide = item.icon;
 
-    link.insertAdjacentElement("afterbegin", icon)
-    navigation.appendChild(link);
+    itemEl.insertAdjacentElement("afterbegin", icon)
+    navigation.appendChild(itemEl);
   })
 
   return navigation;
 }
 
-function createNavigationItem(item: NavigationItem) {
-  const link = createElement(item.element, ["navigation__link"], item.text);
+function createNavigationItem(
+  item: NavigationItem,
+): HTMLAnchorElement | HTMLButtonElement {
+  if (item.element === "a") {
+    const link = createElement("a", ["navigation__link"], item.text);
+    link.href = item.href;
+    return link;
+  }
 
-  return link;
+  const button = createElement("button", ["navigation__link"], item.text);
+  button.type = "button";
+  button.addEventListener("click", item.action);
+
+  return button;
 }
-
-function createActionNavigation() {
-  const navigation = createElement("nav", ["sidebar-actions"]);
-
-  NAVIGATION_ACTIONS.forEach(item => {
-    const link = createNavigationItem(item);
-    const icon = createElement("i");
-    icon.dataset.lucide = item.icon;
-
-    link.insertAdjacentElement("afterbegin", icon)
-    navigation.appendChild(link);
-  })
-
-  return navigation;
-}
-
-
-
-
-
-
