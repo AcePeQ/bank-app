@@ -22,31 +22,7 @@
 
 <body>
   <div class="base-layout grid-12">
-    <header class="header">
-      <a href="/dashboard/" class="logo-wrapper">
-        <img class="logo-image" src="/icons/IFLogo.svg" alt="" />
-      </a>
-      <div class="input-box">
-        <button role="search" aria-label="Search accounts or assets" class="search-btn">
-          <i data-lucide="search"></i>
-        </button>
-        <input id="search" type="text" name="search" class="input-search" placeholder="Search accounts or assets..." />
-      </div>
-      <div class="actions">
-        <button id="notifications-btn" class="notifications">
-          <i data-lucide="bell"></i>
-          <span class="sr-only">Notifications:</span>
-          <span id="notifications-count" class="notifications__count">99</span>
-        </button>
-
-        <div class="avatar" aria-hidden="true">M.N</div>
-
-        <button id="logout-btn" class="logout-btn">
-          <i data-lucide="log-out"></i>
-          <span class="sr-only">Logout</span>
-        </button>
-      </div>
-    </header>
+    <header id="header" class="header"></header>
 
     <aside id="sidebar" class="sidebar"></aside>
 

@@ -6,13 +6,6 @@ import type { RegisterData } from "../types/auth";
 import { registerUser } from "../services/auth";
 
 function init() {
-  createIcons({
-    icons: {
-      Eye,
-      EyeOff,
-    }
-  })
-
   const formEl = getRequiredElement("#form", HTMLFormElement);
   const formErrorEl = getRequiredElement("#formError", HTMLParagraphElement);
   const firstNameInputEl = getRequiredElement("#firstName", HTMLInputElement);
@@ -291,5 +284,12 @@ function init() {
   showPasswordBtnEl.addEventListener("click", toggleShowPassword);
   formEl.addEventListener("submit", handleSubmit);
   formEl.addEventListener("input", handleInput);
+
+  createIcons({
+    icons: {
+      Eye,
+      EyeOff,
+    }
+  })
 };
 init();

@@ -4,10 +4,9 @@
 
   padding: var(--space-s) var(--space-2xs);
 
-
-
   @media (width >=1200px) {
     box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.1);
+    padding: var(--space-s) var(--space-m);
     padding-inline-end: 0px;
 
     display: flex;

@@ -45,9 +45,8 @@ const NAVIGATION_ACTIONS: NavigationItem[] = [
 
 export function createSidebar() {
   const sidebarEl = getRequiredElement("#sidebar", HTMLElement);
-
-
   sidebarEl.textContent = "";
+
   const heading = createHeading();
   const navigation = createNavigation();
   const actionNavigation = createActionNavigation();

@@ -5,13 +5,6 @@ import { loginUser } from "../services/auth";
 import type { LoginData } from "../types/auth";
 
 function init() {
-  createIcons({
-    icons: {
-      Eye,
-      EyeOff,
-    }
-  })
-
   const formEl = getRequiredElement("#form", HTMLFormElement);
   const formErrorEl = getRequiredElement("#formError", HTMLParagraphElement);
   const loginBtn = getRequiredElement("#loginBtn", HTMLButtonElement);
@@ -192,6 +185,13 @@ function init() {
   passwordInputEl.addEventListener("input", () => handleInputValidation(passwordInputEl, passwordInputErrorEl))
   showPasswordBtnEl.addEventListener("click", toggleShowPassword);
   formEl.addEventListener("submit", handleSubmit);
+
+  createIcons({
+    icons: {
+      Eye,
+      EyeOff,
+    }
+  })
 }
 
 init();
