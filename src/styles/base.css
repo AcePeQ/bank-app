@@ -135,6 +135,25 @@ input[type="checkbox"].invalid {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  transition: color 0.3 ease-in-out;
+}
+
+.lucide:hover {
+  color: var(--clr-primary-400);
+}
+
+.lucide:active {
+  color: var(--clr-primary-500);
+}
+
+.lucide:focus-visible {
+  color: var(--clr-primary-400);
+  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+}
+
+.lucide:disabled {
+  opacity: 0.5;
 }
 
 .hidden {
