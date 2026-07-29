@@ -29,8 +29,8 @@ const NAVIGATION_LINKS: NavigationItem[] = [
   {
     element: "a",
     icon: "credit-card",
-    text: "Cards",
-    href: ROUTES.cards
+    text: "Card",
+    href: ROUTES.card
   },
   {
     element: "a",

@@ -14,7 +14,7 @@ export const ROUTES = {
   login: "/",
   register: "/register/",
   dashboard: "/dashboard/",
-  cards: "/cards/",
+  card: "/card/",
   transfers: "/transfers/",
   transactions: "/transactions/",
   settings: "/settings/"
