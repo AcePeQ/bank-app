@@ -1,3 +1,4 @@
+import { ROUTES } from "../utils/constants";
 import { createElement, getRequiredElement } from "../utils/helpers";
 
 export function createHeader() {
@@ -15,7 +16,7 @@ export function createHeader() {
 
 function createLogo() {
   const logoLink = createElement("a", ["logo-wrapper"]);
-  logoLink.href = "/dashboard/";
+  logoLink.href = ROUTES.dashboard;
   logoLink.setAttribute("aria-label", "Go to dashboard");
 
   const logoImage = createElement("img", ["logo-image"]);

@@ -1,3 +1,4 @@
+import { ROUTES } from "../utils/constants";
 import { createElement, getRequiredElement } from "../utils/helpers";
 
 type NavigationItemBase = {
@@ -23,25 +24,25 @@ const NAVIGATION_LINKS: NavigationItem[] = [
     element: "a",
     icon: "house",
     text: "Dashboard",
-    href: "/dashboard/"
+    href: ROUTES.dashboard
   },
   {
     element: "a",
     icon: "credit-card",
     text: "Cards",
-    href: "/cards/"
+    href: ROUTES.cards
   },
   {
     element: "a",
     icon: "repeat",
     text: "Transfers",
-    href: "/transfers/"
+    href: ROUTES.transfers
   },
   {
     element: "a",
     icon: "settings",
     text: "Settings",
-    href: "/settings/"
+    href: ROUTES.settings
   },
 ]
 
@@ -50,7 +51,7 @@ const NAVIGATION_ACTIONS: NavigationItem[] = [
     element: "a",
     icon: "settings",
     text: "Settings",
-    href: "/settings/"
+    href: ROUTES.settings
   },
   {
     element: "button",

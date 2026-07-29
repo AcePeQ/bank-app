@@ -1,4 +1,5 @@
 import type { LoginData, LoginResponse, RegisterData, RegisterResponse } from "../types/auth";
+import { ROUTES } from "../utils/constants";
 
 export async function registerUser(registerData: RegisterData): Promise<RegisterResponse> {
   const res = await fetch("/api/register", {
@@ -30,4 +31,17 @@ export async function loginUser(loginData: LoginData): Promise<LoginResponse> {
   }
 
   return res.json();
+}
+
+export async function requireAuth(): Promise<boolean> {
+  const res = await fetch("/api/session", {
+    method: "GET",
+  });
+
+  if (res.ok) {
+    return true;
+  }
+
+  window.location.replace(ROUTES.login)
+  return false;
 }
