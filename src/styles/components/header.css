@@ -78,8 +78,8 @@
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
 
   border-radius: 100rem;
 
@@ -92,9 +92,16 @@
   background-color: var(--clr-primary-400);
   color: var(--clr-surface-100);
 
-  font-size: 16px;
+  font-size: 14px;
 
   user-select: none;
+
+  @media (width >=1200px) {
+    width: 40px;
+    height: 40px;
+
+    font-size: 16px;
+  }
 }
 
 .notifications {
@@ -103,6 +110,8 @@
   justify-content: center;
 
   position: relative;
+
+  margin-inline-end: 8px;
 }
 
 .notifications svg {
@@ -110,8 +119,13 @@
 
   color: var(--clr-secondary-700);
 
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
+
+  @media (width >=1200px) {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 .notifications__count {
@@ -152,6 +166,11 @@
 
   color: var(--clr-secondary-700);
 
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
+
+  @media (width >=1200px) {
+    width: 36px;
+    height: 36px;
+  }
 }

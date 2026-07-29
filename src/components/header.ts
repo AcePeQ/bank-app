@@ -64,7 +64,7 @@ function createActions() {
   notifications.type = "button";
 
   const notificationsCount = createElement("span", ["notifications__count"]);
-  notificationsCount.textContent = "3";
+  notificationsCount.textContent = "99";
   notificationsCount.setAttribute("aria-hidden", "true");
   notifications.appendChild(notificationsCount);
 
