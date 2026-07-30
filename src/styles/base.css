@@ -18,6 +18,7 @@ h4 {
 a:link,
 a:visited {
   text-decoration: none;
+  cursor: pointer;
 
   color: var(--clr-primary-400);
   font-weight: var(--fw-700);
