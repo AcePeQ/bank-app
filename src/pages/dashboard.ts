@@ -1,4 +1,4 @@
-import { Bell, createIcons, CreditCard, House, LogOut, Repeat, Search, Settings } from "lucide";
+import { BanknoteArrowDown, BanknoteArrowUp, Bell, ChevronRight, createIcons, CreditCard, House, LogOut, Repeat, Search, SendHorizontal, Settings } from "lucide";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 
@@ -15,7 +15,11 @@ function init() {
       CreditCard,
       Repeat,
       Settings,
-      LogOut
+      LogOut,
+      SendHorizontal,
+      BanknoteArrowUp,
+      BanknoteArrowDown,
+      ChevronRight,
     }
   })
 }

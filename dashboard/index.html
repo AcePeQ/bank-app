@@ -37,16 +37,62 @@
           </hgroup>
         </section>
 
-        <section class="account-details">
-          <hgroup>
-            <h2 class="account-details__title">Total Balance</h2>
-            <p class="account-details__balance">$142,850.00</p>
-          </hgroup>
+        <section class="account-dashbaord">
+          <div class="account-details">
+            <hgroup>
+              <h2 class="account-details__title">Total Balance</h2>
+              <p class="account-details__balance">$142,850.00</p>
+            </hgroup>
 
-          <div class="month-spent-wrapper">
-            <p class="month-spent">Spent this month <span class="month-spent-number">$4,320.15</span></p>
-            <progress id="spent-progress-bar" class="month-spent-progress" max="432015" value="200000" />
+            <div class="month-spent-wrapper">
+              <p class="month-spent">Spent this month <span class="month-spent-number">$4,320.15</span></p>
+              <progress id="spent-progress-bar" class="month-spent-progress" max="432015" value="200000" />
+            </div>
           </div>
+
+          <div class="account-actions">
+            <a class="account__action account__action--send" href="/transfers/send/">
+              <div aria-hidden="true" class="account-action__icon-wrapper">
+                <i data-lucide="send-horizontal"></i>
+              </div>
+              <span>Send</span>
+            </a>
+
+            <a class="account__action account__action--request" href="/transfers/request/">
+              <div aria-hidden="true" class="account-action__icon-wrapper">
+                <i data-lucide="banknote-arrow-up"></i>
+              </div>
+              <span>Request</span>
+            </a>
+
+            <a class="account__action account__action--pay" href="/transfers/pay/">
+              <div aria-hidden="true" class="account-action__icon-wrapper">
+                <i data-lucide="banknote-arrow-down"></i>
+              </div>
+              <span>Pay</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="card-section">
+          <div class="card-section__header">
+            <h2>My Card</h2>
+            <a class="card-manage-link">
+              Manage
+              <i data-lucide="chevron-right"></i>
+            </a>
+          </div>
+
+          <article class="card">
+            <p class="card__type">Default Card</p>
+            <h3 class="card__owner">Julian Sterling</h3>
+            <p class="card__number">*** *** *** 8842</p>
+
+            <div class="card__details">
+              <p class="card__detail">Expiry <span class="card__detail__value">12/28</span></p>
+              <p class="card__detail">CVV <span class="card__detail__value">***</span></p>
+            </div>
+          </article>
         </section>
       </div>
     </main>

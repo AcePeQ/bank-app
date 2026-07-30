@@ -9,6 +9,7 @@
 
 .main {
   grid-area: content;
+  overflow: auto;
 
   padding: var(--space-s) var(--space-xs);
 

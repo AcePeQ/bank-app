@@ -150,6 +150,16 @@
   bottom: -5px;
 }
 
+.notifications:hover {
+  cursor: pointer;
+
+  color: var(--clr-primary-400);
+}
+
+.notifications:hover svg {
+  stroke: var(--clr-primary-400);
+}
+
 .logo-wrapper,
 .actions {
   flex-shrink: 0;
