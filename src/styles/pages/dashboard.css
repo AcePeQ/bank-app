@@ -25,11 +25,17 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-s);
+
+  @media (width >=820px) {
+    flex-direction: row;
+  }
 }
 
 .account-details {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
   gap: var(--space-s);
 
   padding: var(--space-s);
@@ -37,6 +43,14 @@
   border-radius: 8px;
 
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+
+
+  @media (width >=820px) {
+    flex-direction: column;
+    flex-basis: fit-content;
+
+    padding: var(--space-m);
+  }
 }
 
 .account-details__title {
@@ -104,15 +118,13 @@
 }
 
 .account-actions {
-  /* --min-col-size: 150px;
-  gap: var(--space-s);
-
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(var(--min-col-size), 100%), 1fr)); */
-
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-s);
+
+  @media (width >=820px) {
+    flex: 1;
+  }
 }
 
 .account-actions .account__action {
@@ -205,10 +217,18 @@
   color: var(--clr-surface-100);
 }
 
+.card-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-m);
+}
+
 .card-section {
   display: flex;
   flex-direction: column;
   gap: var(--space-s);
+
+  max-inline-size: fit-content;
 }
 
 .card-section__header {
@@ -257,7 +277,6 @@
   border-radius: 24px;
 
   padding: var(--space-m);
-
   user-select: none;
 }
 
@@ -319,6 +338,11 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-s);
+  flex: 1;
+
+  @media (width >=450px) {
+    min-inline-size: 385px;
+  }
 }
 
 .card-activity__header {
@@ -376,7 +400,7 @@
 
 .card-payment {
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
 
   gap: var(--space-xs);
@@ -442,6 +466,8 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 2px;
+
+  margin-inline-start: auto;
 }
 
 .card-payment__value {
@@ -482,12 +508,20 @@
   font-size: var(--fs-500);
   font-weight: var(--fw-800);
   color: var(--clr-secondary-900);
+
+  @media (width >=450px) {
+    text-align: center;
+  }
 }
 
 .month-spending__list {
   display: flex;
   flex-direction: column;
   gap: var(--space-2xs);
+
+  @media (width >=450px) {
+    align-items: center;
+  }
 }
 
 .month-spending__item {

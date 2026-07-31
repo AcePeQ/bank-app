@@ -12,15 +12,15 @@
   overflow: auto;
 
   padding: var(--space-s) var(--space-xs);
+  padding-block-end: var(--space-m);
 
   @media (width >=400px) {
     padding: var(--space-s) var(--space-m);
+    padding-block-end: var(--space-l);
   }
 }
 
 .main-wrapper {
-  height: 100%;
-
   display: flex;
   flex-direction: column;
 
