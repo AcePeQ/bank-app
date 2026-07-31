@@ -323,3 +323,158 @@
   color: var(--clr-surface-100);
   letter-spacing: 3px;
 }
+
+
+
+.card-activity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.card-activity__header {
+  display: flex;
+  gap: var(--space-s);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-activity__header h2 {
+  font-size: var(--fs-500);
+  font-weight: var(--fw-800);
+  color: var(--clr-secondary-900);
+}
+
+.card-activity__header .card-manage-link {
+  font-size: var(--fs-200);
+  font-weight: var(--fw-600);
+  color: var(--clr-primary-400);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+
+  transition: color 300ms ease-in-out;
+}
+
+.card-activity__header .card-manage-link svg {
+  stroke: currentColor;
+  stroke-width: 2px;
+  inline-size: 100%;
+  block-size: 100%;
+
+  width: var(--fs-200);
+  height: var(--fs-200);
+
+  transform: translateY(0px);
+}
+
+.card-activity__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+
+  padding: var(--space-xs);
+
+  border-radius: 12px;
+  background-color: var(--clr-surface-300);
+}
+
+.card-activity__list__item {
+  display: block;
+}
+
+.card-payment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: var(--space-xs);
+
+  padding: var(--space-xs);
+  background-color: var(--clr-surface-100);
+  border-radius: 12px;
+}
+
+.card-payment__icon {
+  flex-shrink: 0;
+
+  background-color: var(--clr-surface-300);
+  color: var(--clr-secondary-900);
+
+  inline-size: 50px;
+  block-size: 50px;
+
+  border-radius: 100rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-payment__icon svg {
+  inline-size: 100%;
+  block-size: 100%;
+
+  max-inline-size: 30px;
+  max-block-size: 30px;
+
+  stroke-width: 2px;
+  stroke: currentColor;
+}
+
+.card-payment__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-payment__info h3 {
+  font-size: var(--fs-300);
+  font-weight: var(--fw-700);
+  font-family: var(--ff-primary);
+  color: var(--clr-secondary-900);
+}
+
+.card-payment__info div {
+  font-size: var(--fs-200);
+  font-weight: var(--fw-400);
+  color: var(--clr-secondary-500);
+
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 6px;
+  align-items: center;
+}
+
+.card-payment__total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.card-payment__value {
+  font-family: var(--ff-secondary);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-700);
+}
+
+.card-payment__value.card-payment__value--income {
+  color: var(--clr-green-500);
+}
+
+.card-payment__value.card-payment__value--expense {
+  color: var(--clr-red-500);
+}
+
+.card-payment__status {
+  font-size: var(--fs-200);
+  font-weight: var(--fw-500);
+  color: var(--clr-secondary-300);
+
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: right;
+}

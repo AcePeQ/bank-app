@@ -126,6 +126,11 @@ input[type="checkbox"].invalid {
   border-color: var(--clr-alert-500);
 }
 
+ul,
+ol {
+  list-style: none;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
