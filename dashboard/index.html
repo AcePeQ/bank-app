@@ -32,8 +32,8 @@
 
         <section class="greeting">
           <hgroup>
-            <time id="current-date" class="current-date">MONDAY, OCT 24</time>
-            <h2 class="greeting__title">Hello, Maciej!</h2>
+            <time id="currentDate" class="current-date">MONDAY, OCT 24</time>
+            <h2 id="greeting" class="greeting__title">Hello, Maciej!</h2>
           </hgroup>
         </section>
 
@@ -41,11 +41,12 @@
           <div class="account-details">
             <hgroup>
               <h2 class="account-details__title">Total Balance</h2>
-              <p class="account-details__balance">$142,850.00</p>
+              <p id="cardBalanceValue" class="account-details__balance">$142,850.00</p>
             </hgroup>
 
             <div class="month-spent-wrapper">
-              <p class="month-spent">Spent this month <span class="month-spent-number">$4,320.15</span></p>
+              <p class="month-spent">Spent this month <span id="monthSpendingValue"
+                  class="month-spent-number">$4,320.15</span></p>
               <progress id="spent-progress-bar" class="month-spent-progress" max="432015" value="200000" />
             </div>
           </div>
@@ -84,21 +85,7 @@
               </a>
             </div>
 
-            <article id="card-item" class="card">
-              <p class="card__type">Infinity Finance Credit</p>
-              <h3 class="card__owner">Julian Sterling</h3>
-              <p class="card__number">
-                &bullet;&bullet;&bullet;&bullet;
-                &bullet;&bullet;&bullet;&bullet;
-                &bullet;&bullet;&bullet;&bullet;
-                8842
-              </p>
-
-              <div class="card__details">
-                <p class="card__detail">Expiry <span class="card__detail__value">12/28</span></p>
-                <p class="card__detail">CVV <span class="card__detail__value">&bullet;&bullet;&bullet;</span></p>
-              </div>
-            </article>
+            <article id="cardItem" class="card"></article>
           </section>
 
           <section class="card-activity">

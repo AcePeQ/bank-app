@@ -2,7 +2,7 @@ import type { Card } from "../types/card";
 import { createElement, getRequiredElement } from "../utils/helpers";
 
 export function createCard(card: Card) {
-  const cardWrapperEl = getRequiredElement("#card-item", HTMLElement);
+  const cardWrapperEl = getRequiredElement("#cardItem", HTMLElement);
   if (!cardWrapperEl) return;
 
   cardWrapperEl.textContent = "";
