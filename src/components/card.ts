@@ -7,7 +7,7 @@ export function createCard(card: Card) {
 
   cardWrapperEl.textContent = "";
 
-  const cardTypeEl = createElement("p", ["card__type"], card.type);
+  const cardTypeEl = createElement("p", ["card__type"], card.network);
   const cardOwnerEl = createElement("h3", ["card__owner"], card.cardHolder);
   const cardNumberEl = createElement("p", ["card__number"], `•••• •••• •••• ${card.lastFourDigits}`);
 

@@ -1,8 +1,13 @@
+export type TransactionDirection = "income" | "expense";
+export type TransactionStatus = "pending" | "completed" | "failed";
+
 export type Transaction = {
   id: number;
   name: string;
-  date: string;
+  occurredAt: string;
   category: string;
-  amount: string;
-  status: string;
+  amount: number;
+  currency: string;
+  direction: TransactionDirection;
+  status: TransactionStatus;
 };

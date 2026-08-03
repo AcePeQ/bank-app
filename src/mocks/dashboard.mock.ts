@@ -1,4 +1,4 @@
-export type DashboardMock = typeof dashboardMock;
+import type { DashboardData } from "../types/dashboard";
 
 export const dashboardMock = {
   account: {
@@ -49,4 +49,4 @@ export const dashboardMock = {
       { category: "Bills", amount: 800 },
     ],
   },
-};
+} satisfies DashboardData;

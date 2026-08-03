@@ -1,6 +1,6 @@
 export type Card = {
   id: number;
-  type: string;
+  network: string;
   lastFourDigits: string;
   cardHolder: string;
   expirationDate: string;

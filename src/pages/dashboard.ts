@@ -3,7 +3,7 @@ import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createCard } from "../components/card";
 import { getRequiredElement } from "../utils/helpers";
-import { getCurrentDate, getFormatCurrency } from "../utils/formats";
+import { formatCurrency, getCurrentDate } from "../utils/formats";
 import { createTransactionItem } from "../components/transaction";
 import type { Transaction } from "../types/transaction";
 import { dashboardMock } from "../mocks/dashboard.mock";
@@ -17,7 +17,7 @@ function init() {
   const monthSpendingValueEl = getRequiredElement("#monthSpendingValue", HTMLSpanElement);
   const recentActivityWrapperEl = getRequiredElement("#recentActivityList", HTMLElement);
 
-  const dashbaordData = dashboardMock;
+  const dashboardData = dashboardMock;
 
 
   function addTransactions(transactions: Transaction[]) {
@@ -35,14 +35,24 @@ function init() {
   function createGreeting() {
     const date = getCurrentDate();
     currentDateEl.textContent = date;
-
-    greetingEl.textContent = `Hi, ${dashbaordData.account.ownerName}!`;
+    greetingEl.textContent = `Hi, ${dashboardData.account.ownerName}!`;
   }
 
   createSidebar();
   createHeader();
 
   createGreeting();
+  createCard(dashboardData.card);
+  cardBalanceValueEl.textContent = formatCurrency(
+    dashboardData.account.balance,
+    dashboardData.account.currency,
+  );
+  monthSpendingValueEl.textContent = formatCurrency(
+    dashboardData.monthlySpending.spent,
+    dashboardData.account.currency,
+  );
+
+  addTransactions(dashboardData.recentTransactions);
 
   createIcons({
     icons: {
