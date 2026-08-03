@@ -2,38 +2,47 @@ import { BanknoteArrowDown, BanknoteArrowUp, Bell, ChevronRight, createIcons, Cr
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createCard } from "../components/card";
-import type { Card } from "../types/card";
 import { getRequiredElement } from "../utils/helpers";
 import { getCurrentDate, getFormatCurrency } from "../utils/formats";
+import { createTransactionItem } from "../components/transaction";
+import type { Transaction } from "../types/transaction";
+import { dashboardMock } from "../mocks/dashboard.mock";
 
-const TEMP_CARD: Card = {
-  id: 1,
-  type: "Visa",
-  lastFourDigits: "1234",
-  cardHolder: "John Doe",
-  expirationDate: "10/24"
-}
+
 
 function init() {
   const currentDateEl = getRequiredElement("#currentDate", HTMLElement);
   const greetingEl = getRequiredElement("#greeting", HTMLHeadingElement);
   const cardBalanceValueEl = getRequiredElement("#cardBalanceValue", HTMLParagraphElement);
   const monthSpendingValueEl = getRequiredElement("#monthSpendingValue", HTMLSpanElement);
+  const recentActivityWrapperEl = getRequiredElement("#recentActivityList", HTMLElement);
 
-  const currentDate = getCurrentDate();
-  const cardBalance = getFormatCurrency(1524.12);
-
-  currentDateEl.textContent = currentDate;
-  greetingEl.textContent = `Hello, ${TEMP_CARD.cardHolder}!`;
-  cardBalanceValueEl.textContent = cardBalance;
+  const dashbaordData = dashboardMock;
 
 
+  function addTransactions(transactions: Transaction[]) {
+    transactions.forEach((transaction) => {
+      const transactionEl = document.createElement("li");
+      transactionEl.classList.add("card-activity__list__item");
 
+      const transactionItem = createTransactionItem(transaction);
+
+      transactionEl.append(transactionItem);
+      recentActivityWrapperEl.append(transactionEl);
+    })
+  }
+
+  function createGreeting() {
+    const date = getCurrentDate();
+    currentDateEl.textContent = date;
+
+    greetingEl.textContent = `Hi, ${dashbaordData.account.ownerName}!`;
+  }
 
   createSidebar();
   createHeader();
-  createCard(TEMP_CARD);
 
+  createGreeting();
 
   createIcons({
     icons: {
