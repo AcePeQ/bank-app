@@ -30,16 +30,16 @@
 
     <main class="main">
       <div class="main-wrapper">
-        <h1 class="sr-only">Dashbaord</h1>
+        <h1 class="sr-only">Dashboard</h1>
 
         <section class="greeting">
-          <hgroup>
+          <div>
             <time id="currentDate" class="current-date"></time>
             <h2 id="greeting" class="greeting__title"></h2>
-          </hgroup>
+          </div>
         </section>
 
-        <section class="account-dashbaord">
+        <section class="account-dashboard">
           <div class="account-details">
             <hgroup>
               <h2 class="account-details__title">Total Balance</h2>
@@ -105,7 +105,7 @@
 
         <section class="month-spending-section">
           <h2>Monthly Spending</h2>
-          <h3>Total: <span class="monthly-spending-total" id="monthlySpendingTotal">$4,271</span></h3>
+          <h3>Total: <span class="monthly-spending-total" id="monthlySpendingTotal"></span></h3>
 
           <div class="monthly-spending-chart">
             <canvas id="monthlySpendingCanvas" role="img"></canvas>

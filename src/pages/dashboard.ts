@@ -53,6 +53,7 @@ function init() {
   function createGreeting() {
     const date = getCurrentDate();
     currentDateEl.textContent = date;
+    currentDateEl.setAttribute("data-time", new Date().toISOString());
     greetingEl.textContent = `Hi, ${dashboardData.account.ownerName}!`;
   }
 
