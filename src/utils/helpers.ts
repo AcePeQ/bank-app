@@ -31,7 +31,12 @@ export function getErrorElement(
 
 export function createElement<K extends keyof HTMLElementTagNameMap>(tagName: K, classList?: string[], content?: string) {
   const newElement = document.createElement(tagName);
-  classList ? newElement.classList.add(...classList) : null;
+
+  if (classList) {
+    const filteredClassList = classList?.filter((className) => className !== "" && className !== null);
+    newElement.classList.add(...filteredClassList);
+  }
+
   newElement.textContent = content ?? "";
 
   return newElement;

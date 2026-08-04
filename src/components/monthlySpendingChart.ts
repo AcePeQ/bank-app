@@ -1,20 +1,18 @@
 import type { MonthlySpending } from '../types/dashboard'
 import Chart from 'chart.js/auto'
-import { getRequiredElement } from '../utils/helpers';
+import { formatCurrency } from '../utils/formats';
 
-export function createSpendingChart(data: MonthlySpending, currency: string) {
-  const chartCanvas = getRequiredElement("#monthlySpendingCanvas", HTMLCanvasElement);
 
+export function createSpendingChart(chartCanvas: HTMLCanvasElement, data: MonthlySpending, currency: string) {
   const labels = data.categories.map(category => category.category);
   const values = data.categories.map(category => category.amount);
 
   const ariaLabelString = data.categories.map(category => {
-    return `${category.category}: ${category.amount} ${currency}`
+    return `${category.category}: ${formatCurrency(category.amount, currency)}`
   })
-  const valueTotal = data.categories.reduce((total, category) => total + category.amount, 0);
-  chartCanvas.setAttribute("aria-label", "Monthly spending: " + ariaLabelString.join(", ") + ". Total: " + valueTotal + " " + currency);
+  chartCanvas.setAttribute("aria-label", "Monthly spending: " + ariaLabelString.join(", ") + ". Total: " + formatCurrency(data.spent, currency));
 
-  new Chart(chartCanvas, {
+  return new Chart(chartCanvas, {
     type: "doughnut",
     data: {
       labels: labels,
@@ -58,7 +56,7 @@ export function createSpendingChart(data: MonthlySpending, currency: string) {
                 label += ': ';
               }
               if (typeof context.parsed === 'number') {
-                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: currency }).format(context.parsed);
+                label += formatCurrency(context.parsed, currency);
               }
               return label;
             },

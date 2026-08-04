@@ -141,7 +141,7 @@
   }
 }
 
-.navigation .navigation__link:last-child {
+.navigation .navigation__link.hide-on-desktop {
   @media (width >=1200px) {
     display: none;
   }

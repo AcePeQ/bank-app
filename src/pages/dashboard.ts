@@ -2,7 +2,7 @@ import { BanknoteArrowDown, BanknoteArrowUp, Bell, ChevronRight, createIcons, Cr
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createCard } from "../components/card";
-import { getRequiredElement } from "../utils/helpers";
+import { createElement, getRequiredElement } from "../utils/helpers";
 import { formatCurrency, getCurrentDate } from "../utils/formats";
 import { createTransactionItem } from "../components/transaction";
 import type { Transaction } from "../types/transaction";
@@ -10,7 +10,6 @@ import { dashboardMock } from "../mocks/dashboard.mock";
 import { createSpendingChart } from "../components/monthlySpendingChart";
 
 function init() {
-
   const currentDateEl = getRequiredElement("#currentDate", HTMLElement);
   const greetingEl = getRequiredElement("#greeting", HTMLHeadingElement);
   const cardBalanceValueEl = getRequiredElement("#cardBalanceValue", HTMLParagraphElement);
@@ -18,31 +17,37 @@ function init() {
   const recentActivityWrapperEl = getRequiredElement("#recentActivityList", HTMLElement);
   const progressBarEl = getRequiredElement("#spentProgressBar", HTMLProgressElement);
   const monthlyChartSpendingValueEl = getRequiredElement("#monthlySpendingTotal", HTMLSpanElement);
-
-  const MAX_PROGRESS_BAR_VALUE = Number(progressBarEl.max);
+  const cardWrapperEl = getRequiredElement("#cardWrapper", HTMLDivElement);
+  const canvasEl = getRequiredElement("#monthlySpendingCanvas", HTMLCanvasElement);
 
   const dashboardData = dashboardMock;
 
 
   function addTransactions(transactions: Transaction[]) {
-    recentActivityWrapperEl.innerHTML = "";
+    recentActivityWrapperEl.replaceChildren();
+
+    const fragment = document.createDocumentFragment();;
 
     transactions.forEach((transaction) => {
-      const transactionEl = document.createElement("li");
-      transactionEl.classList.add("card-activity__list__item");
+      const listItem = createElement("li", ["card-activity__list__item"]);
 
-      const transactionItem = createTransactionItem(transaction);
-
-      transactionEl.append(transactionItem);
-      recentActivityWrapperEl.append(transactionEl);
+      listItem.append(createTransactionItem(transaction));
+      fragment.append(listItem);
     })
+
+    recentActivityWrapperEl.replaceChildren(fragment);
   }
 
   function updateSpendingProgress() {
     const totalSpent = dashboardData.monthlySpending.spent;
     const totalBudget = dashboardData.monthlySpending.budget;
-    const percent = (totalSpent / totalBudget) * MAX_PROGRESS_BAR_VALUE;
-    progressBarEl.value = percent;
+
+    const isOverBudget = totalSpent > totalBudget;
+
+    progressBarEl.value = totalSpent;
+    progressBarEl.max = totalBudget;
+
+    progressBarEl.classList.toggle("month-spent-progress--over-budget", isOverBudget);
   }
 
   function createGreeting() {
@@ -71,9 +76,9 @@ function init() {
     dashboardData.account.currency,
   );
 
-  createCard(dashboardData.card);
+  cardWrapperEl.replaceChildren(createCard(dashboardData.card));
   addTransactions(dashboardData.recentTransactions);
-  createSpendingChart(dashboardData.monthlySpending, dashboardData.account.currency);
+  createSpendingChart(canvasEl, dashboardData.monthlySpending, dashboardData.account.currency);
 
   createIcons({
     icons: {

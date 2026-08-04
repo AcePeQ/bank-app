@@ -1,9 +1,8 @@
 import type { Card } from "../types/card";
-import { createElement, getRequiredElement } from "../utils/helpers";
+import { createElement } from "../utils/helpers";
 
-export function createCard(card: Card) {
-  const cardWrapperEl = getRequiredElement("#cardItem", HTMLElement);
-  cardWrapperEl.textContent = "";
+export function createCard(card: Card): HTMLElement {
+  const articleEl = createElement("article", ["card"]);
 
   const cardTypeEl = createElement("p", ["card__type"], card.network);
   const cardOwnerEl = createElement("h3", ["card__owner"], card.cardHolder);
@@ -21,6 +20,8 @@ export function createCard(card: Card) {
   cardExpiryEl.append(cardExpiryValueEl);
 
   cardDetailsEl.append(cardExpiryEl, cardCvvEl);
-  cardWrapperEl.append(cardTypeEl, cardOwnerEl, cardNumberEl, cardDetailsEl);
+  articleEl.append(cardTypeEl, cardOwnerEl, cardNumberEl, cardDetailsEl);
+
+  return articleEl;
 }
 

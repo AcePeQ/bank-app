@@ -4,6 +4,7 @@ import { createElement, getRequiredElement } from "../utils/helpers";
 type NavigationItemBase = {
   icon: string;
   text: string;
+  hideOnDesktop?: boolean;
 }
 
 type NavigationLink = NavigationItemBase & {
@@ -42,7 +43,8 @@ const NAVIGATION_LINKS: NavigationItem[] = [
     element: "a",
     icon: "settings",
     text: "Settings",
-    href: ROUTES.settings
+    href: ROUTES.settings,
+    hideOnDesktop: true
   },
 ]
 
@@ -109,12 +111,12 @@ function createNavigationItem(
   item: NavigationItem,
 ): HTMLAnchorElement | HTMLButtonElement {
   if (item.element === "a") {
-    const link = createElement("a", ["navigation__link"], item.text);
+    const link = createElement("a", ["navigation__link", `${item.hideOnDesktop ? "hide-on-desktop" : ""}`], item.text);
     link.href = item.href;
     return link;
   }
 
-  const button = createElement("button", ["navigation__link"], item.text);
+  const button = createElement("button", ["navigation__link", `${item.hideOnDesktop ? "hide-on-desktop" : ""}`], item.text);
   button.type = "button";
   button.addEventListener("click", item.action);
 

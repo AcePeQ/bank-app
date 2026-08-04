@@ -121,6 +121,10 @@
   border-radius: 6px;
 }
 
+.month-spent-progress--over-budget {
+  background-color: var(--clr-danger-400);
+}
+
 .account-actions {
   display: flex;
   flex-wrap: wrap;
