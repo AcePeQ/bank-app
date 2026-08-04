@@ -3,8 +3,6 @@ import { createElement, getRequiredElement } from "../utils/helpers";
 
 export function createCard(card: Card) {
   const cardWrapperEl = getRequiredElement("#cardItem", HTMLElement);
-  if (!cardWrapperEl) return;
-
   cardWrapperEl.textContent = "";
 
   const cardTypeEl = createElement("p", ["card__type"], card.network);

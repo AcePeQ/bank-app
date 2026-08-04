@@ -8,19 +8,23 @@ import { createTransactionItem } from "../components/transaction";
 import type { Transaction } from "../types/transaction";
 import { dashboardMock } from "../mocks/dashboard.mock";
 
-
-
 function init() {
+
   const currentDateEl = getRequiredElement("#currentDate", HTMLElement);
   const greetingEl = getRequiredElement("#greeting", HTMLHeadingElement);
   const cardBalanceValueEl = getRequiredElement("#cardBalanceValue", HTMLParagraphElement);
   const monthSpendingValueEl = getRequiredElement("#monthSpendingValue", HTMLSpanElement);
   const recentActivityWrapperEl = getRequiredElement("#recentActivityList", HTMLElement);
+  const progressBarEl = getRequiredElement("#spentProgressBar", HTMLProgressElement);
+
+  const MAX_PROGRESS_BAR_VALUE = Number(progressBarEl.max);
 
   const dashboardData = dashboardMock;
 
 
   function addTransactions(transactions: Transaction[]) {
+    recentActivityWrapperEl.innerHTML = "";
+
     transactions.forEach((transaction) => {
       const transactionEl = document.createElement("li");
       transactionEl.classList.add("card-activity__list__item");
@@ -30,6 +34,13 @@ function init() {
       transactionEl.append(transactionItem);
       recentActivityWrapperEl.append(transactionEl);
     })
+  }
+
+  function updateSpendingProgress() {
+    const totalSpent = dashboardData.monthlySpending.spent;
+    const totalBudget = dashboardData.monthlySpending.budget;
+    const percent = (totalSpent / totalBudget) * MAX_PROGRESS_BAR_VALUE;
+    progressBarEl.value = percent;
   }
 
   function createGreeting() {
@@ -42,7 +53,8 @@ function init() {
   createHeader();
 
   createGreeting();
-  createCard(dashboardData.card);
+  updateSpendingProgress();
+
   cardBalanceValueEl.textContent = formatCurrency(
     dashboardData.account.balance,
     dashboardData.account.currency,
@@ -52,6 +64,7 @@ function init() {
     dashboardData.account.currency,
   );
 
+  createCard(dashboardData.card);
   addTransactions(dashboardData.recentTransactions);
 
   createIcons({

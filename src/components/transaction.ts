@@ -5,9 +5,11 @@ import { formatCurrency, formatDate } from "../utils/formats";
 export function createTransactionItem(transaction: Transaction) {
   const paymentWrapper = createElement("article", ["card-payment"]);
 
-  const paymentIcon = createElement("div", ["card-payment__icon"]);
+  const paymentIconWrapper = createElement("div", ["card-payment__icon"]);
   const iconName = transaction.direction === "income" ? "banknote-arrow-down" : "banknote-arrow-up";
-  paymentIcon.innerHTML = `<i data-lucide="${iconName}"></i>`;
+  const paymentIcon = createElement("i");
+  paymentIcon.dataset.lucide = iconName;
+  paymentIconWrapper.append(paymentIcon);
 
   const transactionDate = formatDate(transaction.occurredAt, {
     day: "2-digit",
@@ -16,22 +18,21 @@ export function createTransactionItem(transaction: Transaction) {
   });
   const transactionAmount = formatCurrency(transaction.amount, transaction.currency);
 
-  const paymentInfo = createElement("div", ["card-payment__info"]);
-  paymentInfo.innerHTML = `
-    <h3>${transaction.name}</h3>
-    <div>
-      <time datetime="${transaction.occurredAt}">${transactionDate}</time>
-      •
-      <p>${transaction.category}</p>
-    </div>
-  `;
+  const paymentInfoWrapper = createElement("div", ["card-payment__info"]);
+  const paymentInfoHeading = createElement("h3", [], transaction.name);
+  const paymentInfoDetails = createElement("div");
+  const paymentInfoTime = createElement("time", [], transactionDate);
+  paymentInfoTime.setAttribute("datetime", transaction.occurredAt);
+  const paymentInfoCategory = createElement("p", [], transaction.category);
+  paymentInfoDetails.append(paymentInfoTime, "•", paymentInfoCategory);
+  paymentInfoWrapper.append(paymentInfoHeading, paymentInfoDetails);
+
 
   const paymentTotal = createElement("div", ["card-payment__total"]);
-  paymentTotal.innerHTML = `
-    <p class="card-payment__value card-payment__value--${transaction.direction}">${transactionAmount}</p>
-    <p class="card-payment__status">${transaction.status}</p>
-  `;
+  const paymentTotalValue = createElement("p", ["card-payment__value", `card-payment__value--${transaction.direction}`], transactionAmount);
+  const paymentTotalStatus = createElement("p", ["card-payment__status"], transaction.status);
+  paymentTotal.append(paymentTotalValue, paymentTotalStatus);
 
-  paymentWrapper.append(paymentIcon, paymentInfo, paymentTotal);
+  paymentWrapper.append(paymentIconWrapper, paymentInfoWrapper, paymentTotal);
   return paymentWrapper;
 }
