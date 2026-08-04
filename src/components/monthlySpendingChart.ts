@@ -8,6 +8,12 @@ export function createSpendingChart(data: MonthlySpending, currency: string) {
   const labels = data.categories.map(category => category.category);
   const values = data.categories.map(category => category.amount);
 
+  const ariaLabelString = data.categories.map(category => {
+    return `${category.category}: ${category.amount} ${currency}`
+  })
+  const valueTotal = data.categories.reduce((total, category) => total + category.amount, 0);
+  chartCanvas.setAttribute("aria-label", "Monthly spending: " + ariaLabelString.join(", ") + ". Total: " + valueTotal + " " + currency);
+
   new Chart(chartCanvas, {
     type: "doughnut",
     data: {
