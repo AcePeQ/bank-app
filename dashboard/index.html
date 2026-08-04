@@ -14,6 +14,7 @@
   <link href="/src/styles/components/buttons.css" rel="stylesheet" />
   <link href="/src/styles/components/loader.css" rel="stylesheet" />
   <link href="/src/styles/components/account-card.css" rel="stylesheet" />
+  <link href="/src/styles/components/transaction.css" rel="stylesheet" />
   <link href="/src/styles/pages/dashboard.css" rel="stylesheet" />
 
   <script src="/src/pages/dashboard.ts" defer type="module"></script>
@@ -104,29 +105,11 @@
 
         <section class="month-spending-section">
           <h2>Monthly Spending</h2>
+          <h3>Total: <span class="monthly-spending-total" id="monthlySpendingTotal">$4,271</span></h3>
 
-          <div class="chart">
-            Here is the chart
+          <div class="monthly-spending-chart">
+            <canvas id="monthlySpendingCanvas"></canvas>
           </div>
-
-          <ol class="month-spending__list">
-            <li class="month-spending__item">
-              <span class="month-spending__dot"></span>
-              <h3 class="month-spending__title">Investments</h3>
-              <p class="month-spending__value">$2,996</p>
-            </li>
-            <li class="month-spending__item">
-              <span class="month-spending__dot"></span>
-              <h3 class="month-spending__title">Investments</h3>
-              <p class="month-spending__value">$2,996</p>
-            </li>
-
-            <li class="month-spending__item">
-              <span class="month-spending__dot"></span>
-              <h3 class="month-spending__title">Investments</h3>
-              <p class="month-spending__value">$2,996</p>
-            </li>
-          </ol>
         </section>
       </div>
     </main>

@@ -44,9 +44,12 @@ export const dashboardMock = {
     spent: 3_245.5,
     budget: 5_000,
     categories: [
-      { category: "Investments", amount: 1_500 },
+      { category: "Subscriptions", amount: 400 },
+      { category: "Transport", amount: 100 },
+      { category: "Daily life", amount: 1_500 },
       { category: "Shopping", amount: 945.5 },
       { category: "Bills", amount: 800 },
+      { category: "Others", amount: 800 },
     ],
   },
 } satisfies DashboardData;

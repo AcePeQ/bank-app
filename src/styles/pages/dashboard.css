@@ -274,7 +274,6 @@
 }
 
 
-
 .card-activity {
   display: flex;
   flex-direction: column;
@@ -335,109 +334,10 @@
   background-color: var(--clr-surface-300);
 }
 
-.card-activity__list__item {
-  display: block;
-}
-
-.card-payment {
-  display: flex;
-
-  align-items: center;
-
-  gap: var(--space-xs);
-
-  padding: var(--space-xs);
-  background-color: var(--clr-surface-100);
-  border-radius: 12px;
-}
-
-.card-payment__icon {
-  flex-shrink: 0;
-
-  background-color: var(--clr-surface-300);
-  color: var(--clr-secondary-900);
-
-  inline-size: 50px;
-  block-size: 50px;
-
-  border-radius: 100rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-payment__icon svg {
-  inline-size: 100%;
-  block-size: 100%;
-
-  max-inline-size: 30px;
-  max-block-size: 30px;
-
-  stroke-width: 2px;
-  stroke: currentColor;
-}
-
-.card-payment__info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.card-payment__info h3 {
-  font-size: var(--fs-300);
-  font-weight: var(--fw-700);
-  font-family: var(--ff-primary);
-  color: var(--clr-secondary-900);
-}
-
-.card-payment__info div {
-  font-size: var(--fs-200);
-  font-weight: var(--fw-400);
-  color: var(--clr-secondary-500);
-
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 6px;
-  align-items: center;
-}
-
-.card-payment__total {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-
-  margin-inline-start: auto;
-}
-
-.card-payment__value {
-  font-family: var(--ff-secondary);
-  font-size: var(--fs-300);
-  font-weight: var(--fw-700);
-}
-
-.card-payment__value.card-payment__value--income {
-  color: var(--clr-green-500);
-}
-
-.card-payment__value.card-payment__value--expense {
-  color: var(--clr-red-500);
-}
-
-.card-payment__status {
-  font-size: var(--fs-200);
-  font-weight: var(--fw-500);
-  color: var(--clr-secondary-300);
-
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-align: right;
-}
-
 .month-spending-section {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--space-s);
 
   padding: var(--space-xs);
@@ -449,50 +349,36 @@
   font-size: var(--fs-500);
   font-weight: var(--fw-800);
   color: var(--clr-secondary-900);
-
-  @media (width >=450px) {
-    text-align: center;
-  }
 }
 
-.month-spending__list {
+.month-spending-section h3 {
+  font-size: var(--fs-400);
+  font-weight: var(--fw-600);
+  color: var(--clr-secondary-700);
+
+  font-family: var(--ff-primary);
+
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xs);
-
-  @media (width >=450px) {
-    align-items: center;
-  }
-}
-
-.month-spending__item {
-  display: flex;
   align-items: center;
-
-  gap: var(--space-s);
 }
 
-.month-spending__dot {
-  flex-shrink: 0;
-
-  inline-size: 12px;
-  block-size: 12px;
-
-  background-color: var(--clr-primary-500);
-  border-radius: 100rem;
-}
-
-.month-spending__title {
-  font-size: var(--fs-300);
-  font-weight: var(--fw-500);
+.month-spending-section h3 .monthly-spending-total {
+  font-size: var(--fs-600);
+  font-weight: var(--fw-700);
   color: var(--clr-secondary-900);
-  font-family: var(--ff-primary);
 }
 
-.month-spending__value {
-  font-size: var(--fs-300);
-  font-weight: var(--fw-600);
-  color: var(--clr-secondary-900);
 
-  margin-inline-start: auto;
+.monthly-spending-chart {
+  margin-inline: auto;
+
+  max-inline-size: 350px;
+  inline-size: 100%;
+}
+
+.monthly-spending-chart canvas {
+  width: 100% !important;
+  height: auto !important;
+  inline-size: 100%;
 }
