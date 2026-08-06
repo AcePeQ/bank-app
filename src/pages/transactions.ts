@@ -4,6 +4,7 @@ import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createSearch } from "../components/search";
 import { formatCurrency } from "../utils/formats";
+import { initCustomSelects } from "../components/customSelect";
 
 function init() {
   const outflowValueEl = getRequiredElement("#outflowValue", HTMLSpanElement);
@@ -32,6 +33,7 @@ function init() {
 
   createHeader();
   createSidebar();
+  initCustomSelects();
 }
 
 init();

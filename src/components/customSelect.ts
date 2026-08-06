@@ -1,6 +1,6 @@
 import { getRequiredElement, getRequiredElements } from "../utils/helpers";
 
-function init() {
+export function initCustomSelects() {
   document.addEventListener("DOMContentLoaded", () => {
     const customSelects = getRequiredElements(".custom-select", HTMLDivElement)
     customSelects.forEach((customSelect) => {
@@ -19,5 +19,3 @@ function init() {
     });
   });
 }
-
-init();
