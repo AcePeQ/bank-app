@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/src/styles/reset.css" rel="stylesheet" />
+  <link href="/src/styles/main.css" rel="stylesheet" />
+  <link href="/src/styles/base.css" rel="stylesheet" />
+  <link href="/src/styles/layout.css" rel="stylesheet" />
+  <link href="/src/styles/components/header.css" rel="stylesheet" />
+  <link href="/src/styles/components/search.css" rel="stylesheet" />
+  <link href="/src/styles/components/sidebar.css" rel="stylesheet" />
+  <link href="/src/styles/components/buttons.css" rel="stylesheet" />
+  <link href="/src/styles/components/loader.css" rel="stylesheet" />
+  <link href="/src/styles/components/transaction.css" rel="stylesheet" />
+  <link href="/src/styles/pages/transactions.css" rel="stylesheet" />
+
+  <script src="/src/pages/transactions.ts" defer type="module"></script>
+
+  <title>Dashboard</title>
+</head>
+
+<body>
+  <div class="base-layout grid-12">
+    <header id="header" class="header"></header>
+
+    <aside id="sidebar" class="sidebar"></aside>
+
+    <main class="main">
+      <div class="main-wrapper">
+        <h1 class="sr-only">Transactions</h1>
+
+        <hgroup class="outflow-wrapper">
+          <h2 class="outflow__title">Total outflow</h2>
+          <p class="outflow__this-month"><span id="outflowValue" class="outflow__value"></span> this month</p>
+        </hgroup>
+
+        <div id="transactionsSearchWrapper" class="transactions-search-wrapper"></div>
+
+        <div id="transactionsFiltersWrapper">
+          <div class="direction-filters">
+            <ul class="direction-filters__list">
+              <li class="direction-filters__item">
+                <button class="direction-filters__button direction-filters_button--active">All</button>
+              </li>
+              <li class="direction-filters__item">
+                <button class="direction-filters__button direction-filters_button--active">Income</button>
+              </li>
+              <li class="direction-filters__item">
+                <button class="direction-filters__button direction-filters_button--active">Expenses</button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sortby-filter">
+            <select class="sortby-filter__select">
+              <option class="sortby-filter__option" value="newest">Newest</option>
+              <option class="sortby-filter__option" value="oldest">Oldest</option>
+              <option class="sortby-filter__option" value="highest">Highest</option>
+              <option class="sortby-filter__option" value="lowest">Lowest</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="transactionsListWrapper" class="transactions-list-wrapper"></div>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

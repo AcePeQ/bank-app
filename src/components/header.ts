@@ -1,17 +1,27 @@
+import { Bell, createIcons, LogOut, Search } from "lucide";
 import { ROUTES } from "../utils/constants";
 import { createElement, getRequiredElement } from "../utils/helpers";
+import { createSearch } from "./search";
 
 export function createHeader() {
   const headerEl = getRequiredElement("#header", HTMLElement);
   headerEl.textContent = "";
 
   const logo = createLogo();
-  const search = createSearch();
+  const search = createSearch("searchAccountsAndAssets", "Search accounts and assets", "Search accounts and assets...", ["input-box", "input-box--header"]);
   const actions = createActions();
 
   headerEl.appendChild(logo);
   headerEl.appendChild(search);
   headerEl.appendChild(actions);
+
+  createIcons({
+    icons: {
+      Bell,
+      Search,
+      LogOut,
+    }
+  })
 }
 
 function createLogo() {
@@ -27,34 +37,34 @@ function createLogo() {
   return logoLink;
 }
 
-function createSearch() {
-  const div = createElement("form", ["input-box"]);
-  div.setAttribute("role", "search");
+// function createSearch() {
+//   const div = createElement("form", ["input-box"]);
+//   div.setAttribute("role", "search");
 
-  const label = createElement("label", ["sr-only"]);
-  label.setAttribute("for", "search");
-  label.textContent = "Search accounts or assets";
-  div.appendChild(label);
+//   const label = createElement("label", ["sr-only"]);
+//   label.setAttribute("for", "search");
+//   label.textContent = "Search accounts or assets";
+//   div.appendChild(label);
 
-  const button = createElement("button", ["search-btn"]);
-  button.setAttribute("aria-label", "Search accounts or assets");
-  button.type = "submit";
+//   const button = createElement("button", ["search-btn"]);
+//   button.setAttribute("aria-label", "Search accounts or assets");
+//   button.type = "submit";
 
-  const icon = createElement("i", []);
-  icon.dataset.lucide = "search";
-  button.appendChild(icon);
+//   const icon = createElement("i", []);
+//   icon.dataset.lucide = "search";
+//   button.appendChild(icon);
 
-  const input = createElement("input", ["input-search"]);
-  input.id = "search";
-  input.type = "text";
-  input.name = "search";
-  input.placeholder = "Search accounts or assets...";
+//   const input = createElement("input", ["input-search"]);
+//   input.id = "search";
+//   input.type = "text";
+//   input.name = "search";
+//   input.placeholder = "Search accounts or assets...";
 
-  div.appendChild(button);
-  div.appendChild(input);
+//   div.appendChild(button);
+//   div.appendChild(input);
 
-  return div;
-}
+//   return div;
+// }
 
 function createActions() {
   const div = createElement("div", ["actions"]);

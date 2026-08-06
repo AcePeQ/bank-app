@@ -11,3 +11,10 @@ export type Transaction = {
   direction: TransactionDirection;
   status: TransactionStatus;
 };
+
+export type TransactionsState = {
+  transactions: Transaction[];
+  query: string;
+  diretion: TransactionDirection | "all";
+  sortBy: "newest" | "oldest" | "highest";
+}

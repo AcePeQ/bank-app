@@ -36,37 +36,15 @@
   max-width: 90px;
 }
 
-.input-box {
+.input-box--header {
   display: none;
-  position: relative;
-
-  flex: 1 1 0;
   max-inline-size: 600px;
-
 
   @media (width >=600px) {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-}
-
-.search-btn {
-  position: absolute;
-  top: 50%;
-  left: 0;
-
-  translate: 12px -50%;
-}
-
-.search-btn svg {
-  stroke-width: 1.5px;
-  color: var(--clr-secondary-700);
-}
-
-.input-box .input-search {
-  padding-left: 50px;
-  inline-size: 100%;
 }
 
 .actions {

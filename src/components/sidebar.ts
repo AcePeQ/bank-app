@@ -1,3 +1,4 @@
+import { createIcons, CreditCard, House, LogOut, Repeat, Settings } from "lucide";
 import { ROUTES } from "../utils/constants";
 import { createElement, getRequiredElement } from "../utils/helpers";
 
@@ -77,6 +78,16 @@ export function createSidebar() {
   sidebarEl.appendChild(heading);
   sidebarEl.appendChild(navigation);
   sidebarEl.appendChild(actionNavigation);
+
+  createIcons({
+    icons: {
+      House,
+      CreditCard,
+      Repeat,
+      Settings,
+      LogOut,
+    }
+  })
 }
 
 

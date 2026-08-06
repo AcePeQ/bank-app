@@ -1,0 +1,28 @@
+.outflow-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.outflow__title {
+  font-size: var(--fs-200);
+  font-weight: var(--fw-400);
+  font-family: var(--ff-primary);
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+
+  color: var(--clr-secondary-700);
+}
+
+.outflow__this-month {
+  font-size: var(--fs-400);
+  font-weight: var(--fw-400);
+}
+
+.outflow__value {
+  font-size: var(--fs-800);
+  font-weight: var(--fw-800);
+  font-family: var(--ff-secondary);
+
+  display: inline-block;
+  padding-inline-end: 4px;
+}
