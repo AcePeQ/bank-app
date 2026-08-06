@@ -1,8 +1,9 @@
 export function getRequiredElement<T extends Element>(
   selector: string,
   ElementClass: new () => T,
+  root: ParentNode = document
 ): T {
-  const element = document.querySelector(selector);
+  const element = root.querySelector(selector);
 
   if (!(element instanceof ElementClass)) {
     throw new Error(
@@ -11,6 +12,32 @@ export function getRequiredElement<T extends Element>(
   }
 
   return element;
+}
+
+export function getRequiredElements<T extends Element>(
+  selector: string,
+  ElementClass: new () => T,
+  root: ParentNode = document
+): T[] {
+  const elements = Array.from(root.querySelectorAll(selector), (element) => element as T);
+
+  if (elements.length === 0) {
+    throw new Error(
+      `Required elements "${selector}" list is empty!`,
+    );
+  }
+
+  const areElementsCorrect = elements.every(
+    (element) => element instanceof ElementClass,
+  );
+
+  if (!areElementsCorrect) {
+    throw new Error(
+      `Required elements "${selector}" was not found or has an incorrect type.`,
+    );
+  }
+
+  return elements;
 }
 
 export function getErrorElement(

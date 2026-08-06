@@ -26,3 +26,126 @@
   display: inline-block;
   padding-inline-end: 4px;
 }
+
+.transactions-filters {
+  display: flex;
+  flex-direction: column;
+
+  gap: var(--space-s);
+}
+
+.direction-filters__list {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.direction-filters__item {
+  display: inline-block;
+}
+
+.filter__button {
+  background-color: var(--clr-surface-400);
+  color: var(--clr-secondary-700);
+
+  border-radius: 100rem;
+
+  font-size: var(--fs-300);
+  font-weight: var(--fw-500);
+  letter-spacing: 0.7px;
+
+  padding: var(--space-2xs) var(--space-s);
+}
+
+.filter__button:hover,
+.filter__button:active,
+.filter__button:focus-visible {
+  background-color: var(--clr-primary-400);
+  color: var(--clr-surface-100);
+}
+
+.filter__button--active {
+  background-color: var(--clr-primary-500);
+  color: var(--clr-surface-100);
+}
+
+.filter__button--active:hover,
+.filter__button--active:active,
+.filter__button--active:focus-visible {
+  background-color: var(--clr-primary-500);
+  color: var(--clr-surface-100);
+}
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+  inline-size: 100%;
+  max-width: 100%;
+}
+
+.select-button {
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.675em 1em;
+  border: 1px solid #caced1;
+  border-radius: 0.25rem;
+  background-color: white;
+  cursor: pointer;
+}
+
+.arrow {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #000;
+  transition: transform ease-in-out 0.3s;
+}
+
+.select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border: 1px solid #caced1;
+  border-radius: 0.25rem;
+  background-color: white;
+  list-style: none;
+  padding: 10px;
+  margin: 10px 0 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.select-dropdown::-webkit-scrollbar {
+  width: 7px;
+}
+
+.select-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+
+.select-dropdown::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 25px;
+}
+
+.select-dropdown li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Highlight the selected option */
+.select-dropdown li.selected {
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.select-dropdown li:hover,
+.select-dropdown li:focus {
+  background-color: #f2f2f2;
+  border-radius: 4px;
+}

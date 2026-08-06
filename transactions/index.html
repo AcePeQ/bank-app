@@ -19,7 +19,7 @@
 
   <script src="/src/pages/transactions.ts" defer type="module"></script>
 
-  <title>Dashboard</title>
+  <title>Transactions</title>
 </head>
 
 <body>
@@ -37,30 +37,38 @@
           <p class="outflow__this-month"><span id="outflowValue" class="outflow__value"></span> this month</p>
         </hgroup>
 
-        <div id="transactionsSearchWrapper" class="transactions-search-wrapper"></div>
+        <div class="transactions-filters">
+          <div id="transactionsSearchWrapper" class="transactions-search-wrapper"></div>
 
-        <div id="transactionsFiltersWrapper">
-          <div class="direction-filters">
-            <ul class="direction-filters__list">
-              <li class="direction-filters__item">
-                <button class="direction-filters__button direction-filters_button--active">All</button>
-              </li>
-              <li class="direction-filters__item">
-                <button class="direction-filters__button direction-filters_button--active">Income</button>
-              </li>
-              <li class="direction-filters__item">
-                <button class="direction-filters__button direction-filters_button--active">Expenses</button>
-              </li>
-            </ul>
+          <div id="transactionsFiltersWrapper">
+            <div class="direction-filters">
+              <ul class="direction-filters__list">
+                <li class="direction-filters__item">
+                  <button class="filter__button filter__button--active">All</button>
+                </li>
+                <li class="direction-filters__item">
+                  <button class="filter__button">Income</button>
+                </li>
+                <li class="direction-filters__item">
+                  <button class="filter__button">Expenses</button>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <div class="sortby-filter">
-            <select class="sortby-filter__select">
-              <option class="sortby-filter__option" value="newest">Newest</option>
-              <option class="sortby-filter__option" value="oldest">Oldest</option>
-              <option class="sortby-filter__option" value="highest">Highest</option>
-              <option class="sortby-filter__option" value="lowest">Lowest</option>
-            </select>
+            <div class="custom-select">
+              <button class="select-button">
+                <span class="selected-value">Open this select menu</span>
+                <span class="arrow"></span>
+              </button>
+              <ul class="select-dropdown hidden">
+                <li>Newest</li>
+                <li>Oldest</li>
+                <li>Highest</li>
+                <li>Lowest</li>
+              </ul>
+            </div>
           </div>
         </div>
 
