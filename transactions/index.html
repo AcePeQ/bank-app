@@ -59,11 +59,12 @@
 
           <div class="sortby-filter">
             <div class="custom-select">
-              <button class="select-button">
+              <button id="dropdown-button" class="select-button" role="combobox" aria-label="select button"
+                aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
                 <span class="selected-value">Open this select menu</span>
                 <span class="arrow"></span>
               </button>
-              <ul class="select-dropdown hidden">
+              <ul class="select-dropdown hidden" role="listbox" id="select-dropdown" aria-labelledby="dropdown-button">
                 <li>Newest</li>
                 <li>Oldest</li>
                 <li>Highest</li>
