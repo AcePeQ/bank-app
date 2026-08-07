@@ -42,35 +42,3 @@
 .direction-filters__item {
   display: inline-block;
 }
-
-.filter__button {
-  background-color: var(--clr-surface-400);
-  color: var(--clr-secondary-700);
-
-  border-radius: 100rem;
-
-  font-size: var(--fs-300);
-  font-weight: var(--fw-500);
-  letter-spacing: 0.7px;
-
-  padding: var(--space-2xs) var(--space-s);
-}
-
-.filter__button:hover,
-.filter__button:active,
-.filter__button:focus-visible {
-  background-color: var(--clr-primary-400);
-  color: var(--clr-surface-100);
-}
-
-.filter__button--active {
-  background-color: var(--clr-primary-500);
-  color: var(--clr-surface-100);
-}
-
-.filter__button--active:hover,
-.filter__button--active:active,
-.filter__button--active:focus-visible {
-  background-color: var(--clr-primary-500);
-  color: var(--clr-surface-100);
-}

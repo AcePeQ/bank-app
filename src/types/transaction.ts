@@ -15,6 +15,6 @@ export type Transaction = {
 export type TransactionsState = {
   transactions: Transaction[];
   query: string;
-  diretion: TransactionDirection | "all";
-  sortBy: "newest" | "oldest" | "highest";
+  direction: TransactionDirection | "all";
+  sortBy: "newest" | "oldest" | "highest" | "lowest";
 }
