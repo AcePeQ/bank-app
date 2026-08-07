@@ -31,7 +31,13 @@ function init() {
   function renderTransactions(container: HTMLElement, transactions: Transaction[]) {
     container.textContent = "";
 
-    const divWrapper = createElement("div", ["transactions-list-wrapper"]);
+    const divWrapper = createElement("div", ["transactions-list-box"]);
+
+    const titleEl = createElement("h3", ["transactions-title"]);
+    titleEl.textContent = "Today"
+
+    divWrapper.appendChild(titleEl);
+
     const listEl = createElement("ol", ["transactions-list"]);
 
     transactions.forEach(transaction => {
