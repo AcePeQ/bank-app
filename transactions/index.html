@@ -30,46 +30,49 @@
     <aside id="sidebar" class="sidebar"></aside>
 
     <main class="main">
-      <div class="main-wrapper">
+      <div class="main-wrapper main-wrapper-transactions">
         <h1 class="sr-only">Transactions</h1>
 
-        <hgroup class="outflow-wrapper">
-          <h2 class="outflow__title">Total outflow</h2>
-          <p class="outflow__this-month"><span id="outflowValue" class="outflow__value"></span> this month</p>
-        </hgroup>
+        <div class="left-wrapper">
+          <hgroup class="outflow-wrapper">
+            <h2 class="outflow__title">Total outflow</h2>
+            <p class="outflow__this-month"><span id="outflowValue" class="outflow__value"></span> this month</p>
+          </hgroup>
 
-        <div class="transactions-filters">
-          <div id="transactionsSearchWrapper" class="transactions-search-wrapper"></div>
+          <div class="transactions-filters">
+            <div id="transactionsSearchWrapper" class="transactions-search-wrapper"></div>
 
-          <div id="transactionsFiltersWrapper">
-            <div class="direction-filters">
-              <ul class="direction-filters__list">
-                <li class="direction-filters__item">
-                  <button class="filter__button filter__button--active">All</button>
-                </li>
-                <li class="direction-filters__item">
-                  <button class="filter__button">Income</button>
-                </li>
-                <li class="direction-filters__item">
-                  <button class="filter__button">Expenses</button>
-                </li>
-              </ul>
+            <div id="transactionsFiltersWrapper">
+              <div class="direction-filters">
+                <ul class="direction-filters__list">
+                  <li class="direction-filters__item">
+                    <button class="filter__button filter__button--active">All</button>
+                  </li>
+                  <li class="direction-filters__item">
+                    <button class="filter__button">Income</button>
+                  </li>
+                  <li class="direction-filters__item">
+                    <button class="filter__button">Expenses</button>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
 
-          <div class="sortby-filter">
-            <div class="custom-select">
-              <button id="dropdown-button" class="select-button" role="combobox" aria-label="select button"
-                aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
-                <span class="selected-value">Newest</span>
-                <span class="arrow"></span>
-              </button>
-              <ul class="select-dropdown hidden" role="listbox" id="select-dropdown" aria-labelledby="dropdown-button">
-                <li class="selected">Newest</li>
-                <li>Oldest</li>
-                <li>Highest</li>
-                <li>Lowest</li>
-              </ul>
+            <div class="sortby-filter">
+              <div class="custom-select">
+                <button id="dropdown-button" class="select-button" role="combobox" aria-label="select button"
+                  aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
+                  <span class="selected-value">Newest</span>
+                  <span class="arrow"></span>
+                </button>
+                <ul class="select-dropdown hidden" role="listbox" id="select-dropdown"
+                  aria-labelledby="dropdown-button">
+                  <li class="selected">Newest</li>
+                  <li>Oldest</li>
+                  <li>Highest</li>
+                  <li>Lowest</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
