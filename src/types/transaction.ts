@@ -18,3 +18,8 @@ export type TransactionsState = {
   direction: TransactionDirection | "all";
   sortBy: "newest" | "oldest" | "highest" | "lowest";
 }
+
+export type GroupTransaction = {
+  label: string;
+  transactions: Transaction[]
+}

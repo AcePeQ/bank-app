@@ -4,7 +4,7 @@ export const transactionsMock = [
   {
     id: 1,
     name: "Salary",
-    occurredAt: "2026-08-01T08:00:00Z",
+    occurredAt: "2026-08-10T08:00:00Z",
     category: "Income",
     amount: 4_850,
     currency: "USD",

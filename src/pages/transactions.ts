@@ -1,9 +1,9 @@
-import type { Transaction, TransactionsState } from "../types/transaction";
+import type { GroupTransaction, Transaction, TransactionsState } from "../types/transaction";
 import { createElement, getRequiredElement } from "../utils/helpers";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createSearch } from "../components/search";
-import { formatCurrency } from "../utils/formats";
+import { formatCurrency, formatDate } from "../utils/formats";
 import { initCustomSelects } from "../components/customSelect";
 import { transactionsMock } from "../mocks/transactions.mock";
 import { createTransactionItem } from "../components/transaction";
@@ -29,6 +29,8 @@ function init() {
     sortBy: "newest"
   }
 
+  const MILISECONDS_IN_ONE_DAY = 1000 * 60 * 60 * 24
+
   const outflowValueEl = getRequiredElement("#outflowValue", HTMLSpanElement);
   const transactionsSearchWrapperEl = getRequiredElement("#transactionsSearchWrapper", HTMLDivElement);
   const transactionsListWrapperEl = getRequiredElement("#transactionsListWrapper", HTMLDivElement);
@@ -36,29 +38,83 @@ function init() {
   function selectVisibleTransactions(state: TransactionsState): Transaction[] {
     // filter: query, direction, sortowanie
 
-    return state.transactions.filter(transaction => transaction).filter(transaction => transaction).toSorted((a, b) => a.amount - b.amount)
+    return state.transactions;
   }
+
+
 
   function groupTransactions(transactions: Transaction[]) {
-    const currentDateTime = new Date().getTime();
-    const miliSecsInOneDay = 86_400_400
+    const newArray = transactions.reduce((acc: GroupTransaction[], val: Transaction) => {
+      const daysPast = determineDateGroup(val);
+      const label = daysPast === 0 ? "Today" : daysPast === -1 ? "Yesterday" :
+        daysPast < -1 && daysPast >= -7 ? "Last 7 days" : daysPast < -7 && daysPast >= -14 ? "Last 14 days" : formatDate(val.occurredAt, {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        });
 
-    transactions.forEach(transaction => {
-      const transactionDateTime = new Date(transaction.occurredAt).getTime();
-      const timeDiff = transactionDateTime - currentDateTime;
-      const daysPast = Math.floor(timeDiff / miliSecsInOneDay);
+      const currentGroup = acc.find(transaction => transaction.label === label);
 
-      console.log(daysPast);
-    })
+      if (currentGroup) {
+        currentGroup.transactions.push(val);
+      } else {
+        acc.push({
+          label,
+          transactions: [val],
+        })
+      }
+
+      return acc;
+    }, [])
+
+    console.log(newArray);
+
+    return newArray
   }
 
-  function renderTransactions(container: HTMLElement, transactions: Transaction[]) {
-    groupTransactions(transactions);
+  function determineDateGroup(transaction: Transaction) {
+    const currentDateTime = new Date().setHours(0, 0, 0, 0);
+    const transactionDateTime = new Date(transaction.occurredAt).setHours(0, 0, 0, 0);
+
+    const timeDiff = transactionDateTime - currentDateTime;
+    const daysPast = Math.ceil(timeDiff / MILISECONDS_IN_ONE_DAY);
+
+    return daysPast;
+  }
+
+
+  function renderTransactions(container: HTMLElement, transactions: GroupTransaction[]) {
+    container.textContent = "";
+
+
+    transactions.forEach(item => {
+      const divWrapper = createElement("div", ["transactions-list-box"]);
+
+      const titleEl = createElement("h3", ["transactions-title"]);
+      titleEl.textContent = item.label;
+
+      divWrapper.appendChild(titleEl);
+
+      const listEl = createElement("ol", ["transactions-list"]);
+
+      item.transactions.forEach(transaction => {
+        const liEl = createElement("li", ["transaction-item"]);
+        const transactionItem = createTransactionItem(transaction)
+
+        console.log(transactionItem);
+
+        liEl.appendChild(transactionItem);
+        listEl.appendChild(liEl);
+        divWrapper.appendChild(listEl);
+      })
+
+      container.appendChild(divWrapper);
+    })
 
 
 
 
-    // container.textContent = "";
+
 
     // const divWrapper = createElement("div", ["transactions-list-box"]);
 
@@ -89,7 +145,9 @@ function init() {
 
   function render() {
     const visibleTransactions = selectVisibleTransactions(state);
-    renderTransactions(transactionsListWrapperEl, visibleTransactions)
+    const groupedTransactions = groupTransactions(visibleTransactions);
+
+    renderTransactions(transactionsListWrapperEl, groupedTransactions)
 
     createIcons({
       icons: {

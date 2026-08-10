@@ -30,11 +30,14 @@ export function initCustomSelects() {
       options.forEach((option) => {
         option.addEventListener("click", () => {
           handleOptionSelect(option);
-          toggleDropdown(false);
+          toggleDropdown(false, true);
         });
       });
 
-      const toggleDropdown = (expand: boolean | null = null) => {
+      const toggleDropdown = (
+        expand: boolean | null = null,
+        restoreFocus = false,
+      ) => {
         const isOpen =
           expand !== null ? expand : dropdown.classList.contains("hidden");
 
@@ -44,7 +47,10 @@ export function initCustomSelects() {
           updateFocus();
         } else {
           focusedIndex = -1;
-          selectButton.focus();
+
+          if (restoreFocus) {
+            selectButton.focus();
+          }
         }
 
         dropdown.classList.toggle("hidden", !isOpen);
@@ -60,7 +66,7 @@ export function initCustomSelects() {
           event.preventDefault();
           toggleDropdown(true);
         } else if (event.key === "Escape") {
-          toggleDropdown(false);
+          toggleDropdown(false, true);
         }
       });
 
@@ -76,9 +82,9 @@ export function initCustomSelects() {
         } else if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
           handleOptionSelect(options[focusedIndex]);
-          toggleDropdown(false);
+          toggleDropdown(false, true);
         } else if (event.key === "Escape") {
-          toggleDropdown(false);
+          toggleDropdown(false, true);
         }
       });
 
