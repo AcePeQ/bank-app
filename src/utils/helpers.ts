@@ -94,3 +94,7 @@ export function mapStrengthValue(strength: number) {
 
   return mappedStrength;
 }
+
+export function assertUnreachable(x: never): never {
+  throw new Error(`${x} is not assignable to type "never"`);
+}

@@ -1,5 +1,5 @@
 import type { GroupTransaction, Transaction, TransactionsState } from "../types/transaction";
-import { createElement, getRequiredElement } from "../utils/helpers";
+import { assertUnreachable, createElement, getRequiredElement } from "../utils/helpers";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createSearch } from "../components/search";
@@ -35,13 +35,49 @@ function init() {
   const transactionsSearchWrapperEl = getRequiredElement("#transactionsSearchWrapper", HTMLDivElement);
   const transactionsListWrapperEl = getRequiredElement("#transactionsListWrapper", HTMLDivElement);
 
-  function selectVisibleTransactions(state: TransactionsState): Transaction[] {
-    // filter: query, direction, sortowanie
+  function sortByHandler(transaction1: Transaction, transaction2: Transaction, sortOption: "newest" | "oldest" | "highest" | "lowest") {
+    switch (sortOption) {
+      case "newest": {
+        const t1Date = new Date(transaction1.occurredAt).getTime();
+        const t2Date = new Date(transaction2.occurredAt).getTime();
 
-    return state.transactions;
+        return t2Date - t1Date;
+      };
+      case "oldest": {
+        const t1Date = new Date(transaction1.occurredAt).getTime();
+        const t2Date = new Date(transaction2.occurredAt).getTime();
+
+        return t1Date - t2Date;
+      };
+
+      case "highest": {
+        const t1Value = transaction1.amount;
+        const t2Value = transaction2.amount;
+
+        return t2Value - t1Value;
+      };
+
+      case "lowest": {
+        const t1Value = transaction1.amount;
+        const t2Value = transaction2.amount;
+
+        return t1Value - t2Value;
+      };
+      default: {
+        return assertUnreachable(sortOption);
+      }
+    }
   }
 
+  function selectVisibleTransactions(state: TransactionsState): Transaction[] {
+    // filter: query, direction, sortowanie
+    const queryArray = state.transactions.filter(transaction => state.query.length > 2 ? transaction.name.includes(state.query) : transaction);
+    const directionArray = queryArray.filter((transaction => state.direction !== "all" ? transaction.direction === state.direction : transaction));
 
+    const sortedArray = directionArray.toSorted((a, b) => sortByHandler(a, b, state.sortBy));
+
+    return sortedArray;
+  }
 
   function groupTransactions(transactions: Transaction[]) {
     const newArray = transactions.reduce((acc: GroupTransaction[], val: Transaction) => {
