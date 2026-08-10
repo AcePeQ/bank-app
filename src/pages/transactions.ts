@@ -70,10 +70,8 @@ function init() {
   }
 
   function selectVisibleTransactions(state: TransactionsState): Transaction[] {
-    // filter: query, direction, sortowanie
     const queryArray = state.transactions.filter(transaction => state.query.length > 2 ? transaction.name.includes(state.query) : transaction);
     const directionArray = queryArray.filter((transaction => state.direction !== "all" ? transaction.direction === state.direction : transaction));
-
     const sortedArray = directionArray.toSorted((a, b) => sortByHandler(a, b, state.sortBy));
 
     return sortedArray;
@@ -147,33 +145,6 @@ function init() {
       divWrapper.appendChild(listEl);
       container.appendChild(divWrapper);
     })
-
-
-
-
-
-
-    // const divWrapper = createElement("div", ["transactions-list-box"]);
-
-    // const titleEl = createElement("h3", ["transactions-title"]);
-    // titleEl.textContent = "Today"
-
-    // divWrapper.appendChild(titleEl);
-
-    // const listEl = createElement("ol", ["transactions-list"]);
-
-    // transactions.forEach(transaction => {
-    //   const liEl = createElement("li", ["transaction-item"]);
-    //   const transactionItem = createTransactionItem(transaction)
-
-    //   console.log(transactionItem);
-
-    //   liEl.appendChild(transactionItem);
-    //   listEl.appendChild(liEl);
-    //   divWrapper.appendChild(listEl);
-    // })
-
-    // container.appendChild(divWrapper);
   }
 
   function updateOutflowValue(value: number, currency: string) {
