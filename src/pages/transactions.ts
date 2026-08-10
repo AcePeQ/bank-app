@@ -67,17 +67,18 @@ function init() {
       return acc;
     }, [])
 
-    console.log(newArray);
-
     return newArray
   }
 
   function determineDateGroup(transaction: Transaction) {
-    const currentDateTime = new Date().setHours(0, 0, 0, 0);
-    const transactionDateTime = new Date(transaction.occurredAt).setHours(0, 0, 0, 0);
+    const currentDate = new Date();
+    const transactionDate = new Date(transaction.occurredAt);
 
-    const timeDiff = transactionDateTime - currentDateTime;
-    const daysPast = Math.ceil(timeDiff / MILISECONDS_IN_ONE_DAY);
+    const currentDateUTC = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+    const transactionDateUTC = Date.UTC(transactionDate.getFullYear(), transactionDate.getMonth(), transactionDate.getDate());
+
+    const timeDiff = transactionDateUTC - currentDateUTC;
+    const daysPast = timeDiff / MILISECONDS_IN_ONE_DAY;
 
     return daysPast;
   }
@@ -105,9 +106,9 @@ function init() {
 
         liEl.appendChild(transactionItem);
         listEl.appendChild(liEl);
-        divWrapper.appendChild(listEl);
       })
 
+      divWrapper.appendChild(listEl);
       container.appendChild(divWrapper);
     })
 
