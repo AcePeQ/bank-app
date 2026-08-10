@@ -1,4 +1,3 @@
-import { Bell, createIcons, LogOut, Search } from "lucide";
 import { ROUTES } from "../utils/constants";
 import { createElement, getRequiredElement } from "../utils/helpers";
 import { createSearch } from "./search";
@@ -15,13 +14,6 @@ export function createHeader() {
   headerEl.appendChild(search);
   headerEl.appendChild(actions);
 
-  createIcons({
-    icons: {
-      Bell,
-      Search,
-      LogOut,
-    }
-  })
 }
 
 function createLogo() {

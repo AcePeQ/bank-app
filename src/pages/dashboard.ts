@@ -83,6 +83,13 @@ function init() {
 
   createIcons({
     icons: {
+      Bell,
+      Search,
+      LogOut,
+      House,
+      CreditCard,
+      Repeat,
+      Settings,
       SendHorizontal,
       BanknoteArrowUp,
       BanknoteArrowDown,
