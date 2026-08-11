@@ -1,5 +1,5 @@
-import type { GroupTransaction, SortOption, Transaction, TransactionsState } from "../types/transaction";
-import { assertUnreachable, createElement, getRequiredElement } from "../utils/helpers";
+import type { GroupTransaction, SortOption, Transaction, TransactionDirection, TransactionsState } from "../types/transaction";
+import { assertUnreachable, createElement, getErrorElement, getRequiredElement } from "../utils/helpers";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createSearch } from "../components/search";
@@ -28,6 +28,12 @@ function init() {
     "newest",
     "oldest",
   ] as const satisfies readonly SortOption[];
+
+  const FILTER_VALUES = [
+    "income",
+    "expense",
+    "all"
+  ] as const satisfies readonly TransactionDirection[]
 
   const outflowValueEl = getRequiredElement("#outflowValue", HTMLSpanElement);
   const transactionsSearchWrapperEl = getRequiredElement("#transactionsSearchWrapper", HTMLDivElement);
@@ -192,6 +198,21 @@ function init() {
     render();
   }
 
+  function isFilterValue(value: string): value is TransactionDirection {
+    return FILTER_VALUES.some(filter => filter === value);
+  }
+
+  function handleSelectFilter(value: string) {
+    if (!isFilterValue(value)) {
+      console.error(`Unknown filter value: ${value}`);
+      return;
+    }
+
+    state.direction = value;
+  }
+
+
+
 
   const searchFormEl = createSearch("searchTransactions", "Search transactions", "Search transactions...", ["input-box", "input-box--transactions"]);
   transactionsSearchWrapperEl.appendChild(searchFormEl);
@@ -219,6 +240,15 @@ function init() {
     if (!transactionsFiltersWrapperEl.contains(button)) return;
 
     const filterValue = button.dataset.filter;
+    if (!filterValue) return;
+
+    handleSelectFilter(filterValue);
+
+    const currentActiveFilter = getRequiredElement("button.filter__button--active", HTMLButtonElement, transactionsFiltersWrapperEl);
+    currentActiveFilter.classList.remove("filter__button--active");
+    button.classList.add("filter__button--active");
+
+    render();
   })
 }
 

@@ -1,4 +1,4 @@
-export type TransactionDirection = "income" | "expense";
+export type TransactionDirection = "income" | "expense" | "all";
 export type TransactionStatus = "pending" | "completed" | "failed";
 export type SortOption =
   | "newest"
