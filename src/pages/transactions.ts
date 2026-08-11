@@ -1,4 +1,4 @@
-import type { GroupTransaction, Transaction, TransactionsState } from "../types/transaction";
+import type { GroupTransaction, SortOption, Transaction, TransactionsState } from "../types/transaction";
 import { assertUnreachable, createElement, getRequiredElement } from "../utils/helpers";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
@@ -22,6 +22,12 @@ import {
 
 
 function init() {
+  const MILISECONDS_IN_ONE_DAY = 1000 * 60 * 60 * 24
+
+  const outflowValueEl = getRequiredElement("#outflowValue", HTMLSpanElement);
+  const transactionsSearchWrapperEl = getRequiredElement("#transactionsSearchWrapper", HTMLDivElement);
+  const transactionsListWrapperEl = getRequiredElement("#transactionsListWrapper", HTMLDivElement);
+
   const state: TransactionsState = {
     transactions: [...transactionsMock],
     query: "",
@@ -29,11 +35,6 @@ function init() {
     sortBy: "newest"
   }
 
-  const MILISECONDS_IN_ONE_DAY = 1000 * 60 * 60 * 24
-
-  const outflowValueEl = getRequiredElement("#outflowValue", HTMLSpanElement);
-  const transactionsSearchWrapperEl = getRequiredElement("#transactionsSearchWrapper", HTMLDivElement);
-  const transactionsListWrapperEl = getRequiredElement("#transactionsListWrapper", HTMLDivElement);
 
   function sortByHandler(transaction1: Transaction, transaction2: Transaction, sortOption: "newest" | "oldest" | "highest" | "lowest") {
     switch (sortOption) {
@@ -121,7 +122,6 @@ function init() {
   function renderTransactions(container: HTMLElement, transactions: GroupTransaction[]) {
     container.textContent = "";
 
-
     transactions.forEach(item => {
       const divWrapper = createElement("div", ["transactions-list-box"]);
 
@@ -176,11 +176,53 @@ function init() {
 
   const searchFormEl = createSearch("searchTransactions", "Search transactions", "Search transactions...", ["input-box", "input-box--transactions"]);
   transactionsSearchWrapperEl.appendChild(searchFormEl);
+  const searchFormInputEl = getRequiredElement("input", HTMLInputElement, searchFormEl);
+
+  function handleSearchQuery(state: TransactionsState) {
+    const query = searchFormInputEl.value;
+    if (query.length < 2) return;
+    state.query = query;
+    render();
+  }
+
+  searchFormEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+    handleSearchQuery(state);
+  })
+
+  searchFormInputEl.addEventListener("input", () => {
+    handleSearchQuery(state);
+  })
+
+  const SORT_OPTIONS = [
+    "newest",
+    "oldest",
+    "highest",
+    "lowest",
+  ] as const satisfies readonly SortOption[];
+
+  function isSortOption(
+    value: string,
+  ): value is SortOption {
+    return SORT_OPTIONS.some(
+      (option) => option === value,
+    );
+  }
+
+  function handleSelectOption(value: string) {
+    if (!isSortOption(value)) {
+      console.error(`Unknown sort option: ${value}`);
+      return;
+    }
+
+    state.sortBy = value;
+    render();
+  }
 
 
   createHeader();
   createSidebar();
-  initCustomSelects();
+  initCustomSelects(handleSelectOption);
   render();
 }
 

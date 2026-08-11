@@ -77,7 +77,6 @@ export function createSidebar() {
   sidebarEl.appendChild(heading);
   sidebarEl.appendChild(navigation);
   sidebarEl.appendChild(actionNavigation);
-
 }
 
 

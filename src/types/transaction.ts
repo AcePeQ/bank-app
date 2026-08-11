@@ -1,5 +1,10 @@
 export type TransactionDirection = "income" | "expense";
 export type TransactionStatus = "pending" | "completed" | "failed";
+export type SortOption =
+  | "newest"
+  | "oldest"
+  | "highest"
+  | "lowest";
 
 export type Transaction = {
   id: number;
@@ -16,7 +21,7 @@ export type TransactionsState = {
   transactions: Transaction[];
   query: string;
   direction: TransactionDirection | "all";
-  sortBy: "newest" | "oldest" | "highest" | "lowest";
+  sortBy: SortOption;
 }
 
 export type GroupTransaction = {

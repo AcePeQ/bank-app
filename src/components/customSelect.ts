@@ -1,6 +1,6 @@
 import { getRequiredElement, getRequiredElements } from "../utils/helpers";
 
-export function initCustomSelects() {
+export function initCustomSelects(optionHandler: (value: string) => void) {
   let focusedIndex = -1;
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -16,6 +16,12 @@ export function initCustomSelects() {
         options.forEach((opt) => opt.classList.remove("selected"));
         option.classList.add("selected");
         selectedValue.textContent = option.textContent.trim();
+
+        const optionValue = option.dataset.value;
+        if (!optionValue) {
+          throw new Error("Custom select option has no data-value.");
+        }
+        optionHandler(optionValue);
       };
 
       const updateFocus = () => {
