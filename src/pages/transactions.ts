@@ -36,7 +36,7 @@ function init() {
   }
 
 
-  function sortByHandler(transaction1: Transaction, transaction2: Transaction, sortOption: "newest" | "oldest" | "highest" | "lowest") {
+  function sortByHandler(transaction1: Transaction, transaction2: Transaction, sortOption: SortOption) {
     switch (sortOption) {
       case "newest": {
         const t1Date = new Date(transaction1.occurredAt).getTime();
@@ -49,20 +49,6 @@ function init() {
         const t2Date = new Date(transaction2.occurredAt).getTime();
 
         return t1Date - t2Date;
-      };
-
-      case "highest": {
-        const t1Value = transaction1.amount;
-        const t2Value = transaction2.amount;
-
-        return t2Value - t1Value;
-      };
-
-      case "lowest": {
-        const t1Value = transaction1.amount;
-        const t2Value = transaction2.amount;
-
-        return t1Value - t2Value;
       };
       default: {
         return assertUnreachable(sortOption);
@@ -197,8 +183,6 @@ function init() {
   const SORT_OPTIONS = [
     "newest",
     "oldest",
-    "highest",
-    "lowest",
   ] as const satisfies readonly SortOption[];
 
   function isSortOption(

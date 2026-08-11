@@ -3,8 +3,6 @@ export type TransactionStatus = "pending" | "completed" | "failed";
 export type SortOption =
   | "newest"
   | "oldest"
-  | "highest"
-  | "lowest";
 
 export type Transaction = {
   id: number;
