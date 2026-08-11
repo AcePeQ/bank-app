@@ -24,9 +24,15 @@ import {
 function init() {
   const MILISECONDS_IN_ONE_DAY = 1000 * 60 * 60 * 24
 
+  const SORT_OPTIONS = [
+    "newest",
+    "oldest",
+  ] as const satisfies readonly SortOption[];
+
   const outflowValueEl = getRequiredElement("#outflowValue", HTMLSpanElement);
   const transactionsSearchWrapperEl = getRequiredElement("#transactionsSearchWrapper", HTMLDivElement);
   const transactionsListWrapperEl = getRequiredElement("#transactionsListWrapper", HTMLDivElement);
+  const transactionsFiltersWrapperEl = getRequiredElement("#transactionsFiltersWrapper", HTMLDivElement);
 
   const state: TransactionsState = {
     transactions: [...transactionsMock],
@@ -57,8 +63,14 @@ function init() {
   }
 
   function selectVisibleTransactions(state: TransactionsState): Transaction[] {
-    const queryArray = state.transactions.filter(transaction => state.query.length > 2 ? transaction.name.includes(state.query) : transaction);
-    const directionArray = queryArray.filter((transaction => state.direction !== "all" ? transaction.direction === state.direction : transaction));
+    const normalizedQuery = state.query.trim().toLowerCase();
+
+    const queryArray = state.transactions.filter(transaction => {
+      const isQueryTooShort = normalizedQuery.length < 2;
+      const matchesQuery = transaction.name.toLowerCase().includes(normalizedQuery);
+      return isQueryTooShort || matchesQuery;
+    });
+    const directionArray = queryArray.filter((transaction => state.direction === "all" || transaction.direction === state.direction));
     const sortedArray = directionArray.toSorted((a, b) => sortByHandler(a, b, state.sortBy));
 
     return sortedArray;
@@ -122,7 +134,6 @@ function init() {
         const liEl = createElement("li", ["transaction-item"]);
         const transactionItem = createTransactionItem(transaction)
 
-        console.log(transactionItem);
 
         liEl.appendChild(transactionItem);
         listEl.appendChild(liEl);
@@ -158,32 +169,10 @@ function init() {
     })
   }
 
-  updateOutflowValue(4_230.2, "USD")
-
-  const searchFormEl = createSearch("searchTransactions", "Search transactions", "Search transactions...", ["input-box", "input-box--transactions"]);
-  transactionsSearchWrapperEl.appendChild(searchFormEl);
-  const searchFormInputEl = getRequiredElement("input", HTMLInputElement, searchFormEl);
-
-  function handleSearchQuery(state: TransactionsState) {
-    const query = searchFormInputEl.value;
-    if (query.length < 2) return;
-    state.query = query;
+  function handleSearchQuery() {
+    state.query = searchFormInputEl.value.trim().toLowerCase();
     render();
   }
-
-  searchFormEl.addEventListener("submit", (e) => {
-    e.preventDefault();
-    handleSearchQuery(state);
-  })
-
-  searchFormInputEl.addEventListener("input", () => {
-    handleSearchQuery(state);
-  })
-
-  const SORT_OPTIONS = [
-    "newest",
-    "oldest",
-  ] as const satisfies readonly SortOption[];
 
   function isSortOption(
     value: string,
@@ -204,10 +193,33 @@ function init() {
   }
 
 
+  const searchFormEl = createSearch("searchTransactions", "Search transactions", "Search transactions...", ["input-box", "input-box--transactions"]);
+  transactionsSearchWrapperEl.appendChild(searchFormEl);
+  const searchFormInputEl = getRequiredElement("input", HTMLInputElement, searchFormEl);
+
   createHeader();
   createSidebar();
+  updateOutflowValue(4_230.2, "USD")
   initCustomSelects(handleSelectOption);
   render();
+
+  searchFormEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+    handleSearchQuery();
+  })
+
+  searchFormInputEl.addEventListener("input", () => {
+    handleSearchQuery();
+  })
+
+  transactionsFiltersWrapperEl.addEventListener("click", (event) => {
+    const button = (event.target as Element).closest<HTMLButtonElement>("[data-filter]");
+
+    if (!button) return;
+    if (!transactionsFiltersWrapperEl.contains(button)) return;
+
+    const filterValue = button.dataset.filter;
+  })
 }
 
 init();
