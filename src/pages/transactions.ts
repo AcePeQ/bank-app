@@ -1,5 +1,5 @@
 import type { GroupTransaction, SortOption, Transaction, TransactionDirection, TransactionsState } from "../types/transaction";
-import { assertUnreachable, createElement, getErrorElement, getRequiredElement } from "../utils/helpers";
+import { assertUnreachable, createElement, getRequiredElement } from "../utils/helpers";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createSearch } from "../components/search";
