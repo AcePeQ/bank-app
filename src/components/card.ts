@@ -1,4 +1,5 @@
 import type { Card } from "../types/card";
+import { formatDate } from "../utils/formats";
 import { createElement } from "../utils/helpers";
 
 export function createCard(card: Card): HTMLElement {
@@ -14,7 +15,10 @@ export function createCard(card: Card): HTMLElement {
   const cardCvvValueEl = createElement("span", ["card__detail__value"], "•••");
 
   const cardExpiryEl = createElement("p", ["card__detail"], "Expiry");
-  const cardExpiryValueEl = createElement("span", ["card__detail__value"], card.expirationDate);
+  const cardExpiryValueEl = createElement("span", ["card__detail__value"], formatDate(card.expirationDate, {
+    month: "2-digit",
+    year: "2-digit",
+  }));
 
   cardCvvEl.append(cardCvvValueEl);
   cardExpiryEl.append(cardExpiryValueEl);
