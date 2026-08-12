@@ -70,7 +70,7 @@
 }
 
 .month-spent-wrapper {
-  width: fit-content;
+  inline-size: fit-content;
 }
 
 .month-spent {

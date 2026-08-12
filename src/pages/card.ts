@@ -1,4 +1,4 @@
-import { BanknoteArrowDown, BanknoteArrowUp, Bell, ChevronRight, createIcons, CreditCard, House, LogOut, Repeat, Search, SendHorizontal, Settings } from "lucide";
+import { BanknoteArrowDown, BanknoteArrowUp, Bell, ChevronRight, createIcons, CreditCard, Eye, House, LogOut, Repeat, Search, SendHorizontal, Settings, Snowflake, SquareArrowRightEnter } from "lucide";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createCard } from "../components/card";
@@ -27,10 +27,10 @@ function init() {
       CreditCard,
       Repeat,
       Settings,
-      SendHorizontal,
-      BanknoteArrowUp,
-      BanknoteArrowDown,
+      SquareArrowRightEnter,
       ChevronRight,
+      Snowflake,
+      Eye
     }
   })
 }
