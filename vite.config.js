@@ -9,6 +9,7 @@ export default defineConfig({
         register: resolve(import.meta.dirname, 'register/index.html'),
         dashboard: resolve(import.meta.dirname, 'dashboard/index.html'),
         transactions: resolve(import.meta.dirname, 'transactions/index.html'),
+        card: resolve(import.meta.dirname, 'card/index.html'),
       },
     },
   },
