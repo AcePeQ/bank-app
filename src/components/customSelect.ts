@@ -1,11 +1,12 @@
 import { getRequiredElement, getRequiredElements } from "../utils/helpers";
 
 export function initCustomSelects(optionHandler: (value: string) => void) {
-  let focusedIndex = -1;
+
 
   document.addEventListener("DOMContentLoaded", () => {
     const customSelects = getRequiredElements(".custom-select", HTMLDivElement)
     customSelects.forEach((customSelect) => {
+      let focusedIndex = -1;
       const selectButton = getRequiredElement(".select-button", HTMLButtonElement, customSelect);
       const dropdown = getRequiredElement(".select-dropdown", HTMLUListElement, customSelect)
 

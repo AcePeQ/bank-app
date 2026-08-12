@@ -1,4 +1,4 @@
-export type TransactionDirection = "income" | "expense" | "all";
+export type TransactionDirection = "income" | "expense";
 export type TransactionStatus = "pending" | "completed" | "failed";
 export type SortOption =
   | "newest"
@@ -18,7 +18,7 @@ export type Transaction = {
 export type TransactionsState = {
   transactions: Transaction[];
   query: string;
-  direction: TransactionDirection | "all";
+  direction: FilterDirection;
   sortBy: SortOption;
 }
 
@@ -26,3 +26,5 @@ export type GroupTransaction = {
   label: string;
   transactions: Transaction[]
 }
+
+export type FilterDirection = TransactionDirection | "all";

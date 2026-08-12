@@ -1,5 +1,5 @@
-import type { GroupTransaction, SortOption, Transaction, TransactionDirection, TransactionsState } from "../types/transaction";
-import { assertUnreachable, createElement, getRequiredElement } from "../utils/helpers";
+import type { FilterDirection, GroupTransaction, SortOption, Transaction, TransactionDirection, TransactionsState } from "../types/transaction";
+import { assertUnreachable, createElement, getRequiredElement, getRequiredElements } from "../utils/helpers";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createSearch } from "../components/search";
@@ -21,8 +21,9 @@ import {
 } from "lucide";
 
 
+
 function init() {
-  const MILISECONDS_IN_ONE_DAY = 1000 * 60 * 60 * 24
+  const MILLISECONDS_IN_ONE_DAY = 1000 * 60 * 60 * 24
 
   const SORT_OPTIONS = [
     "newest",
@@ -33,12 +34,13 @@ function init() {
     "income",
     "expense",
     "all"
-  ] as const satisfies readonly TransactionDirection[]
+  ] as const satisfies readonly FilterDirection[]
 
   const outflowValueEl = getRequiredElement("#outflowValue", HTMLSpanElement);
   const transactionsSearchWrapperEl = getRequiredElement("#transactionsSearchWrapper", HTMLDivElement);
   const transactionsListWrapperEl = getRequiredElement("#transactionsListWrapper", HTMLDivElement);
   const transactionsFiltersWrapperEl = getRequiredElement("#transactionsFiltersWrapper", HTMLDivElement);
+  const filterButtonsEls = getRequiredElements("button[data-filter]", HTMLButtonElement, transactionsFiltersWrapperEl);
 
   const state: TransactionsState = {
     transactions: [...transactionsMock],
@@ -49,49 +51,53 @@ function init() {
 
 
   function sortByHandler(transaction1: Transaction, transaction2: Transaction, sortOption: SortOption) {
+    const firstTimestamp = Date.parse(transaction1.occurredAt);
+    const secondTimestamp = Date.parse(transaction2.occurredAt);
+
     switch (sortOption) {
-      case "newest": {
-        const t1Date = new Date(transaction1.occurredAt).getTime();
-        const t2Date = new Date(transaction2.occurredAt).getTime();
+      case "newest":
+        return secondTimestamp - firstTimestamp;
 
-        return t2Date - t1Date;
-      };
-      case "oldest": {
-        const t1Date = new Date(transaction1.occurredAt).getTime();
-        const t2Date = new Date(transaction2.occurredAt).getTime();
+      case "oldest":
+        return firstTimestamp - secondTimestamp;
 
-        return t1Date - t2Date;
-      };
-      default: {
+      default:
         return assertUnreachable(sortOption);
-      }
     }
   }
 
   function selectVisibleTransactions(state: TransactionsState): Transaction[] {
     const normalizedQuery = state.query.trim().toLowerCase();
 
-    const queryArray = state.transactions.filter(transaction => {
+    const matchingQuery = state.transactions.filter(transaction => {
       const isQueryTooShort = normalizedQuery.length < 2;
       const matchesQuery = transaction.name.toLowerCase().includes(normalizedQuery);
       return isQueryTooShort || matchesQuery;
     });
-    const directionArray = queryArray.filter((transaction => state.direction === "all" || transaction.direction === state.direction));
-    const sortedArray = directionArray.toSorted((a, b) => sortByHandler(a, b, state.sortBy));
+    const matchingDirection = matchingQuery.filter((transaction => state.direction === "all" || transaction.direction === state.direction));
+    const sortedTransactions = matchingDirection.toSorted((a, b) => sortByHandler(a, b, state.sortBy));
 
-    return sortedArray;
+    return sortedTransactions;
+  }
+
+  function getDateGrouplabel(transaction: Transaction): string {
+    const daysDifference = determineDateGroup(transaction);
+
+    if (daysDifference === 0) return "Today";
+    if (daysDifference === -1) return "Yesterday";
+    if (daysDifference >= -7) return "Last 7 days";
+    if (daysDifference >= -14) return "Last 14 days";
+
+    return formatDate(transaction.occurredAt, {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
   }
 
   function groupTransactions(transactions: Transaction[]) {
     const newArray = transactions.reduce((acc: GroupTransaction[], val: Transaction) => {
-      const daysPast = determineDateGroup(val);
-      const label = daysPast === 0 ? "Today" : daysPast === -1 ? "Yesterday" :
-        daysPast < -1 && daysPast >= -7 ? "Last 7 days" : daysPast < -7 && daysPast >= -14 ? "Last 14 days" : formatDate(val.occurredAt, {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        });
-
+      const label = getDateGrouplabel(val);
       const currentGroup = acc.find(transaction => transaction.label === label);
 
       if (currentGroup) {
@@ -117,16 +123,27 @@ function init() {
     const transactionDateUTC = Date.UTC(transactionDate.getFullYear(), transactionDate.getMonth(), transactionDate.getDate());
 
     const timeDiff = transactionDateUTC - currentDateUTC;
-    const daysPast = timeDiff / MILISECONDS_IN_ONE_DAY;
+    const daysPast = timeDiff / MILLISECONDS_IN_ONE_DAY;
 
     return daysPast;
   }
 
 
-  function renderTransactions(container: HTMLElement, transactions: GroupTransaction[]) {
+  function renderTransactions(container: HTMLElement, groups: GroupTransaction[]) {
     container.textContent = "";
 
-    transactions.forEach(item => {
+    if (groups.length === 0) {
+      const emptyMessage = createElement(
+        "p",
+        ["transactions-empty"],
+        "No transactions found.",
+      );
+
+      container.replaceChildren(emptyMessage);
+      return;
+    }
+
+    groups.forEach(item => {
       const divWrapper = createElement("div", ["transactions-list-box"]);
 
       const titleEl = createElement("h3", ["transactions-title"]);
@@ -136,9 +153,9 @@ function init() {
 
       const listEl = createElement("ol", ["transactions-list"]);
 
-      item.transactions.forEach(transaction => {
+      item.transactions.forEach(group => {
         const liEl = createElement("li", ["transaction-item"]);
-        const transactionItem = createTransactionItem(transaction)
+        const transactionItem = createTransactionItem(group)
 
 
         liEl.appendChild(transactionItem);
@@ -155,6 +172,8 @@ function init() {
   }
 
   function render() {
+    renderDirectionFilters();
+
     const visibleTransactions = selectVisibleTransactions(state);
     const groupedTransactions = groupTransactions(visibleTransactions);
 
@@ -176,7 +195,6 @@ function init() {
   }
 
   function handleSearchQuery() {
-    state.query = searchFormInputEl.value.trim().toLowerCase();
     render();
   }
 
@@ -198,7 +216,7 @@ function init() {
     render();
   }
 
-  function isFilterValue(value: string): value is TransactionDirection {
+  function isFilterValue(value: string): value is FilterDirection {
     return FILTER_VALUES.some(filter => filter === value);
   }
 
@@ -209,9 +227,21 @@ function init() {
     }
 
     state.direction = value;
+
+    render();
   }
 
+  function renderDirectionFilters() {
+    filterButtonsEls.forEach((button) => {
+      const isActive =
+        button.dataset.filter === state.direction;
 
+      button.classList.toggle(
+        "filter__button--active",
+        isActive,
+      );
+    });
+  }
 
 
   const searchFormEl = createSearch("searchTransactions", "Search transactions", "Search transactions...", ["input-box", "input-box--transactions"]);
@@ -230,11 +260,14 @@ function init() {
   })
 
   searchFormInputEl.addEventListener("input", () => {
+    state.query = searchFormInputEl.value;
     handleSearchQuery();
   })
 
   transactionsFiltersWrapperEl.addEventListener("click", (event) => {
-    const button = (event.target as Element).closest<HTMLButtonElement>("[data-filter]");
+    if (!(event.target instanceof Element)) return;
+
+    const button = event.target.closest<HTMLButtonElement>("[data-filter]");
 
     if (!button) return;
     if (!transactionsFiltersWrapperEl.contains(button)) return;
@@ -243,12 +276,6 @@ function init() {
     if (!filterValue) return;
 
     handleSelectFilter(filterValue);
-
-    const currentActiveFilter = getRequiredElement("button.filter__button--active", HTMLButtonElement, transactionsFiltersWrapperEl);
-    currentActiveFilter.classList.remove("filter__button--active");
-    button.classList.add("filter__button--active");
-
-    render();
   })
 }
 

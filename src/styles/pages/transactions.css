@@ -108,3 +108,12 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 }
+
+.transactions-empty {
+  text-align: center;
+
+  font-size: var(--fs-400);
+  font-weight: var(--fw-500);
+
+  margin-block-start: var(--space-l);
+}
