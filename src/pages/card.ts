@@ -1,15 +1,18 @@
-import { BanknoteArrowDown, BanknoteArrowUp, Bell, ChevronRight, createIcons, CreditCard, Eye, Gauge, HandCoins, House, Landmark, LogOut, Repeat, Search, SendHorizontal, Settings, ShoppingCart, Snowflake, SquareArrowRightEnter } from "lucide";
+import { Bell, ChevronRight, createIcons, CreditCard, Eye, Gauge, HandCoins, House, Landmark, LogOut, Repeat, Search, SendHorizontal, Settings, ShoppingCart, Snowflake, SquareArrowRightEnter } from "lucide";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createCard } from "../components/card";
 import { getRequiredElement } from "../utils/helpers";
 import { dashboardMock } from "../mocks/dashboard.mock";
+import { createSwtich } from "../components/toggleSwitch";
 
 const dashboardData = dashboardMock;
 
 
 function init() {
   const cardWrapperEl = getRequiredElement("#cardContainer", HTMLDivElement);
+  const onlinePaymentsEl = getRequiredElement("#cardSettingsOnlinePayments", HTMLDivElement);
+  const atmWithdrawalsEl = getRequiredElement("#cardSettingsAtmWithdrawals", HTMLDivElement);
 
   createSidebar();
   createHeader();
@@ -17,6 +20,9 @@ function init() {
   const card = createCard(dashboardData.card);
   cardWrapperEl.appendChild(card);
 
+
+  createSwtich("onlinePayments", () => { }, onlinePaymentsEl);
+  createSwtich("atmWithdrawals", () => { }, atmWithdrawalsEl);
 
   createIcons({
     icons: {
