@@ -21,8 +21,8 @@ function init() {
   cardWrapperEl.appendChild(card);
 
 
-  createSwtich("onlinePayments", () => { }, onlinePaymentsEl);
-  createSwtich("atmWithdrawals", () => { }, atmWithdrawalsEl);
+  createSwtich({ id: "onlinePayments" }, () => { }, onlinePaymentsEl);
+  createSwtich({ id: "atmWithdrawals" }, () => { }, atmWithdrawalsEl);
 
   createIcons({
     icons: {

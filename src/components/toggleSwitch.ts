@@ -1,12 +1,16 @@
 import { createElement } from "../utils/helpers";
 
-export function createSwtich(id: string, handler: (e: Event) => void, container: HTMLElement) {
+type SwitchOptions = {
+  id: string;
+}
+
+export function createSwtich(options: SwitchOptions, handler: (e: Event) => void, container: HTMLElement) {
   const labelEl = createElement("label", ["switch"]);
-  labelEl.setAttribute("for", id);
+  labelEl.setAttribute("for", options.id);
 
   const checkboxEl = createElement("input");
   checkboxEl.type = "checkbox";
-  checkboxEl.id = id;
+  checkboxEl.id = options.id;
 
   checkboxEl.addEventListener("change", handler)
 
