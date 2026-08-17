@@ -15,21 +15,31 @@ h4 {
   font-family: var(--ff-secondary);
 }
 
-a:link,
-a:visited {
+:where(a:link, a:visited) {
   text-decoration: none;
   cursor: pointer;
 
   color: var(--clr-primary-400);
   font-weight: var(--fw-700);
 
-  transition: all 0.3s ease-in-out;
+  border-radius: 4px;
+  transition:
+    color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive);
 }
 
-a:hover,
-a:active,
-a:focus-visible {
+:where(a:hover) {
   color: var(--clr-primary-500);
+}
+
+:where(a:active) {
+  color: var(--clr-primary-600);
+}
+
+:where(a:focus-visible) {
+  outline: 0;
+  color: var(--clr-primary-500);
+  box-shadow: var(--focus-ring);
 }
 
 button {
@@ -37,7 +47,23 @@ button {
   cursor: pointer;
 
   background-color: transparent;
-  transition: all 0.3s ease-in-out;
+  transition:
+    color var(--duration-interactive) var(--ease-interactive),
+    background-color var(--duration-interactive) var(--ease-interactive),
+    border-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    transform var(--duration-interactive) var(--ease-interactive),
+    opacity var(--duration-interactive) var(--ease-interactive);
+}
+
+button:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus-ring);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: var(--interactive-disabled-opacity);
 }
 
 label {
@@ -102,7 +128,7 @@ input[type="checkbox"]::before {
   inline-size: 0.65em;
   block-size: 0.65em;
   transform: scale(0);
-  transition: 120ms transform ease-in-out;
+  transition: transform var(--duration-fast) var(--ease-interactive);
   box-shadow: inset 1em 1em var(--clr-primary-300);
 
   transform-origin: center;
@@ -114,12 +140,13 @@ input[type="checkbox"]:checked::before {
 }
 
 input[type="checkbox"]:focus-visible {
-  outline: max(2px, 0.15em) solid currentColor;
-  outline-offset: max(2px, 0.15em);
+  outline: 0;
+  box-shadow: var(--focus-ring);
 }
 
 input[type="checkbox"]:disabled {
-  opacity: 0.5;
+  cursor: not-allowed;
+  opacity: var(--interactive-disabled-opacity);
 }
 
 input[type="checkbox"].invalid {
@@ -146,7 +173,7 @@ ol {
 }
 
 .lucide {
-  color: var(--clr-primary);
+  color: currentColor;
   inline-size: 100%;
   block-size: 100%;
 
@@ -156,24 +183,19 @@ ol {
   align-items: center;
   justify-content: center;
 
-  transition: color 0.3s ease-in-out;
+  pointer-events: none;
+  transition: color var(--duration-interactive) var(--ease-interactive);
 }
 
-.lucide:hover {
-  color: var(--clr-primary-400);
-}
-
-.lucide:active {
-  color: var(--clr-primary-500);
-}
-
-.lucide:focus-visible {
-  color: var(--clr-primary-400);
-  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
-}
-
-.lucide:disabled {
-  opacity: 0.5;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 .hidden {

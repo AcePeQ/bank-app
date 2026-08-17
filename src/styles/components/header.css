@@ -90,6 +90,7 @@
   position: relative;
 
   margin-inline-end: 8px;
+  border-radius: 100rem;
 }
 
 .notifications svg {
@@ -128,14 +129,11 @@
   bottom: -5px;
 }
 
-.notifications:hover {
-  cursor: pointer;
-
+.notifications:hover:not(:disabled) svg,
+.notifications:focus-visible:not(:disabled) svg,
+.logout-btn:hover:not(:disabled) svg,
+.logout-btn:focus-visible:not(:disabled) svg {
   color: var(--clr-primary-400);
-}
-
-.notifications:hover svg {
-  stroke: var(--clr-primary-400);
 }
 
 .logo-wrapper,
@@ -147,6 +145,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 100rem;
 }
 
 .logout-btn svg {
@@ -161,4 +160,14 @@
     width: 36px;
     height: 36px;
   }
+}
+
+.notifications:active:not(:disabled),
+.logout-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.notifications:focus-visible,
+.logout-btn:focus-visible {
+  box-shadow: var(--focus-ring);
 }

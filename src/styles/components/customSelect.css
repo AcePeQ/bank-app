@@ -18,11 +18,23 @@
   cursor: pointer;
 }
 
+.select-button:hover {
+  background-color: var(--clr-surface-600);
+}
+
+.select-button:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+.select-button:active {
+  transform: scale(0.99);
+}
+
 .arrow {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 6px solid var(--clr-secondary-900);
-  transition: transform ease-in-out 0.3s;
+  transition: transform var(--duration-interactive) var(--ease-interactive);
 }
 
 .select-button[aria-expanded="true"] .arrow {
@@ -57,6 +69,12 @@
 
   font-size: var(--fs-300);
   font-weight: var(--fw-400);
+
+  border-radius: 4px;
+  transition:
+    color var(--duration-interactive) var(--ease-interactive),
+    background-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive);
 }
 
 
@@ -72,6 +90,16 @@
   background-color: var(--clr-primary-400);
   color: var(--clr-surface-100);
   border-radius: 4px;
+}
+
+.select-dropdown li:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus-ring);
+}
+
+.select-dropdown li:active {
+  background-color: var(--clr-primary-600);
+  color: var(--clr-surface-100);
 }
 
 .select-dropdown li.selected:hover,

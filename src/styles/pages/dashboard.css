@@ -149,11 +149,25 @@
   flex: 1;
   flex-basis: 150px;
 
-  transition: background-color 300ms ease-in-out;
+  transition:
+    background-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    transform var(--duration-interactive) var(--ease-interactive);
 }
 
-.account-actions .account__action:hover {
+.account-actions .account__action:hover,
+.account-actions .account__action:focus-visible {
   background-color: var(--clr-surface-500);
+}
+
+.account-actions .account__action:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus-ring);
+}
+
+.account-actions .account__action:active {
+  transform: scale(0.98);
+  background-color: var(--clr-surface-600);
 }
 
 .account__action span {
@@ -185,11 +199,13 @@
 
 .account__action .account-action__icon-wrapper,
 .account__action span {
-  transition: color 300ms ease-in-out;
+  transition: color var(--duration-interactive) var(--ease-interactive);
 }
 
 .account-actions .account__action:hover .account-action__icon-wrapper,
-.account-actions .account__action:hover span {
+.account-actions .account__action:hover span,
+.account-actions .account__action:focus-visible .account-action__icon-wrapper,
+.account-actions .account__action:focus-visible span {
   color: var(--clr-primary-400);
 }
 
@@ -200,7 +216,7 @@
   stroke-width: 2px;
   stroke: currentColor;
 
-  transition: stroke 300ms ease-in-out;
+  transition: stroke var(--duration-interactive) var(--ease-interactive);
 }
 
 .account-actions .account__action.account__action--send {
@@ -216,13 +232,20 @@
   color: var(--clr-surface-100);
 }
 
-.account-actions .account__action.account__action--send:hover {
+.account-actions .account__action.account__action--send:hover,
+.account-actions .account__action.account__action--send:focus-visible {
   background-color: var(--clr-primary-500);
 }
 
 .account-actions .account__action.account__action--send:hover .account-action__icon-wrapper,
-.account-actions .account__action.account__action--send:hover span {
+.account-actions .account__action.account__action--send:hover span,
+.account-actions .account__action.account__action--send:focus-visible .account-action__icon-wrapper,
+.account-actions .account__action.account__action--send:focus-visible span {
   color: var(--clr-surface-100);
+}
+
+.account-actions .account__action.account__action--send:active {
+  background-color: var(--clr-primary-600);
 }
 
 .card-sections {
@@ -262,7 +285,7 @@
   justify-content: center;
   gap: 1px;
 
-  transition: color 300ms ease-in-out;
+  transition: color var(--duration-interactive) var(--ease-interactive);
 }
 
 .card-section__header .card-manage-link svg {
@@ -312,7 +335,7 @@
   justify-content: center;
   gap: 1px;
 
-  transition: color 300ms ease-in-out;
+  transition: color var(--duration-interactive) var(--ease-interactive);
 }
 
 .card-activity__header .card-manage-link svg {

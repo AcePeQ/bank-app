@@ -52,6 +52,21 @@
   block-size: 100%;
 }
 
+.card-action__button:hover:not(:disabled),
+.card-action__button:focus-visible:not(:disabled) {
+  color: var(--clr-primary-400);
+  background-color: var(--clr-surface-300);
+}
+
+.card-action__button:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+.card-action__button:active:not(:disabled) {
+  transform: scale(0.98);
+  background-color: var(--clr-surface-400);
+}
+
 .card-action__button__icon-wrapper {
   inline-size: 48px;
   block-size: 48px;
@@ -180,6 +195,7 @@
   font-weight: var(--fw-600);
 
   color: var(--clr-primary-400);
+  border-radius: 6px;
 
   @media (width >=1000px) {
     font-size: var(--fs-400);
@@ -277,15 +293,15 @@
   background-color: var(--clr-surface-300);
 
   transition:
-    border-color 180ms ease-in-out,
-    box-shadow 180ms ease-in-out,
-    background-color 180ms ease-in-out;
+    border-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    background-color var(--duration-interactive) var(--ease-interactive);
 }
 
 .card-settings .money-input:focus-within {
   border-color: var(--clr-primary-400);
   background-color: var(--clr-surface-100);
-  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+  box-shadow: var(--focus-ring);
 }
 
 .card-settings .money-input>span {
@@ -346,10 +362,10 @@
   font-weight: var(--fw-600);
 
   transition:
-    color 180ms ease-in-out,
-    background-color 180ms ease-in-out,
-    box-shadow 180ms ease-in-out,
-    transform 180ms ease-in-out;
+    color var(--duration-interactive) var(--ease-interactive),
+    background-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    transform var(--duration-interactive) var(--ease-interactive);
 }
 
 .card-settings dialog form>div:last-child button:hover {
@@ -362,7 +378,11 @@
 
 .card-settings dialog form>div:last-child button:focus-visible {
   outline: 0;
-  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+  box-shadow: var(--focus-ring);
+}
+
+.card-settings dialog form>div:last-child button:disabled {
+  transform: none;
 }
 
 .card-settings dialog form>div:last-child button[type="button"] {
@@ -403,4 +423,19 @@
   .card-settings dialog form>div:last-child button {
     transition: none;
   }
+}
+
+button.card-settings__action:hover:not(:disabled),
+button.card-settings__action:focus-visible:not(:disabled) {
+  color: var(--clr-primary-500);
+  background-color: var(--clr-surface-100);
+}
+
+button.card-settings__action:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+button.card-settings__action:active:not(:disabled) {
+  transform: scale(0.97);
+  color: var(--clr-primary-600);
 }

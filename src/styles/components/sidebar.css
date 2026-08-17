@@ -111,7 +111,12 @@
 
   flex: 1;
 
-  transition: all 0.3s ease-in-out;
+  transition:
+    color var(--duration-interactive) var(--ease-interactive),
+    background-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    transform var(--duration-interactive) var(--ease-interactive),
+    opacity var(--duration-interactive) var(--ease-interactive);
 
   @media (width >=400px) {
     padding: var(--space-2xs);
@@ -158,7 +163,7 @@
 
   color: var(--clr-secondary-700);
 
-  transition: all 0.3s ease-in-out;
+  transition: color var(--duration-interactive) var(--ease-interactive);
 
   @media (width >=1200px) {
     max-width: var(--fs-400);
@@ -169,38 +174,34 @@
   color: var(--clr-surface-100);
 }
 
-.navigation__link:hover svg {
+.navigation__link:hover:not(:disabled) svg,
+.navigation__link:focus-visible:not(:disabled) svg {
   color: var(--clr-primary-400);
 }
 
-.navigation__link.active:hover svg {
+.navigation__link.active:hover svg,
+.navigation__link.active:focus-visible svg {
   color: var(--clr-surface-100);
 }
 
-.navigation__link:hover {
+.navigation__link:hover:not(:disabled),
+.navigation__link:focus-visible:not(:disabled) {
   color: var(--clr-primary-400);
   background-color: var(--clr-surface-300);
 }
 
-.navigation__link.active:hover {
-  color: var(--clr-surface-100) !important;
-  background-color: var(--clr-primary-400) !important;
+.navigation__link.active:hover,
+.navigation__link.active:focus-visible {
+  color: var(--clr-surface-100);
+  background-color: var(--clr-primary-400);
 }
 
 .navigation__link:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: var(--interactive-disabled-opacity);
 }
 
 .navigation__link:disabled svg {
-  color: var(--clr-secondary-400);
-}
-
-.navigation__link:disabled:hover svg {
-  color: var(--clr-secondary-400);
-}
-
-.navigation__link:disabled:hover {
   color: var(--clr-secondary-400);
 }
 
@@ -213,10 +214,21 @@
 }
 
 .navigation__link:focus-visible {
-  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
-  background-color: var(--clr-surface-300);
+  outline: 0;
+  box-shadow: var(--focus-ring);
 }
 
 .navigation__link:disabled:focus-visible {
   box-shadow: none;
+}
+
+.navigation__link:active:not(:disabled) {
+  transform: scale(0.98);
+  color: var(--clr-primary-600);
+  background-color: var(--clr-surface-400);
+}
+
+.navigation__link.active:active:not(:disabled) {
+  color: var(--clr-surface-100);
+  background-color: var(--clr-primary-600);
 }

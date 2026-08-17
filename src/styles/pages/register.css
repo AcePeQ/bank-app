@@ -113,9 +113,9 @@
   border: 1px solid transparent;
 
   transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    opacity 0.2s ease;
+    border-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    opacity var(--duration-interactive) var(--ease-interactive);
 }
 
 .form__input:hover:not(:disabled, .invalid) {
@@ -123,8 +123,9 @@
 }
 
 .form__input:focus-visible {
+  outline: 0;
   border-color: var(--clr-primary-400);
-  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+  box-shadow: var(--focus-ring);
 }
 
 .form__input.valid:not(:focus-visible) {
@@ -136,12 +137,12 @@
 }
 
 .form__input.invalid:focus-visible {
-  box-shadow: 0 0 0 3px var(--clr-alert-200);
+  box-shadow: var(--focus-ring-error);
 }
 
 .form__input:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: var(--interactive-disabled-opacity);
 }
 
 .form__row__input-box {
@@ -170,7 +171,8 @@
   border: none;
 }
 
-.form__row_button_show-password:hover {
+.form__row_button_show-password:hover,
+.form__row_button_show-password:focus-visible {
   color: var(--clr-primary-400);
 }
 
@@ -179,7 +181,7 @@
 }
 
 .form__row_button_show-password:focus-visible {
-  color: var(--clr-primary-500);
+  box-shadow: var(--focus-ring);
 }
 
 .form__row_button_show-password:disabled {

@@ -25,7 +25,12 @@
 .transfer-page-header__back:hover,
 .transfer-page-header__back:focus-visible {
   color: var(--clr-primary-400);
-  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+  box-shadow: var(--focus-ring);
+}
+
+.transfer-page-header__back:active {
+  transform: scale(0.94);
+  color: var(--clr-primary-600);
 }
 
 .transfer-page-header__back svg {
@@ -107,7 +112,10 @@
   background-color: var(--clr-surface-400);
   font: inherit;
   font-size: var(--fs-300);
-  transition: border-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    border-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    opacity var(--duration-interactive) var(--ease-interactive);
 }
 
 .transfer-form__textarea {
@@ -125,7 +133,14 @@
 .transfer-form__select:focus-visible,
 .transfer-form__textarea:focus-visible {
   border-color: var(--clr-primary-400);
-  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+  box-shadow: var(--focus-ring);
+}
+
+.transfer-form__input:disabled,
+.transfer-form__select:disabled,
+.transfer-form__textarea:disabled {
+  cursor: not-allowed;
+  opacity: var(--interactive-disabled-opacity);
 }
 
 .transfer-form__amount-wrapper {
@@ -134,12 +149,15 @@
   border: 1px solid transparent;
   border-radius: 12px;
   background-color: var(--clr-surface-400);
-  transition: border-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    border-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    opacity var(--duration-interactive) var(--ease-interactive);
 }
 
 .transfer-form__amount-wrapper:focus-within {
   border-color: var(--clr-primary-400);
-  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+  box-shadow: var(--focus-ring);
 }
 
 .transfer-form__amount-wrapper span {
@@ -158,6 +176,11 @@
   background-color: transparent;
   font: inherit;
   font-size: var(--fs-300);
+}
+
+.transfer-form__amount-wrapper:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: var(--interactive-disabled-opacity);
 }
 
 .transfer-form__fieldset {
@@ -181,11 +204,29 @@
   border: 1px solid var(--clr-surface-600);
   border-radius: 12px;
   cursor: pointer;
+
+  transition:
+    background-color var(--duration-interactive) var(--ease-interactive),
+    border-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    transform var(--duration-interactive) var(--ease-interactive);
 }
 
 .transfer-form__option:has(input:checked) {
   border-color: var(--clr-primary-400);
   background-color: var(--clr-primary-100);
+}
+
+.transfer-form__option:hover {
+  border-color: var(--clr-primary-300);
+}
+
+.transfer-form__option:has(input:focus-visible) {
+  box-shadow: var(--focus-ring);
+}
+
+.transfer-form__option:active {
+  transform: scale(0.98);
 }
 
 .transfer-form__option input {

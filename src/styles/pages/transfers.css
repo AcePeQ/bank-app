@@ -36,12 +36,18 @@
   flex-direction: column;
   gap: 6px;
   color: var(--clr-secondary-700);
+  border-radius: 12px;
 }
 
 .recipient:hover .recipient__avatar,
 .recipient:focus-visible .recipient__avatar {
   border-color: var(--clr-primary-600);
-  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+  box-shadow: var(--focus-ring);
+}
+
+.recipient:active .recipient__avatar {
+  transform: scale(0.96);
+  background-color: var(--clr-primary-500);
 }
 
 .recipient__avatar {
@@ -56,7 +62,11 @@
   border-radius: 100rem;
   color: var(--clr-surface-100);
   background-color: var(--clr-primary-300);
-  transition: border-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    background-color var(--duration-interactive) var(--ease-interactive),
+    border-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    transform var(--duration-interactive) var(--ease-interactive);
 }
 
 .recipient__name {
@@ -82,12 +92,26 @@
   color: var(--clr-secondary-900);
   background-color: var(--clr-surface-300);
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+
+  transition:
+    background-color var(--duration-interactive) var(--ease-interactive),
+    box-shadow var(--duration-interactive) var(--ease-interactive),
+    transform var(--duration-interactive) var(--ease-interactive);
 }
 
 .payments__button:hover,
 .payments__button:focus-visible {
   color: var(--clr-secondary-900);
   background-color: var(--clr-surface-400);
+}
+
+.payments__button:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+.payments__button:active {
+  transform: scale(0.99);
+  background-color: var(--clr-surface-600);
 }
 
 .payments__icon {

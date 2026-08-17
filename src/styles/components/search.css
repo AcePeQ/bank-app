@@ -9,6 +9,8 @@
   left: 0;
 
   translate: 12px -50%;
+
+  border-radius: 100rem;
 }
 
 .search-btn svg {
@@ -19,4 +21,13 @@
 .input-box .input-search {
   padding-left: 50px;
   inline-size: 100%;
+}
+
+.search-btn:hover svg,
+.search-btn:focus-visible svg {
+  color: var(--clr-primary-400);
+}
+
+.search-btn:active {
+  transform: scale(0.92);
 }
