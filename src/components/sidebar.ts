@@ -39,22 +39,11 @@ const NAVIGATION_LINKS: NavigationItem[] = [
     text: "Transfers",
     href: ROUTES.transfers
   },
-  {
-    element: "a",
-    icon: "settings",
-    text: "Settings",
-    href: ROUTES.settings,
-    hideOnDesktop: true
-  },
+
 ]
 
 const NAVIGATION_ACTIONS: NavigationItem[] = [
-  {
-    element: "a",
-    icon: "settings",
-    text: "Settings",
-    href: ROUTES.settings
-  },
+
   {
     element: "button",
     icon: "log-out",
