@@ -1,0 +1,523 @@
+{
+  "$schema": "../node_modules/json-server/schema.json",
+  "users": [
+    {
+      "id": "user-1",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "demo@infinity.test",
+      "phoneNumber": "+48111111111",
+      "password": "Demo123!",
+      "createdAt": "2026-01-10T09:00:00Z"
+    },
+    {
+      "id": "user-2",
+      "firstName": "Maciej",
+      "lastName": "Nowak",
+      "email": "maciej@infinity.test",
+      "phoneNumber": "+48222222222",
+      "password": "Demo123!",
+      "createdAt": "2026-02-14T11:20:00Z"
+    },
+    {
+      "id": "user-3",
+      "firstName": "Michał",
+      "lastName": "Nowicki",
+      "email": "michal@infinity.test",
+      "phoneNumber": "+48333333333",
+      "password": "Demo123!",
+      "createdAt": "2026-03-08T14:10:00Z"
+    },
+    {
+      "id": "user-4",
+      "firstName": "Łukasz",
+      "lastName": "Nawrocki",
+      "email": "lukasz@infinity.test",
+      "phoneNumber": "+48444444444",
+      "password": "Demo123!",
+      "createdAt": "2026-04-22T08:45:00Z"
+    },
+    {
+      "id": "user-5",
+      "firstName": "Ava",
+      "lastName": "Anderson",
+      "email": "ava@infinity.test",
+      "phoneNumber": "+48555555555",
+      "password": "Demo123!",
+      "createdAt": "2026-05-19T16:30:00Z"
+    }
+  ],
+  "sessions": [],
+  "accounts": [
+    {
+      "id": "account-1",
+      "userId": "user-1",
+      "name": "Main account",
+      "accountNumber": "PL00000000000000000000000001",
+      "balance": 15524.12,
+      "currency": "USD",
+      "status": "active"
+    },
+    {
+      "id": "account-2",
+      "userId": "user-2",
+      "name": "Main account",
+      "accountNumber": "PL00000000000000000000000002",
+      "balance": 4230.5,
+      "currency": "USD",
+      "status": "active"
+    },
+    {
+      "id": "account-3",
+      "userId": "user-3",
+      "name": "Main account",
+      "accountNumber": "PL00000000000000000000000003",
+      "balance": 8120,
+      "currency": "USD",
+      "status": "active"
+    },
+    {
+      "id": "account-4",
+      "userId": "user-4",
+      "name": "Main account",
+      "accountNumber": "PL00000000000000000000000004",
+      "balance": 2910.75,
+      "currency": "USD",
+      "status": "active"
+    },
+    {
+      "id": "account-5",
+      "userId": "user-5",
+      "name": "Main account",
+      "accountNumber": "PL00000000000000000000000005",
+      "balance": 12350.4,
+      "currency": "USD",
+      "status": "active"
+    }
+  ],
+  "cards": [
+    {
+      "id": "card-1",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "network": "Visa",
+      "lastFourDigits": "1234",
+      "cardHolder": "John Doe",
+      "expirationDate": "2029-10",
+      "status": "active",
+      "onlinePaymentsEnabled": true,
+      "atmWithdrawalsEnabled": true,
+      "dailySpendingLimit": 1500,
+      "singlePaymentLimit": 1250.5
+    }
+  ],
+  "budgets": [
+    {
+      "id": "budget-1",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "month": "2026-08",
+      "amount": 5000,
+      "currency": "USD"
+    }
+  ],
+  "recipients": [
+    {
+      "id": "recipient-1",
+      "ownerUserId": "user-1",
+      "infinityUserId": "user-2",
+      "firstName": "Maciej",
+      "lastName": "Nowak",
+      "email": "maciej@infinity.test",
+      "phoneNumber": "+48222222222",
+      "accountNumber": "PL00000000000000000000000002",
+      "lastUsedAt": "2026-08-14T12:30:00Z"
+    },
+    {
+      "id": "recipient-2",
+      "ownerUserId": "user-1",
+      "infinityUserId": "user-3",
+      "firstName": "Michał",
+      "lastName": "Nowicki",
+      "email": "michal@infinity.test",
+      "phoneNumber": "+48333333333",
+      "accountNumber": "PL00000000000000000000000003",
+      "lastUsedAt": "2026-08-12T18:05:00Z"
+    },
+    {
+      "id": "recipient-3",
+      "ownerUserId": "user-1",
+      "infinityUserId": "user-4",
+      "firstName": "Łukasz",
+      "lastName": "Nawrocki",
+      "email": "lukasz@infinity.test",
+      "phoneNumber": "+48444444444",
+      "accountNumber": "PL00000000000000000000000004",
+      "lastUsedAt": "2026-08-08T09:45:00Z"
+    },
+    {
+      "id": "recipient-4",
+      "ownerUserId": "user-1",
+      "infinityUserId": "user-5",
+      "firstName": "Ava",
+      "lastName": "Anderson",
+      "email": "ava@infinity.test",
+      "phoneNumber": "+48555555555",
+      "accountNumber": "PL00000000000000000000000005",
+      "lastUsedAt": "2026-08-02T15:20:00Z"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "transaction-1",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Salary",
+      "occurredAt": "2026-08-10T08:00:00Z",
+      "category": "Income",
+      "amount": 4850,
+      "currency": "USD",
+      "direction": "income",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-2",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Apple Store",
+      "occurredAt": "2026-08-02T14:25:00Z",
+      "category": "Electronics",
+      "amount": 1299,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-3",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Netflix",
+      "occurredAt": "2026-08-03T06:15:00Z",
+      "category": "Subscriptions",
+      "amount": 19.99,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-4",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Uber",
+      "occurredAt": "2026-08-03T19:42:00Z",
+      "category": "Transport",
+      "amount": 27.45,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-5",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Freelance project",
+      "occurredAt": "2026-08-04T10:30:00Z",
+      "category": "Income",
+      "amount": 850,
+      "currency": "USD",
+      "direction": "income",
+      "status": "pending"
+    },
+    {
+      "id": "transaction-6",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Whole Foods Market",
+      "occurredAt": "2026-08-04T17:18:00Z",
+      "category": "Groceries",
+      "amount": 86.37,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-7",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Spotify",
+      "occurredAt": "2026-08-05T07:05:00Z",
+      "category": "Subscriptions",
+      "amount": 11.99,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "pending"
+    },
+    {
+      "id": "transaction-8",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Electricity bill",
+      "occurredAt": "2026-08-05T12:00:00Z",
+      "category": "Bills",
+      "amount": 124.68,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-9",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Amazon refund",
+      "occurredAt": "2026-08-05T15:22:00Z",
+      "category": "Refunds",
+      "amount": 64.99,
+      "currency": "USD",
+      "direction": "income",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-10",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Coffee House",
+      "occurredAt": "2026-08-06T07:48:00Z",
+      "category": "Dining",
+      "amount": 6.75,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-11",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Gym membership",
+      "occurredAt": "2026-08-06T09:10:00Z",
+      "category": "Health",
+      "amount": 49.9,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "failed"
+    },
+    {
+      "id": "transaction-12",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "John Smith",
+      "occurredAt": "2026-08-06T16:35:00Z",
+      "category": "Transfers",
+      "amount": 250,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "pending"
+    },
+    {
+      "id": "transaction-13",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Savings interest",
+      "occurredAt": "2026-07-31T23:59:00Z",
+      "category": "Income",
+      "amount": 8.42,
+      "currency": "USD",
+      "direction": "income",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-14",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "City Pharmacy",
+      "occurredAt": "2026-07-28T11:12:00Z",
+      "category": "Health",
+      "amount": 32.18,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-15",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Airline tickets",
+      "occurredAt": "2026-07-24T13:40:00Z",
+      "category": "Travel",
+      "amount": 680.5,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-16",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Bookstore",
+      "occurredAt": "2026-07-20T16:08:00Z",
+      "category": "Education",
+      "amount": 45.25,
+      "currency": "USD",
+      "direction": "expense",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-17",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Tax refund",
+      "occurredAt": "2026-07-15T09:00:00Z",
+      "category": "Refunds",
+      "amount": 325.8,
+      "currency": "USD",
+      "direction": "income",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-18",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Restaurant Milano",
+      "occurredAt": "2026-07-12T20:46:00Z",
+      "category": "Dining",
+      "amount": 73.6,
+      "currency": "EUR",
+      "direction": "expense",
+      "status": "completed"
+    },
+    {
+      "id": "transaction-19",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Online course",
+      "occurredAt": "2026-06-25T18:20:00Z",
+      "category": "Education",
+      "amount": 129,
+      "currency": "EUR",
+      "direction": "expense",
+      "status": "failed"
+    },
+    {
+      "id": "transaction-20",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "name": "Birthday gift",
+      "occurredAt": "2026-06-18T12:30:00Z",
+      "category": "Gifts",
+      "amount": 100,
+      "currency": "USD",
+      "direction": "income",
+      "status": "completed"
+    }
+  ],
+  "transfers": [
+    {
+      "id": "transfer-1",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "recipientId": "recipient-1",
+      "kind": "friend",
+      "recipientName": "Maciej Nowak",
+      "recipientAccountNumber": "PL00000000000000000000000002",
+      "amount": 75,
+      "currency": "USD",
+      "reference": "Dinner",
+      "status": "completed",
+      "createdAt": "2026-08-14T12:30:00Z"
+    },
+    {
+      "id": "transfer-2",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "recipientId": null,
+      "kind": "bank",
+      "recipientName": "Example Utilities Ltd.",
+      "recipientAccountNumber": "PL00000000000000000000000999",
+      "amount": 124.68,
+      "currency": "USD",
+      "reference": "Electricity bill August",
+      "status": "completed",
+      "createdAt": "2026-08-05T12:00:00Z"
+    },
+    {
+      "id": "transfer-3",
+      "userId": "user-1",
+      "accountId": "account-1",
+      "recipientId": "recipient-3",
+      "kind": "friend",
+      "recipientName": "Łukasz Nawrocki",
+      "recipientAccountNumber": "PL00000000000000000000000004",
+      "amount": 42.5,
+      "currency": "USD",
+      "reference": "Tickets",
+      "status": "pending",
+      "createdAt": "2026-08-16T19:15:00Z"
+    }
+  ],
+  "paymentRequests": [
+    {
+      "id": "request-1",
+      "requesterUserId": "user-1",
+      "payerUserId": "user-5",
+      "payerContact": "ava@infinity.test",
+      "amount": 35,
+      "currency": "USD",
+      "note": "Cinema tickets",
+      "status": "pending",
+      "createdAt": "2026-08-15T17:20:00Z",
+      "resolvedAt": null
+    },
+    {
+      "id": "request-2",
+      "requesterUserId": "user-1",
+      "payerUserId": "user-2",
+      "payerContact": "maciej@infinity.test",
+      "amount": 28.5,
+      "currency": "USD",
+      "note": "Lunch",
+      "status": "paid",
+      "createdAt": "2026-08-09T13:05:00Z",
+      "resolvedAt": "2026-08-09T13:40:00Z"
+    },
+    {
+      "id": "request-3",
+      "requesterUserId": "user-1",
+      "payerUserId": "user-3",
+      "payerContact": "michal@infinity.test",
+      "amount": 18,
+      "currency": "USD",
+      "note": "Coffee beans",
+      "status": "declined",
+      "createdAt": "2026-07-29T10:00:00Z",
+      "resolvedAt": "2026-07-30T08:10:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notification-1",
+      "userId": "user-1",
+      "type": "transfer",
+      "title": "Transfer completed",
+      "message": "Your transfer to Maciej Nowak was completed.",
+      "isRead": false,
+      "createdAt": "2026-08-14T12:31:00Z"
+    },
+    {
+      "id": "notification-2",
+      "userId": "user-1",
+      "type": "payment-request",
+      "title": "Payment request paid",
+      "message": "Maciej Nowak paid your request for $28.50.",
+      "isRead": false,
+      "createdAt": "2026-08-09T13:40:00Z"
+    },
+    {
+      "id": "notification-3",
+      "userId": "user-1",
+      "type": "card",
+      "title": "Online payment",
+      "message": "A card payment of $19.99 was completed.",
+      "isRead": true,
+      "createdAt": "2026-08-03T06:16:00Z"
+    }
+  ]
+}
