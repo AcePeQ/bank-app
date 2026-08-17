@@ -104,9 +104,45 @@
                   <h3 class="card-settings__title">Daily Spending Limit</h3>
                   <p class="card-settings__subtitle">Max daily transaction amount</p>
                 </hgroup>
-                <div class="card-settings__action">
-                  $2,500,00
-                </div>
+                <button id="dailySpendingLimitButton" class="card-settings__action" type="button"
+                  aria-haspopup="dialog" aria-controls="dailySpendingLimitDialog">
+                  <span id="dailySpendingLimitValue">$1,500.00</span>
+                  <i data-lucide="chevron-right"></i>
+                </button>
+
+                <dialog id="dailySpendingLimitDialog" aria-labelledby="dailySpendingLimitDialogTitle">
+                  <form id="dailySpendingLimitForm">
+                    <h2 id="dailySpendingLimitDialogTitle">Daily spending limit</h2>
+
+                    <p>
+                      Set the maximum amount that can be spent with
+                      this card in one day.
+                    </p>
+
+                    <label for="dailySpendingLimitInput">
+                      New daily limit
+                    </label>
+
+                    <div class="money-input">
+                      <span aria-hidden="true">$</span>
+
+                      <input id="dailySpendingLimitInput" name="dailySpendingLimit" type="number" min="1"
+                        max="50000" step="0.01" required>
+                    </div>
+
+                    <p id="dailySpendingLimitError"></p>
+
+                    <div>
+                      <button id="dailySpendingLimitCancelButton" type="button">
+                        Cancel
+                      </button>
+
+                      <button type="submit">
+                        Save limit
+                      </button>
+                    </div>
+                  </form>
+                </dialog>
               </li>
               <li>
                 <div class="card-settings__icon">
@@ -116,9 +152,45 @@
                   <h3 class="card-settings__title">Single Payment Limit</h3>
                   <p class="card-settings__subtitle">Max per single transaction</p>
                 </hgroup>
-                <div class="card-settings__action">
-                  $1,500,00
-                </div>
+                <button id="singlePaymentLimitButton" class="card-settings__action" type="button"
+                  aria-haspopup="dialog" aria-controls="singlePaymentLimitDialog">
+                  <span id="singlePaymentLimitValue">$1,250.50</span>
+                  <i data-lucide="chevron-right"></i>
+                </button>
+
+                <dialog id="singlePaymentLimitDialog" aria-labelledby="singlePaymentLimitDialogTitle">
+                  <form id="singlePaymentLimitForm">
+                    <h2 id="singlePaymentLimitDialogTitle">Single Payment Limit</h2>
+
+                    <p>
+                      Set the single amount that can be paid with
+                      this card.
+                    </p>
+
+                    <label for="singlePaymentLimitInput">
+                      New Single Payment limit
+                    </label>
+
+                    <div class="money-input">
+                      <span aria-hidden="true">$</span>
+
+                      <input id="singlePaymentLimitInput" name="singlePaymentLimit" type="number" min="1"
+                        max="50000" step="0.01" required>
+                    </div>
+
+                    <p id="singlePaymentLimitError"></p>
+
+                    <div>
+                      <button id="singlePaymentLimitCancelButton" type="button">
+                        Cancel
+                      </button>
+
+                      <button type="submit">
+                        Save limit
+                      </button>
+                    </div>
+                  </form>
+                </dialog>
               </li>
             </ul>
           </div>

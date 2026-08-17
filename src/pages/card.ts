@@ -1,4 +1,4 @@
-import { Bell, ChevronRight, createIcons, CreditCard, Eye, Gauge, HandCoins, House, Landmark, LogOut, Repeat, Search, SendHorizontal, Settings, ShoppingCart, Snowflake, SquareArrowRightEnter } from "lucide";
+import { Bell, ChevronRight, createIcons, CreditCard, Eye, Gauge, HandCoins, House, Landmark, LogOut, Repeat, Search, Settings, ShoppingCart, Snowflake, SquareArrowRightEnter } from "lucide";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createCard } from "../components/card";
