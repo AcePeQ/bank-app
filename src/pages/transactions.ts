@@ -1,4 +1,4 @@
-import type { FilterDirection, GroupTransaction, SortOption, Transaction, TransactionDirection, TransactionsState } from "../types/transaction";
+import type { FilterDirection, GroupTransaction, SortOption, Transaction, TransactionsState } from "../types/transaction";
 import { assertUnreachable, createElement, getRequiredElement, getRequiredElements } from "../utils/helpers";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";

@@ -1,0 +1,198 @@
+.main-wrapper-transfer-form {
+  inline-size: 100%;
+  max-inline-size: 44rem;
+  margin-inline: auto;
+}
+
+.transfer-page-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.transfer-page-header__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  flex-shrink: 0;
+  border-radius: 100rem;
+  color: var(--clr-secondary-700);
+  background-color: var(--clr-surface-100);
+}
+
+.transfer-page-header__back:hover,
+.transfer-page-header__back:focus-visible {
+  color: var(--clr-primary-400);
+  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+}
+
+.transfer-page-header__back svg {
+  inline-size: 1.4rem;
+  block-size: 1.4rem;
+}
+
+.transfer-page-header h1 {
+  font-size: var(--fs-600);
+  font-weight: var(--fw-700);
+  line-height: 1.2;
+}
+
+.transfer-form-card {
+  padding: var(--space-s);
+  border-radius: 16px;
+  background-color: var(--clr-surface-100);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.06);
+
+  @media (width >=600px) {
+    padding: var(--space-m);
+  }
+}
+
+.transfer-form {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.transfer-form__intro {
+  color: var(--clr-secondary-600);
+  font-size: var(--fs-300);
+}
+
+.transfer-form__account {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-s);
+  border-radius: 12px;
+  background-color: var(--clr-surface-300);
+}
+
+.transfer-form__account-label,
+.transfer-form__hint {
+  color: var(--clr-secondary-600);
+  font-size: var(--fs-200);
+}
+
+.transfer-form__balance {
+  font-size: var(--fs-300);
+  font-weight: var(--fw-700);
+  white-space: nowrap;
+}
+
+.transfer-form__row {
+  display: grid;
+  gap: var(--space-3xs);
+}
+
+.transfer-form__row label,
+.transfer-form__fieldset legend {
+  padding: 0;
+  color: var(--clr-secondary-700);
+  font-size: var(--fs-200);
+  font-weight: var(--fw-600);
+}
+
+.transfer-form__input,
+.transfer-form__select,
+.transfer-form__textarea {
+  inline-size: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid transparent;
+  outline: none;
+  border-radius: 12px;
+  color: var(--clr-secondary-900);
+  background-color: var(--clr-surface-400);
+  font: inherit;
+  font-size: var(--fs-300);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.transfer-form__textarea {
+  min-block-size: 6rem;
+  resize: vertical;
+}
+
+.transfer-form__input:hover,
+.transfer-form__select:hover,
+.transfer-form__textarea:hover {
+  border-color: var(--clr-secondary-400);
+}
+
+.transfer-form__input:focus-visible,
+.transfer-form__select:focus-visible,
+.transfer-form__textarea:focus-visible {
+  border-color: var(--clr-primary-400);
+  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+}
+
+.transfer-form__amount-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background-color: var(--clr-surface-400);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.transfer-form__amount-wrapper:focus-within {
+  border-color: var(--clr-primary-400);
+  box-shadow: 0 0 0 3px var(--clr-primary-400-40);
+}
+
+.transfer-form__amount-wrapper span {
+  padding-inline-start: 1rem;
+  color: var(--clr-secondary-600);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-600);
+}
+
+.transfer-form__amount-wrapper input {
+  min-inline-size: 0;
+  inline-size: 100%;
+  padding: 0.8rem 1rem 0.8rem var(--space-2xs);
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  font: inherit;
+  font-size: var(--fs-300);
+}
+
+.transfer-form__fieldset {
+  display: grid;
+  gap: var(--space-xs);
+  padding: 0;
+  border: 0;
+}
+
+.transfer-form__options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xs);
+}
+
+.transfer-form__option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-xs);
+  border: 1px solid var(--clr-surface-600);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.transfer-form__option:has(input:checked) {
+  border-color: var(--clr-primary-400);
+  background-color: var(--clr-primary-100);
+}
+
+.transfer-form__option input {
+  accent-color: var(--clr-primary-400);
+}
+
+.transfer-form__submit {
+  inline-size: 100%;
+  margin-block-start: var(--space-2xs);
+}

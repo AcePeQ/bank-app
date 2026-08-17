@@ -16,6 +16,9 @@ export const ROUTES = {
   dashboard: "/dashboard/",
   card: "/card/",
   transfers: "/transfers/",
-  transactions: "/transactions/",
+  bankTransfer: "/transfers/bank-transfer/",
+  payFriend: "/transfers/pay-a-friend/",
+  requestPayment: "/transfers/request-payment/",
+  transactions: "/transfers/transactions/",
   settings: "/settings/"
 } as const

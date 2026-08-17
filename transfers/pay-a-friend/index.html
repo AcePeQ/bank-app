@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/src/styles/reset.css" rel="stylesheet">
+  <link href="/src/styles/main.css" rel="stylesheet">
+  <link href="/src/styles/base.css" rel="stylesheet">
+  <link href="/src/styles/layout.css" rel="stylesheet">
+  <link href="/src/styles/components/header.css" rel="stylesheet">
+  <link href="/src/styles/components/search.css" rel="stylesheet">
+  <link href="/src/styles/components/sidebar.css" rel="stylesheet">
+  <link href="/src/styles/components/buttons.css" rel="stylesheet">
+  <link href="/src/styles/pages/transfer-form.css" rel="stylesheet">
+
+  <script src="/src/pages/transfer-form.ts" defer type="module"></script>
+  <title>Pay a Friend</title>
+</head>
+
+<body>
+  <div class="base-layout grid-12">
+    <header id="header" class="header"></header>
+    <aside id="sidebar" class="sidebar"></aside>
+
+    <main class="main">
+      <div class="main-wrapper main-wrapper-transfer-form">
+        <div class="transfer-page-header">
+          <a class="transfer-page-header__back" href="/transfers/" aria-label="Back to transfers">
+            <i data-lucide="arrow-left"></i>
+          </a>
+          <h1>Pay a Friend</h1>
+        </div>
+
+        <section class="transfer-form-card" aria-labelledby="payFriendFormTitle">
+          <form id="payFriendForm" class="transfer-form">
+            <p id="payFriendFormTitle" class="transfer-form__intro">
+              Send money instantly to another Infinity user.
+            </p>
+
+            <div class="transfer-form__account">
+              <div>
+                <p class="transfer-form__account-label">Available balance</p>
+                <p>Main account •••• 4821</p>
+              </div>
+              <p class="transfer-form__balance">$15,524.12</p>
+            </div>
+
+            <div class="transfer-form__row">
+              <label for="friendRecipient">Recipient</label>
+              <select id="friendRecipient" name="recipientId" class="transfer-form__select" required>
+                <option value="" selected disabled>Select a friend</option>
+                <option value="1">Maciej Nowak</option>
+                <option value="2">Michał Nowicki</option>
+                <option value="3">Łukasz Nawrocki</option>
+                <option value="4">Ava Anderson</option>
+              </select>
+            </div>
+
+            <div class="transfer-form__row">
+              <label for="friendAmount">Amount</label>
+              <div class="transfer-form__amount-wrapper">
+                <span aria-hidden="true">$</span>
+                <input id="friendAmount" name="amount" type="number" inputmode="decimal" min="0.01"
+                  max="15524.12" step="0.01" placeholder="0.00" required>
+              </div>
+            </div>
+
+            <div class="transfer-form__row">
+              <label for="friendMessage">Message <span class="transfer-form__hint">(optional)</span></label>
+              <textarea id="friendMessage" name="message" class="transfer-form__textarea" maxlength="140"
+                placeholder="What is this payment for?"></textarea>
+            </div>
+
+            <button class="btn btn--primary transfer-form__submit" type="submit">Review payment</button>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

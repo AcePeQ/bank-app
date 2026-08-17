@@ -5,16 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="/src/styles/reset.css" rel="stylesheet" />
-  <link href="/src/styles/main.css" rel="stylesheet" />
-  <link href="/src/styles/base.css" rel="stylesheet" />
-  <link href="/src/styles/layout.css" rel="stylesheet" />
-  <link href="/src/styles/components/header.css" rel="stylesheet" />
-  <link href="/src/styles/components/search.css" rel="stylesheet" />
-  <link href="/src/styles/components/sidebar.css" rel="stylesheet" />
-  <link href="/src/styles/components/buttons.css" rel="stylesheet" />
-  <link href="/src/styles/components/loader.css" rel="stylesheet" />
-  <link href="/src/styles/pages/transfers.css" rel="stylesheet" />
+  <link href="/src/styles/reset.css" rel="stylesheet">
+  <link href="/src/styles/main.css" rel="stylesheet">
+  <link href="/src/styles/base.css" rel="stylesheet">
+  <link href="/src/styles/layout.css" rel="stylesheet">
+  <link href="/src/styles/components/header.css" rel="stylesheet">
+  <link href="/src/styles/components/search.css" rel="stylesheet">
+  <link href="/src/styles/components/sidebar.css" rel="stylesheet">
+  <link href="/src/styles/components/buttons.css" rel="stylesheet">
+  <link href="/src/styles/components/loader.css" rel="stylesheet">
+  <link href="/src/styles/pages/transfers.css" rel="stylesheet">
 
   <script src="/src/pages/transfers.ts" defer type="module"></script>
 
@@ -24,92 +24,55 @@
 <body>
   <div class="base-layout grid-12">
     <header id="header" class="header"></header>
-
     <aside id="sidebar" class="sidebar"></aside>
 
     <main class="main">
       <div class="main-wrapper main-wrapper-transfers">
         <h1 class="sr-only">Transfers</h1>
 
-        <div class="recipients">
-          <h2 class="recipients__title">Recent Recipients</h2>
-          <ul class="recipients__list">
-            <li class="recipients__item">
-              <button class="recipient">
-                <div class="recipient__avatar">
-                  M.N
-                </div>
-                <p class="recipient__name">Maciej N.</p>
-              </button>
-            </li>
-            <li class="recipients__item">
-              <button class="recipient">
-                <div class="recipient__avatar">
-                  M.N
-                </div>
-                <p class="recipient__name">Michał N.</p>
-              </button>
-            </li>
-            <li class="recipients__item">
-              <button class="recipient">
-                <div class="recipient__avatar">
-                  L.N
-                </div>
-                <p class="recipient__name">Lukasz N.</p>
-              </button>
-            </li>
-            <li class="recipients__item">
-              <button class="recipient">
-                <div class="recipient__avatar">
-                  A.A
-                </div>
-                <p class="recipient__name">Ava A.</p>
-              </button>
-            </li>
-          </ul>
-        </div>
+        <section class="recipients" aria-labelledby="recentRecipientsTitle">
+          <h2 id="recentRecipientsTitle" class="recipients__title">Recent Recipients</h2>
+          <ul id="recentRecipientsList" class="recipients__list"></ul>
+        </section>
 
-        <div class="payments">
-          <h2 class="payments__title">New Payment</h2>
+        <section class="payments" aria-labelledby="newPaymentTitle">
+          <h2 id="newPaymentTitle" class="payments__title">New Payment</h2>
 
           <ul class="payments__list">
             <li class="payments__item">
-              <button class="payments__button">
-                <div class="payments__icon">
-                  <i data-lucide="landmark"></i>
-                </div>
-                <hgroup class="payment__details">
-                  <h3 class=" payment__title">Bank Transfer</h3>
-                  <p class="payment__subTitle">Send to any local bank account</p>
-                </hgroup>
-              </button>
+              <a class="payments__button" href="/transfers/bank-transfer/">
+                <span class="payments__icon"><i data-lucide="landmark"></i></span>
+                <span class="payment__details">
+                  <span class="payment__title">Bank Transfer</span>
+                  <span class="payment__subTitle">Send to any local bank account</span>
+                </span>
+                <i class="payments__chevron" data-lucide="chevron-right"></i>
+              </a>
             </li>
 
             <li class="payments__item">
-              <button class="payments__button">
-                <div class="payments__icon">
-                  <i data-lucide="user"></i>
-                </div>
-                <hgroup class="payment__details">
-                  <h3 class="payment__title">Pay a Friend</h3>
-                  <p class="payment__subTitle">Instant transfers to Infinity users</p>
-                </hgroup>
-              </button>
+              <a class="payments__button" href="/transfers/pay-a-friend/">
+                <span class="payments__icon"><i data-lucide="user"></i></span>
+                <span class="payment__details">
+                  <span class="payment__title">Pay a Friend</span>
+                  <span class="payment__subTitle">Instant transfers to Infinity users</span>
+                </span>
+                <i class="payments__chevron" data-lucide="chevron-right"></i>
+              </a>
             </li>
 
             <li class="payments__item">
-              <button class="payments__button">
-                <div class="payments__icon">
-                  <i data-lucide="contact"></i>
-                </div>
-                <hgroup class="payment__details">
-                  <h3 class="payment__title">Request Payment</h3>
-                  <p class="payment__subTitle">Request payment from Infinity users</p>
-                </hgroup>
-              </button>
+              <a class="payments__button" href="/transfers/request-payment/">
+                <span class="payments__icon"><i data-lucide="contact"></i></span>
+                <span class="payment__details">
+                  <span class="payment__title">Request Payment</span>
+                  <span class="payment__subTitle">Request payment from Infinity users</span>
+                </span>
+                <i class="payments__chevron" data-lucide="chevron-right"></i>
+              </a>
             </li>
           </ul>
-        </div>
+        </section>
       </div>
     </main>
   </div>
