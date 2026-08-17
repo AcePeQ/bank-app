@@ -2,9 +2,10 @@ import { Bell, ChevronRight, createIcons, CreditCard, Eye, Gauge, HandCoins, Hou
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createCard } from "../components/card";
-import { getRequiredElement } from "../utils/helpers";
+import { getLimitDialogElements, getRequiredElement } from "../utils/helpers";
 import { dashboardMock } from "../mocks/dashboard.mock";
 import { createSwtich } from "../components/toggleSwitch";
+import type { LimitDialogElements } from "../types/dialog";
 
 const dashboardData = dashboardMock;
 
@@ -14,12 +15,8 @@ function init() {
   const onlinePaymentsEl = getRequiredElement("#cardSettingsOnlinePayments", HTMLDivElement);
   const atmWithdrawalsEl = getRequiredElement("#cardSettingsAtmWithdrawals", HTMLDivElement);
 
-  const dailySpendingLimitBtnEl = getRequiredElement("#dailySpendingLimitButton", HTMLButtonElement);
-  const dailySpendingDialogEl = getRequiredElement("#dailySpendingLimitDialog", HTMLDialogElement);
-
-  const singlePaymentLimitBtnEl = getRequiredElement("#singlePaymentLimitButton", HTMLButtonElement);
-  const singlePaymentLimitDialogEl = getRequiredElement("#singlePaymentLimitDialog", HTMLDialogElement)
-
+  const dailySpendingLimitElements = getLimitDialogElements("dailySpendingLimit");
+  const singlePaymentLimitElements = getLimitDialogElements("singlePaymentLimit");
 
   function openDialog(dialog: HTMLDialogElement) {
     dialog.showModal();
@@ -29,14 +26,19 @@ function init() {
     dialog.close();
   }
 
+  function initLimitDialog(elements: LimitDialogElements) {
+    elements.openButtonEl.addEventListener("click", () => openDialog(elements.dialogEl));
+    elements.cancelButtonEl.addEventListener("click", () => closeDialog(elements.dialogEl));
+  }
+
   createSidebar();
   createHeader();
 
   const card = createCard(dashboardData.card);
   cardWrapperEl.appendChild(card);
 
-  dailySpendingLimitBtnEl.addEventListener("click", () => openDialog(dailySpendingDialogEl));
-  singlePaymentLimitBtnEl.addEventListener("click", () => openDialog(singlePaymentLimitDialogEl));
+  initLimitDialog(dailySpendingLimitElements);
+  initLimitDialog(singlePaymentLimitElements);
 
 
   createSwtich({ id: "onlinePayments" }, () => { }, onlinePaymentsEl);

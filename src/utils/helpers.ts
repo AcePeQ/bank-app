@@ -1,3 +1,5 @@
+import type { LimitDialogElements, LimitDialogPrefix } from "../types/dialog";
+
 export function getRequiredElement<T extends Element>(
   selector: string,
   ElementClass: new () => T,
@@ -97,4 +99,16 @@ export function mapStrengthValue(strength: number) {
 
 export function assertUnreachable(x: never): never {
   throw new Error(`${x} is not assignable to type "never"`);
+}
+
+export function getLimitDialogElements(prefix: LimitDialogPrefix): LimitDialogElements {
+  return {
+    openButtonEl: getRequiredElement(`#${prefix}Button`, HTMLButtonElement),
+    valueEl: getRequiredElement(`#${prefix}Value`, HTMLSpanElement),
+    dialogEl: getRequiredElement(`#${prefix}Dialog`, HTMLDialogElement),
+    formEl: getRequiredElement(`#${prefix}Form`, HTMLFormElement),
+    inputEl: getRequiredElement(`#${prefix}Input`, HTMLInputElement),
+    errorEl: getRequiredElement(`#${prefix}Error`, HTMLParagraphElement),
+    cancelButtonEl: getRequiredElement(`#${prefix}CancelButton`, HTMLButtonElement),
+  };
 }
