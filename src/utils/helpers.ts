@@ -112,3 +112,9 @@ export function getLimitDialogElements(prefix: LimitDialogPrefix): LimitDialogEl
     cancelButtonEl: getRequiredElement(`#${prefix}CancelButton`, HTMLButtonElement),
   };
 }
+
+export function setActiveLink() {
+  const pagePart = location.pathname.split("/")[1];
+  const pageLink = getRequiredElement(`#sidebar a[href^="/${pagePart}"]`, HTMLAnchorElement);
+  pageLink.classList.add("active");
+}

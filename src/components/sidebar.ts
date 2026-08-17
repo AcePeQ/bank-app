@@ -1,5 +1,5 @@
 import { ROUTES } from "../utils/constants";
-import { createElement, getRequiredElement } from "../utils/helpers";
+import { createElement, getRequiredElement, setActiveLink } from "../utils/helpers";
 
 type NavigationItemBase = {
   icon: string;
@@ -77,6 +77,8 @@ export function createSidebar() {
   sidebarEl.appendChild(heading);
   sidebarEl.appendChild(navigation);
   sidebarEl.appendChild(actionNavigation);
+
+  setActiveLink();
 }
 
 
