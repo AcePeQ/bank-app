@@ -221,6 +221,8 @@
   box-shadow: 0 24px 64px rgb(0 0 0 / 0.22);
 
   overflow: auto;
+
+  margin: auto;
 }
 
 .card-settings dialog[open] {
@@ -239,7 +241,7 @@
   padding: var(--space-m);
 }
 
-.card-settings dialog form > h2 {
+.card-settings dialog form>h2 {
   margin: 0;
 
   font-size: var(--fs-500);
@@ -247,7 +249,7 @@
   line-height: 1.25;
 }
 
-.card-settings dialog form > p:first-of-type {
+.card-settings dialog form>p:first-of-type {
   margin: 0;
 
   color: var(--clr-secondary-500);
@@ -286,7 +288,7 @@
   box-shadow: 0 0 0 3px var(--clr-primary-400-40);
 }
 
-.card-settings .money-input > span {
+.card-settings .money-input>span {
   padding-inline-start: var(--space-s);
 
   color: var(--clr-secondary-500);
@@ -310,7 +312,7 @@
   font-weight: var(--fw-600);
 }
 
-.card-settings dialog form > p:last-of-type {
+.card-settings dialog form>p:last-of-type {
   min-block-size: 1.25em;
   margin: 0;
 
@@ -319,11 +321,11 @@
   font-weight: var(--fw-500);
 }
 
-.card-settings dialog form > p:last-of-type:empty {
+.card-settings dialog form>p:last-of-type:empty {
   min-block-size: 0;
 }
 
-.card-settings dialog form > div:last-child {
+.card-settings dialog form>div:last-child {
   display: flex;
   flex-direction: column-reverse;
   gap: var(--space-2xs);
@@ -336,7 +338,7 @@
   }
 }
 
-.card-settings dialog form > div:last-child button {
+.card-settings dialog form>div:last-child button {
   padding: var(--space-xs) var(--space-s);
   border-radius: 100rem;
 
@@ -350,34 +352,34 @@
     transform 180ms ease-in-out;
 }
 
-.card-settings dialog form > div:last-child button:hover {
+.card-settings dialog form>div:last-child button:hover {
   transform: translateY(-1px);
 }
 
-.card-settings dialog form > div:last-child button:active {
+.card-settings dialog form>div:last-child button:active {
   transform: translateY(0);
 }
 
-.card-settings dialog form > div:last-child button:focus-visible {
+.card-settings dialog form>div:last-child button:focus-visible {
   outline: 0;
   box-shadow: 0 0 0 3px var(--clr-primary-400-40);
 }
 
-.card-settings dialog form > div:last-child button[type="button"] {
+.card-settings dialog form>div:last-child button[type="button"] {
   color: var(--clr-secondary-700);
   background-color: var(--clr-surface-400);
 }
 
-.card-settings dialog form > div:last-child button[type="button"]:hover {
+.card-settings dialog form>div:last-child button[type="button"]:hover {
   background-color: var(--clr-surface-600);
 }
 
-.card-settings dialog form > div:last-child button[type="submit"] {
+.card-settings dialog form>div:last-child button[type="submit"] {
   color: var(--clr-surface-100);
   background-color: var(--clr-primary-400);
 }
 
-.card-settings dialog form > div:last-child button[type="submit"]:hover {
+.card-settings dialog form>div:last-child button[type="submit"]:hover {
   background-color: var(--clr-primary-500);
 }
 
@@ -398,7 +400,7 @@
     animation: none;
   }
 
-  .card-settings dialog form > div:last-child button {
+  .card-settings dialog form>div:last-child button {
     transition: none;
   }
 }

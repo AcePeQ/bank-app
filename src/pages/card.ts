@@ -14,11 +14,29 @@ function init() {
   const onlinePaymentsEl = getRequiredElement("#cardSettingsOnlinePayments", HTMLDivElement);
   const atmWithdrawalsEl = getRequiredElement("#cardSettingsAtmWithdrawals", HTMLDivElement);
 
+  const dailySpendingLimitBtnEl = getRequiredElement("#dailySpendingLimitButton", HTMLButtonElement);
+  const dailySpendingDialogEl = getRequiredElement("#dailySpendingLimitDialog", HTMLDialogElement);
+
+  const singlePaymentLimitBtnEl = getRequiredElement("#singlePaymentLimitButton", HTMLButtonElement);
+  const singlePaymentLimitDialogEl = getRequiredElement("#singlePaymentLimitDialog", HTMLDialogElement)
+
+
+  function openDialog(dialog: HTMLDialogElement) {
+    dialog.showModal();
+  }
+
+  function closeDialog(dialog: HTMLDialogElement) {
+    dialog.close();
+  }
+
   createSidebar();
   createHeader();
 
   const card = createCard(dashboardData.card);
   cardWrapperEl.appendChild(card);
+
+  dailySpendingLimitBtnEl.addEventListener("click", () => openDialog(dailySpendingDialogEl));
+  singlePaymentLimitBtnEl.addEventListener("click", () => openDialog(singlePaymentLimitDialogEl));
 
 
   createSwtich({ id: "onlinePayments" }, () => { }, onlinePaymentsEl);
