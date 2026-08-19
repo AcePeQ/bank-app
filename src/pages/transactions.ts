@@ -43,6 +43,7 @@ function init() {
   const transactionsFiltersWrapperEl = getRequiredElement("#transactionsFiltersWrapper", HTMLDivElement);
   const filterButtonsEls = getRequiredElements("button[data-filter]", HTMLButtonElement, transactionsFiltersWrapperEl);
   const loaderEl = getRequiredElement("#loaderWrapper", HTMLDivElement);
+  const errorWrapperEl = getRequiredElement("#errorWrapper", HTMLDivElement);
 
   const state: TransactionsState = {
     transactions: [],
@@ -257,6 +258,7 @@ function init() {
   async function loadInitData() {
     try {
       loaderEl.classList.remove("hidden");
+      errorWrapperEl.classList.add("hidden");
 
       const [transactions, account] = await Promise.all([getTransactions(ACCOUNT_ID), getAccounts(ACCOUNT_ID)]);
       state.transactions = transactions;
@@ -264,6 +266,7 @@ function init() {
       render();
     } catch (error) {
       console.error(error);
+      errorWrapperEl.classList.remove("hidden");
     } finally {
       loaderEl.classList.add("hidden");
     }

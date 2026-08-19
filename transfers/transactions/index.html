@@ -84,6 +84,17 @@
         <span class="sr-only">Loading...</span>
       </span>
     </div>
+
+    <div id="errorWrapper" class="hidden" role="alert">
+      <div class="error-message">
+        <p class="error-message__eyebrow">Something went wrong</p>
+        <h2 class="error-message__title">We couldn't load your transactions</h2>
+        <p class="error-message__description">
+          Check your connection and make sure the API server is running, then try again.
+        </p>
+        <a class="error-message__action" href="/transfers/transactions/">Try again</a>
+      </div>
+    </div>
   </div>
 </body>
 
