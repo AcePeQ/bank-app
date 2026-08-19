@@ -21,16 +21,16 @@ import { createElement, getRequiredElement } from "../utils/helpers";
 import { ROUTES } from "../utils/constants";
 
 type RecentRecipient = {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
 };
 
 const recentRecipients = [
-  { id: 1, firstName: "Maciej", lastName: "Nowak" },
-  { id: 2, firstName: "Michał", lastName: "Nowicki" },
-  { id: 3, firstName: "Łukasz", lastName: "Nawrocki" },
-  { id: 4, firstName: "Ava", lastName: "Anderson" },
+  { id: "1", firstName: "Maciej", lastName: "Nowak" },
+  { id: "2", firstName: "Michał", lastName: "Nowicki" },
+  { id: "3", firstName: "Łukasz", lastName: "Nawrocki" },
+  { id: "4", firstName: "Ava", lastName: "Anderson" },
 ] satisfies RecentRecipient[];
 
 function createRecentRecipient(recipient: RecentRecipient): HTMLLIElement {

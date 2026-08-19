@@ -2,7 +2,7 @@ import type { Card } from "./card";
 import type { Transaction } from "./transaction";
 
 export type Account = {
-  id: number;
+  id: string;
   ownerName: string;
   balance: number;
   currency: string;

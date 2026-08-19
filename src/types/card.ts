@@ -1,5 +1,5 @@
 export type Card = {
-  id: number;
+  id: string;
   network: string;
   lastFourDigits: string;
   cardHolder: string;

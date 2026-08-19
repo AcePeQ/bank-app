@@ -5,7 +5,7 @@ export type SortOption =
   | "oldest"
 
 export type Transaction = {
-  id: number;
+  id: string;
   name: string;
   occurredAt: string;
   category: string;
