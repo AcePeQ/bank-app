@@ -118,3 +118,10 @@ export function setActiveLink() {
   const pageLink = getRequiredElement(`#sidebar a[href^="/${pagePart}"]`, HTMLAnchorElement);
   pageLink.classList.add("active");
 }
+
+export function isCurrentMonth(date: string) {
+  const now = new Date();
+  const transactionDate = new Date(date);
+
+  return transactionDate.getMonth() === now.getMonth() && transactionDate.getFullYear() === now.getFullYear();
+}

@@ -23,4 +23,4 @@ export const ROUTES = {
   settings: "/settings/"
 } as const
 
-export const USER_ID = "user-1";
+export const ACCOUNT_ID = "account-1";

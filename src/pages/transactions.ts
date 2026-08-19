@@ -1,5 +1,5 @@
 import type { FilterDirection, GroupTransaction, SortOption, Transaction, TransactionsState } from "../types/transaction";
-import { assertUnreachable, createElement, getRequiredElement, getRequiredElements } from "../utils/helpers";
+import { assertUnreachable, createElement, getRequiredElement, getRequiredElements, isCurrentMonth } from "../utils/helpers";
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createSearch } from "../components/search";
@@ -20,12 +20,11 @@ import {
 } from "lucide";
 import { getTransactions } from "../services/transactions";
 import { getAccounts } from "../services/account";
-import { USER_ID } from "../utils/constants";
-
-
+import { ACCOUNT_ID } from "../utils/constants";
 
 function init() {
   const MILLISECONDS_IN_ONE_DAY = 1000 * 60 * 60 * 24
+  const EURO_TO_USD_RATE = 1.17;
 
   const SORT_OPTIONS = [
     "newest",
@@ -171,9 +170,16 @@ function init() {
   }
 
   function updateOutflowValue(transactions: Transaction[], currency: string) {
-    const value = 1000;
+    const expenseValue = transactions.filter(transaction => transaction.direction === "expense" && transaction.status === "completed" && isCurrentMonth(transaction.occurredAt))
+      .reduce((acc, val) => {
+        if (val.currency === "EUR") {
+          return val.amount * EURO_TO_USD_RATE + acc;
+        }
 
-    outflowValueEl.textContent = formatCurrency(value, currency);
+        return val.amount + acc;
+      }, 0);
+
+    outflowValueEl.textContent = formatCurrency(expenseValue, currency);
   }
 
   function render() {
@@ -252,13 +258,12 @@ function init() {
     try {
       loaderEl.classList.remove("hidden");
 
-      const [transactions, accounts] = await Promise.all([getTransactions(USER_ID), getAccounts(USER_ID)]);
+      const [transactions, account] = await Promise.all([getTransactions(ACCOUNT_ID), getAccounts(ACCOUNT_ID)]);
       state.transactions = transactions;
-      const account = accounts[0];
       updateOutflowValue(transactions, account.currency);
       render();
     } catch (error) {
-
+      console.error(error);
     } finally {
       loaderEl.classList.add("hidden");
     }
