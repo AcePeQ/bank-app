@@ -5,7 +5,6 @@ import { createHeader } from "../components/header";
 import { createSearch } from "../components/search";
 import { formatCurrency, formatDate } from "../utils/formats";
 import { initCustomSelects } from "../components/customSelect";
-import { transactionsMock } from "../mocks/transactions.mock";
 import { createTransactionItem } from "../components/transaction";
 import {
   BanknoteArrowDown,
@@ -19,6 +18,9 @@ import {
   Search,
   Settings,
 } from "lucide";
+import { getTransactions } from "../services/transactions";
+import { getAccounts } from "../services/account";
+import { USER_ID } from "../utils/constants";
 
 
 
@@ -41,9 +43,10 @@ function init() {
   const transactionsListWrapperEl = getRequiredElement("#transactionsListWrapper", HTMLDivElement);
   const transactionsFiltersWrapperEl = getRequiredElement("#transactionsFiltersWrapper", HTMLDivElement);
   const filterButtonsEls = getRequiredElements("button[data-filter]", HTMLButtonElement, transactionsFiltersWrapperEl);
+  const loaderEl = getRequiredElement("#loaderWrapper", HTMLDivElement);
 
   const state: TransactionsState = {
-    transactions: [...transactionsMock],
+    transactions: [],
     query: "",
     direction: "all",
     sortBy: "newest"
@@ -167,7 +170,9 @@ function init() {
     })
   }
 
-  function updateOutflowValue(value: number, currency: string) {
+  function updateOutflowValue(transactions: Transaction[], currency: string) {
+    const value = 1000;
+
     outflowValueEl.textContent = formatCurrency(value, currency);
   }
 
@@ -243,16 +248,32 @@ function init() {
     });
   }
 
+  async function loadInitData() {
+    try {
+      loaderEl.classList.remove("hidden");
+
+      const [transactions, accounts] = await Promise.all([getTransactions(USER_ID), getAccounts(USER_ID)]);
+      state.transactions = transactions;
+      const account = accounts[0];
+      updateOutflowValue(transactions, account.currency);
+      render();
+    } catch (error) {
+
+    } finally {
+      loaderEl.classList.add("hidden");
+    }
+  }
+
+  createHeader();
+  createSidebar();
+
+  loadInitData();
+
 
   const searchFormEl = createSearch("searchTransactions", "Search transactions", "Search transactions...", ["input-box", "input-box--transactions"]);
   transactionsSearchWrapperEl.appendChild(searchFormEl);
   const searchFormInputEl = getRequiredElement("input", HTMLInputElement, searchFormEl);
-
-  createHeader();
-  createSidebar();
-  updateOutflowValue(4_230.2, "USD")
   initCustomSelects(handleSelectOption);
-  render();
 
   searchFormEl.addEventListener("submit", (e) => {
     e.preventDefault();

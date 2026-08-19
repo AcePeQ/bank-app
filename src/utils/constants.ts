@@ -22,3 +22,5 @@ export const ROUTES = {
   transactions: "/transfers/transactions/",
   settings: "/settings/"
 } as const
+
+export const USER_ID = "user-1";
