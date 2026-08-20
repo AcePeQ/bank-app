@@ -44,15 +44,18 @@
 
             <div id="transactionsFiltersWrapper">
               <div class="direction-filters">
-                <ul class="direction-filters__list">
+                <ul role="group" aria-label="Filter transactions" class="direction-filters__list">
                   <li class="direction-filters__item">
-                    <button type="button" data-filter="all" class="filter__button filter__button--active">All</button>
+                    <button type="button" data-filter="all" aria-pressed="true"
+                      class="filter__button filter__button--active">All</button>
                   </li>
                   <li class="direction-filters__item">
-                    <button type="button" data-filter="income" class="filter__button">Income</button>
+                    <button type="button" data-filter="income" aria-pressed="false"
+                      class="filter__button">Income</button>
                   </li>
                   <li class="direction-filters__item">
-                    <button type="button" data-filter="expense" class="filter__button">Expenses</button>
+                    <button type="button" data-filter="expense" aria-pressed="false"
+                      class="filter__button">Expenses</button>
                   </li>
                 </ul>
               </div>
@@ -60,21 +63,23 @@
 
             <div class="sortby-filter">
               <div class="custom-select">
-                <button id="dropdown-button" class="select-button" role="combobox" aria-label="select button"
+                <button id="dropdown-button" class="select-button" role="combobox" aria-label="Sort transactions"
                   aria-haspopup="listbox" aria-expanded="false" aria-controls="select-dropdown">
                   <span class="selected-value">Newest</span>
                   <span class="arrow"></span>
                 </button>
                 <ul class="select-dropdown hidden" role="listbox" id="select-dropdown"
                   aria-labelledby="dropdown-button">
-                  <li data-value="newest" class="selected">Newest</li>
-                  <li data-value="oldest">Oldest</li>
+                  <li role="option" data-value="newest" class="selected">Newest</li>
+                  <li role="option" data-value="oldest">Oldest</li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
 
+
+        <div id="listStatus" class="sr-only" role="status" aria-live="polite"></div>
         <div id="transactionsListWrapper" class="transactions-list-wrapper"></div>
       </div>
     </main>
@@ -85,16 +90,16 @@
       </span>
     </div>
 
-    <div id="errorWrapper" class="hidden" role="alert">
+    <dialog id="errorDialog" role="alertdialog" aria-labelledby="errorTitle" aria-describedby="errorDescription">
       <div class="error-message">
         <p class="error-message__eyebrow">Something went wrong</p>
-        <h2 class="error-message__title">We couldn't load your transactions</h2>
-        <p class="error-message__description">
+        <h2 id="errorTitle" class="error-message__title">We couldn't load your transactions</h2>
+        <p id="errorDescription" class="error-message__description">
           Check your connection and make sure the API server is running, then try again.
         </p>
-        <a class="error-message__action" href="/transfers/transactions/">Try again</a>
+        <a id="errorRetry" class="error-message__action" href="/transfers/transactions/" autofocus>Try again</a>
       </div>
-    </div>
+    </dialog>
   </div>
 </body>
 

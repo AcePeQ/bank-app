@@ -220,21 +220,25 @@ ol {
   margin-bottom: 0 !important;
 }
 
-#errorWrapper {
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
+#errorDialog {
+  inline-size: min(calc(100% - var(--space-s) - var(--space-s)), 33rem);
+  max-inline-size: 33rem;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
 
-  display: grid;
-  place-items: center;
+  color: inherit;
+  background-color: transparent;
+  overflow: visible;
+}
 
-  padding: var(--space-s);
+#errorDialog::backdrop {
   background-color: rgb(25 29 36 / 0.45);
   backdrop-filter: blur(3px);
 }
 
 .error-message {
-  inline-size: min(100%, 33rem);
+  inline-size: 100%;
   padding: var(--space-m);
   border: 1px solid var(--clr-alert-200);
   border-radius: 16px;

@@ -1,5 +1,3 @@
-import type { Transaction } from "../types/transaction";
-
 const API_URL = "/api";
 
 export async function apiRequest<T>(path: string, options?: RequestInit): Promise<T> {

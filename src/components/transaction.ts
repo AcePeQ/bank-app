@@ -19,7 +19,7 @@ export function createTransactionItem(transaction: Transaction) {
   const transactionAmount = formatCurrency(transaction.amount, transaction.currency);
 
   const paymentInfoWrapper = createElement("div", ["card-payment__info"]);
-  const paymentInfoHeading = createElement("h3", [], transaction.name);
+  const paymentInfoHeading = createElement("h4", [], transaction.name);
   const paymentInfoDetails = createElement("div");
   const paymentInfoTime = createElement("time", [], transactionDate);
   paymentInfoTime.setAttribute("datetime", transaction.occurredAt);
@@ -29,7 +29,12 @@ export function createTransactionItem(transaction: Transaction) {
 
 
   const paymentTotal = createElement("div", ["card-payment__total"]);
+  const paymentTotalLabel = createElement("span", ["sr-only"], `${transaction.direction}:`);
   const paymentTotalValue = createElement("p", ["card-payment__value", `card-payment__value--${transaction.direction}`], transactionAmount);
+  paymentTotalValue.insertAdjacentElement("afterbegin", paymentTotalLabel);
+
+
+
   const paymentTotalStatus = createElement("p", ["card-payment__status"], transaction.status);
   paymentTotal.append(paymentTotalValue, paymentTotalStatus);
 

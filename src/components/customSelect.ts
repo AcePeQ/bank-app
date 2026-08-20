@@ -1,8 +1,6 @@
 import { getRequiredElement, getRequiredElements } from "../utils/helpers";
 
 export function initCustomSelects(optionHandler: (value: string) => void) {
-
-
   document.addEventListener("DOMContentLoaded", () => {
     const customSelects = getRequiredElements(".custom-select", HTMLDivElement)
     customSelects.forEach((customSelect) => {

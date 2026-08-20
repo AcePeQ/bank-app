@@ -43,7 +43,9 @@ function init() {
   const transactionsFiltersWrapperEl = getRequiredElement("#transactionsFiltersWrapper", HTMLDivElement);
   const filterButtonsEls = getRequiredElements("button[data-filter]", HTMLButtonElement, transactionsFiltersWrapperEl);
   const loaderEl = getRequiredElement("#loaderWrapper", HTMLDivElement);
-  const errorWrapperEl = getRequiredElement("#errorWrapper", HTMLDivElement);
+  const errorDialogEl = getRequiredElement("#errorDialog", HTMLDialogElement);
+  const errorRetryEl = getRequiredElement("#errorRetry", HTMLAnchorElement, errorDialogEl);
+  const listStatusEl = getRequiredElement("#listStatus", HTMLDivElement);
 
   const state: TransactionsState = {
     transactions: [],
@@ -147,14 +149,14 @@ function init() {
     }
 
     groups.forEach(item => {
-      const divWrapper = createElement("div", ["transactions-list-box"]);
+      const divWrapper = createElement("ol", ["transactions-list-box"]);
 
       const titleEl = createElement("h3", ["transactions-title"]);
       titleEl.textContent = item.label;
 
       divWrapper.appendChild(titleEl);
 
-      const listEl = createElement("ol", ["transactions-list"]);
+      const listEl = createElement("ul", ["transactions-list"]);
 
       item.transactions.forEach(group => {
         const liEl = createElement("li", ["transaction-item"]);
@@ -183,10 +185,19 @@ function init() {
     outflowValueEl.textContent = formatCurrency(expenseValue, currency);
   }
 
+  function updateListStatus(transactions: Transaction[]) {
+    if (transactions.length === 0) {
+      transactionsListWrapperEl.textContent = "No transactions found.";
+    }
+
+    listStatusEl.textContent = `${transactions.length} transactions`;
+  }
+
   function render() {
     renderDirectionFilters();
 
     const visibleTransactions = selectVisibleTransactions(state);
+    updateListStatus(visibleTransactions);
     const groupedTransactions = groupTransactions(visibleTransactions);
 
     renderTransactions(transactionsListWrapperEl, groupedTransactions)
@@ -239,7 +250,6 @@ function init() {
     }
 
     state.direction = value;
-
     render();
   }
 
@@ -247,6 +257,11 @@ function init() {
     filterButtonsEls.forEach((button) => {
       const isActive =
         button.dataset.filter === state.direction;
+
+      button.setAttribute(
+        "aria-pressed",
+        String(isActive),
+      );
 
       button.classList.toggle(
         "filter__button--active",
@@ -258,7 +273,10 @@ function init() {
   async function loadInitData() {
     try {
       loaderEl.classList.remove("hidden");
-      errorWrapperEl.classList.add("hidden");
+
+      if (errorDialogEl.open) {
+        errorDialogEl.close();
+      }
 
       const [transactions, account] = await Promise.all([getTransactions(ACCOUNT_ID), getAccounts(ACCOUNT_ID)]);
       state.transactions = transactions;
@@ -266,7 +284,11 @@ function init() {
       render();
     } catch (error) {
       console.error(error);
-      errorWrapperEl.classList.remove("hidden");
+
+      if (!errorDialogEl.open) {
+        errorDialogEl.showModal();
+        errorRetryEl.focus();
+      }
     } finally {
       loaderEl.classList.add("hidden");
     }
@@ -274,6 +296,12 @@ function init() {
 
   createHeader();
   createSidebar();
+
+
+  // It's impletmented to stop "Escape" key from closing the dialog
+  errorDialogEl.addEventListener("cancel", (event) => {
+    event.preventDefault();
+  });
 
   loadInitData();
 
@@ -303,6 +331,8 @@ function init() {
 
     const filterValue = button.dataset.filter;
     if (!filterValue) return;
+
+
 
     handleSelectFilter(filterValue);
   })
