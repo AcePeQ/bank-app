@@ -149,7 +149,7 @@ function init() {
     }
 
     groups.forEach(item => {
-      const divWrapper = createElement("ol", ["transactions-list-box"]);
+      const divWrapper = createElement("div", ["transactions-list-box"]);
 
       const titleEl = createElement("h3", ["transactions-title"]);
       titleEl.textContent = item.label;
@@ -186,11 +186,7 @@ function init() {
   }
 
   function updateListStatus(transactions: Transaction[]) {
-    if (transactions.length === 0) {
-      transactionsListWrapperEl.textContent = "No transactions found.";
-    }
-
-    listStatusEl.textContent = `${transactions.length} transactions`;
+    listStatusEl.textContent = `${transactions.length} transaction${transactions.length === 1 ? "" : "s"}`;
   }
 
   function render() {
@@ -331,8 +327,6 @@ function init() {
 
     const filterValue = button.dataset.filter;
     if (!filterValue) return;
-
-
 
     handleSelectFilter(filterValue);
   })
