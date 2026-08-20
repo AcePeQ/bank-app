@@ -173,7 +173,7 @@ function init() {
   }
 
   function updateOutflowValue(transactions: Transaction[], currency: string) {
-    const expenseValue = transactions.filter(transaction => transaction.direction === "expense" && transaction.status === "completed" && isCurrentMonth(transaction.occurredAt))
+    const thisMonthExpenseValue = transactions.filter(transaction => transaction.direction === "expense" && transaction.status === "completed" && isCurrentMonth(transaction.occurredAt))
       .reduce((acc, val) => {
         if (val.currency === "EUR") {
           return val.amount * EURO_TO_USD_RATE + acc;
@@ -182,7 +182,7 @@ function init() {
         return val.amount + acc;
       }, 0);
 
-    outflowValueEl.textContent = formatCurrency(expenseValue, currency);
+    outflowValueEl.textContent = formatCurrency(thisMonthExpenseValue, currency);
   }
 
   function updateListStatus(transactions: Transaction[]) {

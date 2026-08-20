@@ -1,9 +1,9 @@
-import type { MonthlySpending } from '../types/dashboard'
 import Chart from 'chart.js/auto'
 import { formatCurrency } from '../utils/formats';
+import type { ChartData } from '../types/chart';
 
 
-export function createSpendingChart(chartCanvas: HTMLCanvasElement, data: MonthlySpending, currency: string) {
+export function createSpendingChart(chartCanvas: HTMLCanvasElement, data: ChartData, currency: string) {
   const labels = data.categories.map(category => category.category);
   const values = data.categories.map(category => category.amount);
 

@@ -2,7 +2,7 @@ import { BanknoteArrowDown, BanknoteArrowUp, Bell, ChevronRight, createIcons, Cr
 import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createCard } from "../components/card";
-import { createElement, getRequiredElement } from "../utils/helpers";
+import { createElement, getRequiredElement, isCurrentMonth } from "../utils/helpers";
 import { formatCurrency, getCurrentDate } from "../utils/formats";
 import { createTransactionItem } from "../components/transaction";
 import type { Transaction } from "../types/transaction";
@@ -10,8 +10,10 @@ import { createSpendingChart } from "../components/monthlySpendingChart";
 import { ACCOUNT_ID } from "../utils/constants";
 import { getAccount } from "../services/account";
 import { getCard } from "../services/card";
-import { getLimitTransactions } from "../services/transactions";
+import { getTransactions } from "../services/transactions";
 import { getBudget } from "../services/budget";
+import type { Account } from "../types/dashboard";
+import type { ChartData } from "../types/chart";
 
 function init() {
   const currentDateEl = getRequiredElement("#currentDate", HTMLElement);
@@ -43,9 +45,9 @@ function init() {
     recentActivityWrapperEl.replaceChildren(fragment);
   }
 
-  function updateSpendingProgress() {
-    const totalSpent = dashboardData.monthlySpending.spent;
-    const totalBudget = dashboardData.monthlySpending.budget;
+  function updateSpendingProgress(thisMonthSpent: number, budget: number) {
+    const totalSpent = thisMonthSpent;
+    const totalBudget = budget;
 
     const isOverBudget = totalSpent > totalBudget;
 
@@ -62,8 +64,50 @@ function init() {
     greetingEl.textContent = `Hi, ${accountName}!`;
   }
 
+  function getMonthSpentAmount(transactions: Transaction[]) {
+    return transactions.filter(transaction => transaction.direction === "expense" && transaction.status === "completed" && isCurrentMonth(transaction.occurredAt))
+      .reduce((acc, val) => {
+        if (val.currency === "EUR") {
+          return val.amount * 1.70 + acc;
+        }
+
+        return val.amount + acc;
+      }, 0);
+  }
+
+  function getMonthTransactions(transactions: Transaction[]) {
+    return transactions.filter(transaction => transaction.direction === "expense" && transaction.status === "completed" && isCurrentMonth(transaction.occurredAt))
+  }
+
+  function updateUI(account: Account, thisMonthExpenseValue: number) {
+    cardBalanceValueEl.textContent = formatCurrency(
+      account.balance,
+      account.currency,
+    );
+    monthSpendingValueEl.textContent = formatCurrency(
+      thisMonthExpenseValue,
+      account.currency,
+    );
+
+    monthlyChartSpendingValueEl.textContent = formatCurrency(
+      thisMonthExpenseValue,
+      account.currency,
+    );
+  }
+
   createSidebar();
   createHeader();
+
+  function createChartOptions(transactions: Transaction[], budget: number): ChartData {
+
+
+    return {
+      month: getCurrentDate(),
+      spent: getMonthSpentAmount(transactions),
+      budget: budget,
+      categories: [],
+    }
+  }
 
 
   async function initLoadData() {
@@ -74,36 +118,47 @@ function init() {
         errorDialogEl.close();
       }
 
-      const [account, card, transactions, budget] = await Promise.all([
+      const [account, cards, budgets, transactions] = await Promise.all([
         getAccount(ACCOUNT_ID),
         getCard(ACCOUNT_ID),
-        getLimitTransactions(ACCOUNT_ID, 10),
         getBudget(ACCOUNT_ID),
+        getTransactions(ACCOUNT_ID),
       ])
+      const card = cards[0];
+      const budget = budgets[0];
+      const thisMonthExpenseValue = getMonthSpentAmount(transactions);
+      const thisMonthTransactions = getMonthTransactions(transactions);
+      const lastTransactions = transactions.toSorted((transaction1, transaction2) => {
+        const firstTimestamp = Date.parse(transaction1.occurredAt);
+        const secondTimestamp = Date.parse(transaction2.occurredAt);
 
+        return secondTimestamp - firstTimestamp
+      }).slice(0, 2);
+      const chartOptions = createChartOptions(thisMonthTransactions, budget.amount);
 
-      createGreeting(account.ownerName);
-      updateSpendingProgress();
+      createGreeting(card.cardHolder);
+      updateSpendingProgress(thisMonthExpenseValue, budget.amount);
+      updateUI(account, thisMonthExpenseValue);
 
-      cardBalanceValueEl.textContent = formatCurrency(
-        dashboardData.account.balance,
-        dashboardData.account.currency,
-      );
-      monthSpendingValueEl.textContent = formatCurrency(
-        dashboardData.monthlySpending.spent,
-        dashboardData.account.currency,
-      );
+      cardWrapperEl.replaceChildren(createCard(card));
+      addTransactions(lastTransactions);
+      createSpendingChart(canvasEl, chartOptions, account.currency);
 
-      monthlyChartSpendingValueEl.textContent = formatCurrency(
-        dashboardData.monthlySpending.spent,
-        dashboardData.account.currency,
-      );
-
-      cardWrapperEl.replaceChildren(createCard(dashboardData.card));
-      addTransactions(dashboardData.recentTransactions);
-      createSpendingChart(canvasEl, dashboardData.monthlySpending, dashboardData.account.currency);
-
-
+      createIcons({
+        icons: {
+          Bell,
+          Search,
+          LogOut,
+          House,
+          CreditCard,
+          Repeat,
+          Settings,
+          SendHorizontal,
+          BanknoteArrowUp,
+          BanknoteArrowDown,
+          ChevronRight,
+        }
+      })
     } catch (error) {
       console.error(error);
 
@@ -118,22 +173,6 @@ function init() {
 
   errorDialogEl.addEventListener("cancel", (event) => event.preventDefault());
   initLoadData();
-
-  createIcons({
-    icons: {
-      Bell,
-      Search,
-      LogOut,
-      House,
-      CreditCard,
-      Repeat,
-      Settings,
-      SendHorizontal,
-      BanknoteArrowUp,
-      BanknoteArrowDown,
-      ChevronRight,
-    }
-  })
 }
 
 init();
