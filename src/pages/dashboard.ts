@@ -6,8 +6,12 @@ import { createElement, getRequiredElement } from "../utils/helpers";
 import { formatCurrency, getCurrentDate } from "../utils/formats";
 import { createTransactionItem } from "../components/transaction";
 import type { Transaction } from "../types/transaction";
-import { dashboardMock } from "../mocks/dashboard.mock";
 import { createSpendingChart } from "../components/monthlySpendingChart";
+import { ACCOUNT_ID } from "../utils/constants";
+import { getAccount } from "../services/account";
+import { getCard } from "../services/card";
+import { getLimitTransactions } from "../services/transactions";
+import { getBudget } from "../services/budget";
 
 function init() {
   const currentDateEl = getRequiredElement("#currentDate", HTMLElement);
@@ -20,8 +24,9 @@ function init() {
   const cardWrapperEl = getRequiredElement("#cardWrapper", HTMLDivElement);
   const canvasEl = getRequiredElement("#monthlySpendingCanvas", HTMLCanvasElement);
 
-  const dashboardData = dashboardMock;
-
+  const loaderEl = getRequiredElement("#loaderWrapper", HTMLDivElement);
+  const errorDialogEl = getRequiredElement("#errorDialog", HTMLDialogElement);
+  const errorRetryEl = getRequiredElement("#errorRetry", HTMLAnchorElement, errorDialogEl);
 
   function addTransactions(transactions: Transaction[]) {
     recentActivityWrapperEl.replaceChildren();
@@ -50,36 +55,69 @@ function init() {
     progressBarEl.classList.toggle("month-spent-progress--over-budget", isOverBudget);
   }
 
-  function createGreeting() {
+  function createGreeting(accountName: string) {
     const date = getCurrentDate();
     currentDateEl.textContent = date;
     currentDateEl.setAttribute("data-time", new Date().toISOString());
-    greetingEl.textContent = `Hi, ${dashboardData.account.ownerName}!`;
+    greetingEl.textContent = `Hi, ${accountName}!`;
   }
 
   createSidebar();
   createHeader();
 
-  createGreeting();
-  updateSpendingProgress();
 
-  cardBalanceValueEl.textContent = formatCurrency(
-    dashboardData.account.balance,
-    dashboardData.account.currency,
-  );
-  monthSpendingValueEl.textContent = formatCurrency(
-    dashboardData.monthlySpending.spent,
-    dashboardData.account.currency,
-  );
+  async function initLoadData() {
+    try {
+      loaderEl.classList.remove("hidden");
 
-  monthlyChartSpendingValueEl.textContent = formatCurrency(
-    dashboardData.monthlySpending.spent,
-    dashboardData.account.currency,
-  );
+      if (errorDialogEl.open) {
+        errorDialogEl.close();
+      }
 
-  cardWrapperEl.replaceChildren(createCard(dashboardData.card));
-  addTransactions(dashboardData.recentTransactions);
-  createSpendingChart(canvasEl, dashboardData.monthlySpending, dashboardData.account.currency);
+      const [account, card, transactions, budget] = await Promise.all([
+        getAccount(ACCOUNT_ID),
+        getCard(ACCOUNT_ID),
+        getLimitTransactions(ACCOUNT_ID, 10),
+        getBudget(ACCOUNT_ID),
+      ])
+
+
+      createGreeting(account.ownerName);
+      updateSpendingProgress();
+
+      cardBalanceValueEl.textContent = formatCurrency(
+        dashboardData.account.balance,
+        dashboardData.account.currency,
+      );
+      monthSpendingValueEl.textContent = formatCurrency(
+        dashboardData.monthlySpending.spent,
+        dashboardData.account.currency,
+      );
+
+      monthlyChartSpendingValueEl.textContent = formatCurrency(
+        dashboardData.monthlySpending.spent,
+        dashboardData.account.currency,
+      );
+
+      cardWrapperEl.replaceChildren(createCard(dashboardData.card));
+      addTransactions(dashboardData.recentTransactions);
+      createSpendingChart(canvasEl, dashboardData.monthlySpending, dashboardData.account.currency);
+
+
+    } catch (error) {
+      console.error(error);
+
+      if (!errorDialogEl.open) {
+        errorDialogEl.showModal();
+        errorRetryEl.focus();
+      }
+    } finally {
+      loaderEl.classList.add("hidden");
+    }
+  }
+
+  errorDialogEl.addEventListener("cancel", (event) => event.preventDefault());
+  initLoadData();
 
   createIcons({
     icons: {

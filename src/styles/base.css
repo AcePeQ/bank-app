@@ -221,15 +221,22 @@ ol {
 }
 
 #errorDialog {
+  position: fixed;
+  inset: 0;
+
   inline-size: min(calc(100% - var(--space-s) - var(--space-s)), 33rem);
   max-inline-size: 33rem;
+  block-size: fit-content;
+  max-block-size: calc(100% - var(--space-s) - var(--space-s));
+  margin: auto;
+
   padding: 0;
   border: 0;
   border-radius: 16px;
 
   color: inherit;
   background-color: transparent;
-  overflow: visible;
+  overflow: auto;
 }
 
 #errorDialog::backdrop {
@@ -247,6 +254,7 @@ ol {
   color: var(--clr-secondary-900);
   background-color: var(--clr-surface-100);
   box-shadow: 0 20px 50px rgb(0 0 0 / 0.2);
+
 }
 
 .error-message__eyebrow {

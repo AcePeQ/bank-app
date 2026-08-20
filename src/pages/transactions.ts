@@ -19,7 +19,7 @@ import {
   Settings,
 } from "lucide";
 import { getTransactions } from "../services/transactions";
-import { getAccounts } from "../services/account";
+import { getAccount } from "../services/account";
 import { ACCOUNT_ID } from "../utils/constants";
 
 function init() {
@@ -274,7 +274,7 @@ function init() {
         errorDialogEl.close();
       }
 
-      const [transactions, account] = await Promise.all([getTransactions(ACCOUNT_ID), getAccounts(ACCOUNT_ID)]);
+      const [transactions, account] = await Promise.all([getTransactions(ACCOUNT_ID), getAccount(ACCOUNT_ID)]);
       state.transactions = transactions;
       updateOutflowValue(transactions, account.currency);
       render();
