@@ -3,7 +3,7 @@ import type { Transaction } from "../types/transaction";
 import { formatCurrency, formatDate } from "../utils/formats";
 
 export function createTransactionItem(transaction: Transaction) {
-  const paymentWrapper = createElement("article", ["card-payment"]);
+  const paymentWrapper = createElement("div", ["card-payment"]);
 
   const paymentIconWrapper = createElement("div", ["card-payment__icon"]);
   const iconName = transaction.direction === "income" ? "banknote-arrow-down" : "banknote-arrow-up";
@@ -19,13 +19,13 @@ export function createTransactionItem(transaction: Transaction) {
   const transactionAmount = formatCurrency(transaction.amount, transaction.currency);
 
   const paymentInfoWrapper = createElement("div", ["card-payment__info"]);
-  const paymentInfoHeading = createElement("h4", [], transaction.name);
+  const paymentInfoName = createElement("p", ["card-payment__name"], transaction.name);
   const paymentInfoDetails = createElement("div");
   const paymentInfoTime = createElement("time", [], transactionDate);
   paymentInfoTime.setAttribute("datetime", transaction.occurredAt);
   const paymentInfoCategory = createElement("p", [], transaction.category);
   paymentInfoDetails.append(paymentInfoTime, "•", paymentInfoCategory);
-  paymentInfoWrapper.append(paymentInfoHeading, paymentInfoDetails);
+  paymentInfoWrapper.append(paymentInfoName, paymentInfoDetails);
 
 
   const paymentTotal = createElement("div", ["card-payment__total"]);

@@ -20,11 +20,10 @@ import {
 } from "lucide";
 import { getTransactions } from "../services/transactions";
 import { getAccount } from "../services/account";
-import { ACCOUNT_ID } from "../utils/constants";
+import { ACCOUNT_ID, EURO_TO_USD_RATE } from "../utils/constants";
 
 function init() {
   const MILLISECONDS_IN_ONE_DAY = 1000 * 60 * 60 * 24
-  const EURO_TO_USD_RATE = 1.17;
 
   const SORT_OPTIONS = [
     "newest",

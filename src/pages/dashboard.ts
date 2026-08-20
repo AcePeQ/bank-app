@@ -7,13 +7,14 @@ import { formatCurrency, getCurrentDate } from "../utils/formats";
 import { createTransactionItem } from "../components/transaction";
 import type { Transaction } from "../types/transaction";
 import { createSpendingChart } from "../components/monthlySpendingChart";
-import { ACCOUNT_ID } from "../utils/constants";
+import { ACCOUNT_ID, EURO_TO_USD_RATE } from "../utils/constants";
 import { getAccount } from "../services/account";
 import { getCard } from "../services/card";
 import { getTransactions } from "../services/transactions";
 import { getBudget } from "../services/budget";
 import type { Account } from "../types/dashboard";
 import type { ChartData, SpendingCategory } from "../types/chart";
+import type { Budget } from "../types/budget";
 
 function init() {
   const currentDateEl = getRequiredElement("#currentDate", HTMLElement);
@@ -31,21 +32,30 @@ function init() {
   const errorRetryEl = getRequiredElement("#errorRetry", HTMLAnchorElement, errorDialogEl);
 
   function addTransactions(transactions: Transaction[]) {
-    recentActivityWrapperEl.replaceChildren();
+    if (transactions.length === 0) {
+      const emptyItem = createElement(
+        "li",
+        ["card-activity__empty"],
+        "No recent transactions yet.",
+      );
 
-    const fragment = document.createDocumentFragment();;
+      recentActivityWrapperEl.replaceChildren(emptyItem);
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
 
     transactions.forEach((transaction) => {
       const listItem = createElement("li", ["card-activity__list__item"]);
 
       listItem.append(createTransactionItem(transaction));
       fragment.append(listItem);
-    })
+    });
 
     recentActivityWrapperEl.replaceChildren(fragment);
   }
 
-  function updateSpendingProgress(thisMonthSpent: number, budget: number) {
+  function updateSpendingProgress(thisMonthSpent: number, budget: number, currency: string) {
     const totalSpent = thisMonthSpent;
     const totalBudget = budget;
 
@@ -54,13 +64,18 @@ function init() {
     progressBarEl.value = totalSpent;
     progressBarEl.max = totalBudget;
 
+    monthSpendingValueEl.textContent = formatCurrency(
+      thisMonthSpent,
+      currency,
+    );
+
     progressBarEl.classList.toggle("month-spent-progress--over-budget", isOverBudget);
   }
 
   function createGreeting(accountName: string) {
     const date = getCurrentDate();
     currentDateEl.textContent = date;
-    currentDateEl.setAttribute("data-time", new Date().toISOString());
+    currentDateEl.setAttribute("datetime", new Date().toISOString());
     greetingEl.textContent = `Hi, ${accountName}!`;
   }
 
@@ -68,7 +83,7 @@ function init() {
     return transactions.filter(transaction => transaction.direction === "expense" && transaction.status === "completed" && isCurrentMonth(transaction.occurredAt))
       .reduce((acc, val) => {
         if (val.currency === "EUR") {
-          return val.amount * 1.70 + acc;
+          return val.amount * EURO_TO_USD_RATE + acc;
         }
 
         return val.amount + acc;
@@ -82,10 +97,6 @@ function init() {
   function updateUI(account: Account, thisMonthExpenseValue: number) {
     cardBalanceValueEl.textContent = formatCurrency(
       account.balance,
-      account.currency,
-    );
-    monthSpendingValueEl.textContent = formatCurrency(
-      thisMonthExpenseValue,
       account.currency,
     );
 
@@ -108,13 +119,14 @@ function init() {
       }
     }
 
-    const categories = getMonthTransactions(transactions).reduce((acc: SpendingCategory[], val) => {
+    const categories = transactions.reduce((acc: SpendingCategory[], val) => {
       const category = acc.find(category => category.category === val.category);
+      const amount = val.currency === "USD" ? val.amount : val.amount * EURO_TO_USD_RATE;
 
       if (category) {
-        category.amount += val.amount;
+        category.amount += amount;
       } else {
-        acc.push({ category: val.category, amount: val.amount });
+        acc.push({ category: val.category, amount });
       }
 
       return acc;
@@ -126,6 +138,15 @@ function init() {
       budget: budget,
       categories: categories,
     }
+  }
+
+  function getThisMonthBudget(budgets: Budget[]) {
+    return budgets.find(budget => {
+      const budgetDate = new Date(budget.month);
+      const currentDate = new Date();
+
+      return budgetDate.getMonth() === currentDate.getMonth() && budgetDate.getFullYear() === currentDate.getFullYear();
+    });
   }
 
 
@@ -143,8 +164,13 @@ function init() {
         getBudget(ACCOUNT_ID),
         getTransactions(ACCOUNT_ID),
       ])
-      const card = cards[0];
-      const budget = budgets[0];
+      const card = cards?.[0];
+      const budget = getThisMonthBudget(budgets);
+
+      if (!card || !budget) {
+        throw Error("We couldn't load your dashboard")
+      }
+
       const thisMonthExpenseValue = getMonthSpentAmount(transactions);
       const thisMonthTransactions = getMonthTransactions(transactions);
       const lastTransactions = transactions.toSorted((transaction1, transaction2) => {
@@ -156,7 +182,7 @@ function init() {
       const chartOptions = createChartOptions(thisMonthTransactions, budget.amount);
 
       createGreeting(card.cardHolder);
-      updateSpendingProgress(thisMonthExpenseValue, budget.amount);
+      updateSpendingProgress(thisMonthExpenseValue, budget.amount, account.currency);
       updateUI(account, thisMonthExpenseValue);
 
       cardWrapperEl.replaceChildren(createCard(card));

@@ -47,7 +47,7 @@
   gap: 2px;
 }
 
-.card-payment__info h4 {
+.card-payment__name {
   font-size: var(--fs-300);
   font-weight: var(--fw-700);
   font-family: var(--ff-primary);

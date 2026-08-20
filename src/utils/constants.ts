@@ -24,3 +24,4 @@ export const ROUTES = {
 } as const
 
 export const ACCOUNT_ID = "account-1";
+export const EURO_TO_USD_RATE = 1.17;

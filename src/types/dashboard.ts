@@ -3,9 +3,12 @@ import type { Transaction } from "./transaction";
 
 export type Account = {
   id: string;
-  ownerName: string;
+  userId: string;
+  name: string;
+  accountNumber: string;
   balance: number;
   currency: string;
+  status: string;
 };
 
 export type SpendingCategory = {
