@@ -13,7 +13,7 @@ import { getCard } from "../services/card";
 import { getTransactions } from "../services/transactions";
 import { getBudget } from "../services/budget";
 import type { Account } from "../types/dashboard";
-import type { ChartData } from "../types/chart";
+import type { ChartData, SpendingCategory } from "../types/chart";
 
 function init() {
   const currentDateEl = getRequiredElement("#currentDate", HTMLElement);
@@ -99,13 +99,32 @@ function init() {
   createHeader();
 
   function createChartOptions(transactions: Transaction[], budget: number): ChartData {
+    if (transactions.length === 0) {
+      return {
+        month: getCurrentDate(),
+        spent: 0,
+        budget: budget,
+        categories: [],
+      }
+    }
 
+    const categories = getMonthTransactions(transactions).reduce((acc: SpendingCategory[], val) => {
+      const category = acc.find(category => category.category === val.category);
+
+      if (category) {
+        category.amount += val.amount;
+      } else {
+        acc.push({ category: val.category, amount: val.amount });
+      }
+
+      return acc;
+    }, [])
 
     return {
       month: getCurrentDate(),
       spent: getMonthSpentAmount(transactions),
       budget: budget,
-      categories: [],
+      categories: categories,
     }
   }
 
