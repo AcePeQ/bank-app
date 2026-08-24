@@ -428,7 +428,6 @@
 button.card-settings__action:hover:not(:disabled),
 button.card-settings__action:focus-visible:not(:disabled) {
   color: var(--clr-primary-500);
-  background-color: var(--clr-surface-100);
 }
 
 button.card-settings__action:focus-visible {
