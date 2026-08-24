@@ -5,7 +5,7 @@ type SwitchOptions = {
   checked: boolean,
 }
 
-export function createSwitch(options: SwitchOptions, handler: (e: Event) => void, container: HTMLElement) {
+export function createSwitch(options: SwitchOptions, container: HTMLElement) {
   const labelEl = createElement("label", ["switch"]);
   labelEl.setAttribute("for", options.id);
 
@@ -14,11 +14,11 @@ export function createSwitch(options: SwitchOptions, handler: (e: Event) => void
   checkboxEl.id = options.id;
   checkboxEl.checked = options.checked;
 
-  checkboxEl.addEventListener("change", handler)
-
   const spanEl = createElement("span", ["slider", "round"]);
 
   labelEl.append(checkboxEl, spanEl);
 
   container.append(labelEl);
+
+  return checkboxEl
 }

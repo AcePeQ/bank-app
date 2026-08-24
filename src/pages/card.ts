@@ -50,8 +50,10 @@ function init() {
     cardFreezeOptionTextEl.textContent = cardStatus !== "active" ? "Unfreeze Card" : "Freeze Card"
   }
 
-  async function toggleOnlinePayments(cardId: string, enabled: boolean) {
+  async function toggleOnlinePayments(cardId: string, inputEl: HTMLInputElement) {
     try {
+      const enabled = inputEl.checked;
+
     } catch (error) {
 
     } finally {
@@ -59,9 +61,9 @@ function init() {
     }
   }
 
-  async function toggleAtmWithdrawals(cardId: string, enabled: boolean) {
+  async function toggleAtmWithdrawals(cardId: string, inputEl: HTMLInputElement) {
     try {
-      console.log("withdrawals")
+      const enabled = inputEl.checked;
     } catch (error) {
 
     } finally {
@@ -89,12 +91,18 @@ function init() {
       const cardNode = createCard(card);
       cardWrapperEl.appendChild(cardNode);
 
-      createSwitch({ id: "onlinePayments", checked: card.onlinePaymentsEnabled }, () => toggleOnlinePayments(card.id, !card.onlinePaymentsEnabled), onlinePaymentsEl);
-      createSwitch({ id: "atmWithdrawals", checked: card.atmWithdrawalsEnabled }, () => toggleAtmWithdrawals(card.id, !card.atmWithdrawalsEnabled), atmWithdrawalsEl);
+      const onlinePaymentsSwitch = createSwitch({ id: "onlinePayments", checked: card.onlinePaymentsEnabled }, onlinePaymentsEl);
+      const atmWithdrawalsSwitch = createSwitch({ id: "atmWithdrawals", checked: card.atmWithdrawalsEnabled }, atmWithdrawalsEl);
 
       setDefaultCardSettings(card.singlePaymentLimit, card.dailySpendingLimit, card.status)
 
+      onlinePaymentsSwitch.addEventListener("change", () => {
+        toggleOnlinePayments(card.id, onlinePaymentsSwitch);
+      });
 
+      atmWithdrawalsSwitch.addEventListener("change", () => {
+        toggleAtmWithdrawals(card.id, atmWithdrawalsSwitch)
+      })
 
 
     } catch (error) {
@@ -111,7 +119,6 @@ function init() {
 
   errorDialogEl.addEventListener("cancel", (event) => event.preventDefault());
   loadInitData();
-
 
 
   initLimitDialog(dailySpendingLimitElements);
