@@ -104,8 +104,8 @@
                   <h3 class="card-settings__title">Daily Spending Limit</h3>
                   <p class="card-settings__subtitle">Max daily transaction amount</p>
                 </hgroup>
-                <button id="dailySpendingLimitButton" class="card-settings__action" type="button"
-                  aria-haspopup="dialog" aria-controls="dailySpendingLimitDialog">
+                <button id="dailySpendingLimitButton" class="card-settings__action" type="button" aria-haspopup="dialog"
+                  aria-controls="dailySpendingLimitDialog">
                   <span id="dailySpendingLimitValue">$1,500.00</span>
                   <i data-lucide="chevron-right"></i>
                 </button>
@@ -126,8 +126,8 @@
                     <div class="money-input">
                       <span aria-hidden="true">$</span>
 
-                      <input id="dailySpendingLimitInput" name="dailySpendingLimit" type="number" min="1"
-                        max="50000" step="0.01" required>
+                      <input id="dailySpendingLimitInput" name="dailySpendingLimit" type="number" min="1" max="50000"
+                        step="0.01" required>
                     </div>
 
                     <p id="dailySpendingLimitError"></p>
@@ -152,8 +152,8 @@
                   <h3 class="card-settings__title">Single Payment Limit</h3>
                   <p class="card-settings__subtitle">Max per single transaction</p>
                 </hgroup>
-                <button id="singlePaymentLimitButton" class="card-settings__action" type="button"
-                  aria-haspopup="dialog" aria-controls="singlePaymentLimitDialog">
+                <button id="singlePaymentLimitButton" class="card-settings__action" type="button" aria-haspopup="dialog"
+                  aria-controls="singlePaymentLimitDialog">
                   <span id="singlePaymentLimitValue">$1,250.50</span>
                   <i data-lucide="chevron-right"></i>
                 </button>
@@ -174,8 +174,8 @@
                     <div class="money-input">
                       <span aria-hidden="true">$</span>
 
-                      <input id="singlePaymentLimitInput" name="singlePaymentLimit" type="number" min="1"
-                        max="50000" step="0.01" required>
+                      <input id="singlePaymentLimitInput" name="singlePaymentLimit" type="number" min="1" max="50000"
+                        step="0.01" required>
                     </div>
 
                     <p id="singlePaymentLimitError"></p>
@@ -197,6 +197,23 @@
         </section>
       </div>
     </main>
+
+    <div id="loaderWrapper">
+      <span role="status" id="loader" class="dots dots--normal">
+        <span class="sr-only">Loading...</span>
+      </span>
+    </div>
+
+    <dialog id="errorDialog" role="alertdialog" aria-labelledby="errorTitle" aria-describedby="errorDescription">
+      <div class="error-message">
+        <p class="error-message__eyebrow">Something went wrong</p>
+        <h2 id="errorTitle" class="error-message__title">We couldn't load your dashboard</h2>
+        <p id="errorDescription" class="error-message__description">
+          Check your connection and make sure the API server is running, then try again.
+        </p>
+        <a id="errorRetry" class="error-message__action" href="/dashboard/" autofocus>Try again</a>
+      </div>
+    </dialog>
   </div>
 </body>
 
