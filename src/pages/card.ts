@@ -3,7 +3,7 @@ import { createSidebar } from "../components/sidebar";
 import { createHeader } from "../components/header";
 import { createCard } from "../components/card";
 import { getLimitDialogElements, getRequiredElement } from "../utils/helpers";
-import { createSwtich } from "../components/toggleSwitch";
+import { createSwitch } from "../components/toggleSwitch";
 import type { LimitDialogElements } from "../types/dialog";
 import { getCard } from "../services/card";
 import { ACCOUNT_ID } from "../utils/constants";
@@ -34,30 +34,39 @@ function init() {
     elements.cancelButtonEl.addEventListener("click", () => closeDialog(elements.dialogEl));
   }
 
-  function setDefaultCardSettings(atmWithdrawals: boolean, onlinePayments: boolean, singlePaymentLimit: number, dailySpendingLimit: number, cardStatus: string) {
-    const onlinePaymentsEl = getRequiredElement("#onlinePayments", HTMLInputElement);
-    const atmWithdrawalsEl = getRequiredElement("#atmWithdrawals", HTMLInputElement);
+  function setDefaultCardSettings(singlePaymentLimit: number, dailySpendingLimit: number, cardStatus: "active" | "disabled") {
+
     const cardFreezeOptionTextEl = getRequiredElement("#cardFreezeOptionText", HTMLSpanElement);
-
-    const dailySpendingLimitValueEl = getRequiredElement("#dailySpendingLimitValue", HTMLSpanElement);
-    const dailySpendingLimitInputEl = getRequiredElement("#dailySpendingLimitInput", HTMLInputElement);
-
-    const singlePaymentLimitValueEl = getRequiredElement("#singlePaymentLimitValue", HTMLSpanElement);
-    const singlePaymentLimitInputEl = getRequiredElement("#singlePaymentLimitInput", HTMLInputElement);
 
     const formatedDailyLimit = formatCurrency(dailySpendingLimit, "USD")
     const formatedSinglePaymentLimit = formatCurrency(singlePaymentLimit, "USD")
 
-    dailySpendingLimitValueEl.textContent = String(formatedDailyLimit);
-    dailySpendingLimitInputEl.value = String(dailySpendingLimit);
+    dailySpendingLimitElements.valueEl.textContent = String(formatedDailyLimit);
+    dailySpendingLimitElements.inputEl.value = String(dailySpendingLimit);
 
-    singlePaymentLimitValueEl.textContent = String(formatedSinglePaymentLimit);
-    singlePaymentLimitInputEl.value = String(singlePaymentLimit);
+    singlePaymentLimitElements.valueEl.textContent = String(formatedSinglePaymentLimit);
+    singlePaymentLimitElements.inputEl.value = String(singlePaymentLimit);
 
-    onlinePaymentsEl.checked = onlinePayments;
-    atmWithdrawalsEl.checked = atmWithdrawals;
+    cardFreezeOptionTextEl.textContent = cardStatus !== "active" ? "Unfreeze Card" : "Freeze Card"
+  }
 
-    cardFreezeOptionTextEl.textContent = cardStatus === "active" ? "Freeze Card" : "Unfreeze Card"
+  async function toggleOnlinePayments(cardId: string, enabled: boolean) {
+    try {
+    } catch (error) {
+
+    } finally {
+
+    }
+  }
+
+  async function toggleAtmWithdrawals(cardId: string, enabled: boolean) {
+    try {
+      console.log("withdrawals")
+    } catch (error) {
+
+    } finally {
+
+    }
   }
 
   createSidebar();
@@ -73,12 +82,19 @@ function init() {
 
       const [card] = await getCard(ACCOUNT_ID);
 
+      if (!card) return;
+
       console.log(card);
 
       const cardNode = createCard(card);
       cardWrapperEl.appendChild(cardNode);
 
-      setDefaultCardSettings(card.atmWithdrawalsEnabled, card.onlinePaymentsEnabled, card.singlePaymentLimit, card.dailySpendingLimit, card.status)
+      createSwitch({ id: "onlinePayments", checked: card.onlinePaymentsEnabled }, () => toggleOnlinePayments(card.id, !card.onlinePaymentsEnabled), onlinePaymentsEl);
+      createSwitch({ id: "atmWithdrawals", checked: card.atmWithdrawalsEnabled }, () => toggleAtmWithdrawals(card.id, !card.atmWithdrawalsEnabled), atmWithdrawalsEl);
+
+      setDefaultCardSettings(card.singlePaymentLimit, card.dailySpendingLimit, card.status)
+
+
 
 
     } catch (error) {
@@ -93,9 +109,6 @@ function init() {
     }
   }
 
-
-  createSwtich({ id: "onlinePayments" }, () => { }, onlinePaymentsEl);
-  createSwtich({ id: "atmWithdrawals" }, () => { }, atmWithdrawalsEl);
   errorDialogEl.addEventListener("cancel", (event) => event.preventDefault());
   loadInitData();
 

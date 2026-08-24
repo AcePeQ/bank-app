@@ -9,7 +9,7 @@ export type Card = {
   network: string;
   onlinePaymentsEnabled: boolean;
   singlePaymentLimit: number;
-  status: string;
+  status: "active" | "disabled";
   userId: string;
 };
 
