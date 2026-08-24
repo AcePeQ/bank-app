@@ -34,9 +34,10 @@ function init() {
     elements.cancelButtonEl.addEventListener("click", () => closeDialog(elements.dialogEl));
   }
 
-  function setDefaultCardSettings(atmWithdrawals: boolean, onlinePayments: boolean, singlePaymentLimit: number, dailySpendingLimit: number) {
+  function setDefaultCardSettings(atmWithdrawals: boolean, onlinePayments: boolean, singlePaymentLimit: number, dailySpendingLimit: number, cardStatus: string) {
     const onlinePaymentsEl = getRequiredElement("#onlinePayments", HTMLInputElement);
     const atmWithdrawalsEl = getRequiredElement("#atmWithdrawals", HTMLInputElement);
+    const cardFreezeOptionTextEl = getRequiredElement("#cardFreezeOptionText", HTMLSpanElement);
 
     const dailySpendingLimitValueEl = getRequiredElement("#dailySpendingLimitValue", HTMLSpanElement);
     const dailySpendingLimitInputEl = getRequiredElement("#dailySpendingLimitInput", HTMLInputElement);
@@ -55,6 +56,8 @@ function init() {
 
     onlinePaymentsEl.checked = onlinePayments;
     atmWithdrawalsEl.checked = atmWithdrawals;
+
+    cardFreezeOptionTextEl.textContent = cardStatus === "active" ? "Freeze Card" : "Unfreeze Card"
   }
 
   createSidebar();
@@ -75,7 +78,7 @@ function init() {
       const cardNode = createCard(card);
       cardWrapperEl.appendChild(cardNode);
 
-      setDefaultCardSettings(card.atmWithdrawalsEnabled, card.onlinePaymentsEnabled, card.singlePaymentLimit, card.dailySpendingLimit)
+      setDefaultCardSettings(card.atmWithdrawalsEnabled, card.onlinePaymentsEnabled, card.singlePaymentLimit, card.dailySpendingLimit, card.status)
 
 
     } catch (error) {
