@@ -5,7 +5,7 @@ import { createCard } from "../components/card";
 import { getLimitDialogElements, getRequiredElement } from "../utils/helpers";
 import { createSwitch } from "../components/toggleSwitch";
 import type { LimitDialogElements } from "../types/dialog";
-import { getCard, toggleOnlinePaymentsOption } from "../services/card";
+import { getCard, toggleAtmWithdrawalsOption, toggleOnlinePaymentsOption } from "../services/card";
 import { ACCOUNT_ID } from "../utils/constants";
 import { formatCurrency } from "../utils/formats";
 
@@ -58,7 +58,6 @@ function init() {
     try {
       const updatedCard = await toggleOnlinePaymentsOption(cardId, nextEnabled)
       inputEl.checked = updatedCard.onlinePaymentsEnabled;
-
     } catch (error) {
       console.error(error);
       inputEl.checked = previousEnabled;
@@ -73,12 +72,24 @@ function init() {
   }
 
   async function toggleAtmWithdrawals(cardId: string, inputEl: HTMLInputElement) {
+    const nextEnabled = inputEl.checked;
+    const previousEnabled = !nextEnabled;
+
+    inputEl.disabled = true;
+
     try {
-      const enabled = inputEl.checked;
+      const updatedCard = await toggleAtmWithdrawalsOption(cardId, nextEnabled);
+      inputEl.checked = updatedCard.atmWithdrawalsEnabled;
     } catch (error) {
+      console.error(error);
+      inputEl.checked = previousEnabled;
 
+      if (!errorDialogEl.open) {
+        errorDialogEl.showModal();
+        errorRetryEl.focus();
+      }
     } finally {
-
+      inputEl.disabled = false;
     }
   }
 
