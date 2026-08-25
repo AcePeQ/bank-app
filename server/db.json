@@ -103,10 +103,10 @@
       "lastFourDigits": "1234",
       "cardHolder": "John Doe",
       "expirationDate": "2029-10",
-      "status": "active",
+      "status": "disabled",
       "onlinePaymentsEnabled": true,
       "atmWithdrawalsEnabled": true,
-      "dailySpendingLimit": 1500,
+      "dailySpendingLimit": 1300,
       "singlePaymentLimit": 1250.5
     }
   ],

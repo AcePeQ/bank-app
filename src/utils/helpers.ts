@@ -102,14 +102,17 @@ export function assertUnreachable(x: never): never {
 }
 
 export function getLimitDialogElements(prefix: LimitDialogPrefix): LimitDialogElements {
+  const formEl = getRequiredElement(`#${prefix}Form`, HTMLFormElement);
+
   return {
     openButtonEl: getRequiredElement(`#${prefix}Button`, HTMLButtonElement),
     valueEl: getRequiredElement(`#${prefix}Value`, HTMLSpanElement),
     dialogEl: getRequiredElement(`#${prefix}Dialog`, HTMLDialogElement),
-    formEl: getRequiredElement(`#${prefix}Form`, HTMLFormElement),
+    formEl,
     inputEl: getRequiredElement(`#${prefix}Input`, HTMLInputElement),
     errorEl: getRequiredElement(`#${prefix}Error`, HTMLParagraphElement),
     cancelButtonEl: getRequiredElement(`#${prefix}CancelButton`, HTMLButtonElement),
+    submitButtonEl: getRequiredElement('button[type="submit"]', HTMLButtonElement, formEl),
   };
 }
 

@@ -31,3 +31,21 @@ export async function toggleCardStatus(cardId: string, status: CardStatus) {
     }),
   });
 }
+
+export async function setDailySpendingLimit(cardId: string, limit: number): Promise<Card> {
+  return apiRequest<Card>(`/cards/${cardId}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      dailySpendingLimit: limit,
+    }),
+  });
+}
+
+export async function setSinglePaymentLimit(cardId: string, limit: number): Promise<Card> {
+  return apiRequest<Card>(`/cards/${cardId}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      singlePaymentLimit: limit,
+    }),
+  });
+}

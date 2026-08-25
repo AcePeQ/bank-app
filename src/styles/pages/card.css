@@ -304,6 +304,11 @@
   box-shadow: var(--focus-ring);
 }
 
+.card-settings .money-input:has(input[aria-invalid="true"]) {
+  border-color: var(--clr-alert-500);
+  box-shadow: var(--focus-ring-error);
+}
+
 .card-settings .money-input>span {
   padding-inline-start: var(--space-s);
 

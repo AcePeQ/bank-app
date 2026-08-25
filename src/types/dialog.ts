@@ -8,4 +8,5 @@ export type LimitDialogElements = {
   inputEl: HTMLInputElement;
   errorEl: HTMLParagraphElement;
   cancelButtonEl: HTMLButtonElement;
+  submitButtonEl: HTMLButtonElement;
 };
