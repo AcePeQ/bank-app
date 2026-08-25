@@ -1,3 +1,5 @@
+export type CardStatus = "active" | "disabled";
+
 export type Card = {
   accountId: string;
   atmWithdrawalsEnabled: boolean;
@@ -9,7 +11,7 @@ export type Card = {
   network: string;
   onlinePaymentsEnabled: boolean;
   singlePaymentLimit: number;
-  status: "active" | "disabled";
+  status: CardStatus;
   userId: string;
 };
 

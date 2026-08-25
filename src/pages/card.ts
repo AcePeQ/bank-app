@@ -5,14 +5,17 @@ import { createCard } from "../components/card";
 import { getLimitDialogElements, getRequiredElement } from "../utils/helpers";
 import { createSwitch } from "../components/toggleSwitch";
 import type { LimitDialogElements } from "../types/dialog";
-import { getCard, toggleAtmWithdrawalsOption, toggleOnlinePaymentsOption } from "../services/card";
+import { getCard, toggleAtmWithdrawalsOption, toggleCardStatus, toggleOnlinePaymentsOption } from "../services/card";
 import { ACCOUNT_ID } from "../utils/constants";
 import { formatCurrency } from "../utils/formats";
+import type { CardStatus } from "../types/card";
 
 function init() {
   const cardWrapperEl = getRequiredElement("#cardContainer", HTMLDivElement);
   const onlinePaymentsEl = getRequiredElement("#cardSettingsOnlinePayments", HTMLDivElement);
   const atmWithdrawalsEl = getRequiredElement("#cardSettingsAtmWithdrawals", HTMLDivElement);
+  const cardFreezeButtonEl = getRequiredElement("#cardFreezeButton", HTMLButtonElement);
+  const cardFreezeOptionTextEl = getRequiredElement("#cardFreezeOptionText", HTMLSpanElement);
 
   const loaderEl = getRequiredElement("#loaderWrapper", HTMLDivElement);
   const errorDialogEl = getRequiredElement("#errorDialog", HTMLDialogElement);
@@ -34,9 +37,7 @@ function init() {
     elements.cancelButtonEl.addEventListener("click", () => closeDialog(elements.dialogEl));
   }
 
-  function setDefaultCardSettings(singlePaymentLimit: number, dailySpendingLimit: number, cardStatus: "active" | "disabled") {
-    const cardFreezeOptionTextEl = getRequiredElement("#cardFreezeOptionText", HTMLSpanElement);
-
+  function setDefaultCardSettings(singlePaymentLimit: number, dailySpendingLimit: number, cardStatus: CardStatus) {
     const formatedDailyLimit = formatCurrency(dailySpendingLimit, "USD")
     const formatedSinglePaymentLimit = formatCurrency(singlePaymentLimit, "USD")
 
@@ -46,7 +47,11 @@ function init() {
     singlePaymentLimitElements.valueEl.textContent = String(formatedSinglePaymentLimit);
     singlePaymentLimitElements.inputEl.value = String(singlePaymentLimit);
 
-    cardFreezeOptionTextEl.textContent = cardStatus !== "active" ? "Unfreeze Card" : "Freeze Card"
+    updateCardStatusUI(cardStatus);
+  }
+
+  function updateCardStatusUI(status: CardStatus) {
+    cardFreezeOptionTextEl.textContent = status === "disabled" ? "Unfreeze Card" : "Freeze Card";
   }
 
   async function toggleOnlinePayments(cardId: string, inputEl: HTMLInputElement) {
@@ -93,6 +98,32 @@ function init() {
     }
   }
 
+  async function toggleFreezeCard(cardId: string, currentStatus: CardStatus): Promise<CardStatus> {
+    const previousStatus = currentStatus;
+    const nextStatus: CardStatus = currentStatus === "active" ? "disabled" : "active";
+
+    cardFreezeButtonEl.disabled = true;
+    updateCardStatusUI(nextStatus);
+
+    try {
+      const updatedCard = await toggleCardStatus(cardId, nextStatus);
+      updateCardStatusUI(updatedCard.status);
+      return updatedCard.status;
+    } catch (error) {
+      console.error(error);
+      updateCardStatusUI(previousStatus);
+
+      if (!errorDialogEl.open) {
+        errorDialogEl.showModal();
+        errorRetryEl.focus();
+      }
+
+      return previousStatus;
+    } finally {
+      cardFreezeButtonEl.disabled = false;
+    }
+  }
+
   createSidebar();
   createHeader();
 
@@ -113,6 +144,7 @@ function init() {
 
       const onlinePaymentsSwitch = createSwitch({ id: "onlinePayments", checked: card.onlinePaymentsEnabled }, onlinePaymentsEl);
       const atmWithdrawalsSwitch = createSwitch({ id: "atmWithdrawals", checked: card.atmWithdrawalsEnabled }, atmWithdrawalsEl);
+      let cardStatus = card.status;
 
       setDefaultCardSettings(card.singlePaymentLimit, card.dailySpendingLimit, card.status)
 
@@ -123,6 +155,10 @@ function init() {
       atmWithdrawalsSwitch.addEventListener("change", () => {
         toggleAtmWithdrawals(card.id, atmWithdrawalsSwitch)
       })
+
+      cardFreezeButtonEl.addEventListener("click", async () => {
+        cardStatus = await toggleFreezeCard(card.id, cardStatus);
+      });
 
 
     } catch (error) {
@@ -143,8 +179,6 @@ function init() {
 
   initLimitDialog(dailySpendingLimitElements);
   initLimitDialog(singlePaymentLimitElements);
-
-
 
 
   createIcons({

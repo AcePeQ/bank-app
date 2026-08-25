@@ -1,4 +1,4 @@
-import type { Card } from "../types/card";
+import type { Card, CardStatus } from "../types/card";
 import { apiRequest } from "./api";
 
 export async function getCard(accountId: string): Promise<Card[]> {
@@ -19,6 +19,15 @@ export async function toggleAtmWithdrawalsOption(cardId: string, enabled: boolea
     method: "PATCH",
     body: JSON.stringify({
       atmWithdrawalsEnabled: enabled,
+    }),
+  });
+}
+
+export async function toggleCardStatus(cardId: string, status: CardStatus) {
+  return apiRequest<Card>(`/cards/${cardId}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      status,
     }),
   });
 }
