@@ -1,5 +1,4 @@
 {
-  "$schema": "../node_modules/json-server/schema.json",
   "users": [
     {
       "id": "user-1",
@@ -519,5 +518,6 @@
       "isRead": true,
       "createdAt": "2026-08-03T06:16:00Z"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

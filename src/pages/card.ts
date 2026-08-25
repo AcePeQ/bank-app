@@ -5,7 +5,7 @@ import { createCard } from "../components/card";
 import { getLimitDialogElements, getRequiredElement } from "../utils/helpers";
 import { createSwitch } from "../components/toggleSwitch";
 import type { LimitDialogElements } from "../types/dialog";
-import { getCard } from "../services/card";
+import { getCard, toggleOnlinePaymentsOption } from "../services/card";
 import { ACCOUNT_ID } from "../utils/constants";
 import { formatCurrency } from "../utils/formats";
 
@@ -35,7 +35,6 @@ function init() {
   }
 
   function setDefaultCardSettings(singlePaymentLimit: number, dailySpendingLimit: number, cardStatus: "active" | "disabled") {
-
     const cardFreezeOptionTextEl = getRequiredElement("#cardFreezeOptionText", HTMLSpanElement);
 
     const formatedDailyLimit = formatCurrency(dailySpendingLimit, "USD")
@@ -51,13 +50,25 @@ function init() {
   }
 
   async function toggleOnlinePayments(cardId: string, inputEl: HTMLInputElement) {
+    const nextEnabled = inputEl.checked;
+    const previousEnabled = !nextEnabled;
+
+    inputEl.disabled = true;
+
     try {
-      const enabled = inputEl.checked;
+      const updatedCard = await toggleOnlinePaymentsOption(cardId, nextEnabled)
+      inputEl.checked = updatedCard.onlinePaymentsEnabled;
 
     } catch (error) {
+      console.error(error);
+      inputEl.checked = previousEnabled;
 
+      if (!errorDialogEl.open) {
+        errorDialogEl.showModal();
+        errorRetryEl.focus();
+      }
     } finally {
-
+      inputEl.disabled = false;
     }
   }
 
@@ -85,8 +96,6 @@ function init() {
       const [card] = await getCard(ACCOUNT_ID);
 
       if (!card) return;
-
-      console.log(card);
 
       const cardNode = createCard(card);
       cardWrapperEl.appendChild(cardNode);
